@@ -45,6 +45,16 @@ android {
     }
 
     signingConfigs {
+        // Both variants use the same private persistent certificate when configured.
+        getByName("debug") {
+            if (releaseKeyFile.isFile) {
+                storeFile = rootProject.file(releaseKey("storeFile"))
+                require(storeFile!!.isFile) { "Persistent keystore file does not exist" }
+                storePassword = releaseKey("storePassword")
+                keyAlias = releaseKey("keyAlias")
+                keyPassword = releaseKey("keyPassword")
+            }
+        }
         create("release") {
             if (releaseKeyFile.isFile) {
                 storeFile = rootProject.file(releaseKey("storeFile"))

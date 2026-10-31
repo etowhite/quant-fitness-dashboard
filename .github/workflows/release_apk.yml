@@ -38,6 +38,13 @@ jobs:
         run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0' 'platform-tools'
       - name: Resolve dependencies
         run: flutter pub get
+      - name: Restore persistent Android signing
+        if: github.event_name != 'pull_request'
+        env:
+          QUANT_KEYSTORE_BASE64: ${{ secrets.QUANT_KEYSTORE_BASE64 }}
+          QUANT_KEYSTORE_PASSWORD: ${{ secrets.QUANT_KEYSTORE_PASSWORD }}
+          QUANT_KEY_PASSWORD: ${{ secrets.QUANT_KEY_PASSWORD }}
+        run: python3 .github/scripts/restore_signing.py
       - name: Security regression and dependency advisory checks
         run: |
           dart pub deps --json > .dart_tool/dependency-tree.json
@@ -52,6 +59,9 @@ jobs:
         run: flutter build apk --release
       - name: Verify packaged Android permissions and flags
         run: node tool/check_apk.mjs
+      - name: Verify persistent signing certificate
+        if: github.event_name != 'pull_request'
+        run: node tool/check_signing.mjs
       - name: Rename quant APK
         run: cp build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/quant-release.apk
       - name: Upload APK
@@ -61,6 +71,9 @@ jobs:
           path: build/app/outputs/flutter-apk/quant-release.apk
           if-no-files-found: error
           retention-days: 14
+      - name: Remove private signing material
+        if: always()
+        run: rm -f android/key.properties android/app/quant-release-key.jks
       - name: Upload coverage
         uses: actions/upload-artifact@v4
         with:
@@ -68,7 +81,6 @@ jobs:
           path: coverage/lcov.info
 
   android-integration:
-    needs: build
     runs-on: ubuntu-24.04
     timeout-minutes: 40
     steps:
@@ -88,6 +100,13 @@ jobs:
       - name: Enable KVM
         run: sudo chmod 666 /dev/kvm
       - run: flutter pub get
+      - name: Restore persistent Android signing
+        if: github.event_name != 'pull_request'
+        env:
+          QUANT_KEYSTORE_BASE64: ${{ secrets.QUANT_KEYSTORE_BASE64 }}
+          QUANT_KEYSTORE_PASSWORD: ${{ secrets.QUANT_KEYSTORE_PASSWORD }}
+          QUANT_KEY_PASSWORD: ${{ secrets.QUANT_KEY_PASSWORD }}
+        run: python3 .github/scripts/restore_signing.py
       - run: dart run build_runner build --delete-conflicting-outputs
       - name: Configure integration build memory
         run: |
@@ -102,6 +121,12 @@ jobs:
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           script: flutter test integration_test -d emulator-5554
+      - name: Verify debug certificate matches release
+        if: github.event_name != 'pull_request'
+        run: node tool/check_signing.mjs build/app/outputs/flutter-apk/app-debug.apk
+      - name: Remove private signing material
+        if: always()
+        run: rm -f android/key.properties android/app/quant-release-key.jks
 
   publish:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -119,4 +144,4 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         run: |
-          gh release create "build-${{ github.run_number }}" release/quant-release.apk --target "${{ github.sha }}" --title "quant · build ${{ github.run_number }}" --notes "Automated quant APK. Analyze, unit/widget tests and security regression checks passed. Without android/key.properties this APK uses the debug signing key. Emulator results are reported separately in Actions."
+          gh release create "build-${{ github.run_number }}" release/quant-release.apk --target "${{ github.sha }}" --title "quant · build ${{ github.run_number }}" --notes "Automated quant APK with the persistent private quant signing certificate. Analyze, unit/widget tests, security regression and certificate checks passed. Emulator results are reported separately in Actions."
