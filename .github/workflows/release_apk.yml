@@ -29,6 +29,8 @@ jobs:
           channel: stable
           cache: true
       - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -81,6 +83,8 @@ jobs:
           channel: stable
           cache: true
       - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
       - name: Enable KVM
         run: sudo chmod 666 /dev/kvm
       - run: flutter pub get
