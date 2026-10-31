@@ -28,6 +28,7 @@ void main() {
             Divider(),
             ChoiceChip(label: Text('250 ml'), selected: false),
           ])))));
+      await tester.pumpAndSettle();
       expect(theme.colorScheme.outlineVariant, expected);
       final shape = theme.cardTheme.shape! as RoundedRectangleBorder;
       expect(shape.side, BorderSide(color: expected, width: 1));
