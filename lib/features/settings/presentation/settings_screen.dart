@@ -1,3 +1,4 @@
+import '../../../core/home_widgets/home_widgets.dart';
 import 'widgets/appearance_card.dart';
 import '../../../core/security/app_lock.dart';
 import 'widgets/language_card.dart';
@@ -69,6 +70,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               const AppearanceCard(),
               const SizedBox(height: 16),
               const AppLockCard(),
+              const SizedBox(height: 16),
+              const WidgetPrivacyCard(),
               const SizedBox(height: 16),
               const UserGoalsCard(),
               const SizedBox(height: 16),
@@ -227,7 +230,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                           TextStyle(fontSize: 28, fontWeight: FontWeight.w700))
                 ]),
                 const SizedBox(height: 12),
-                const QText('Версия 1.4.2 · питание, движение и прогресс'),
+                const QText('Версия 1.4.3 · питание, движение и прогресс'),
                 const SizedBox(height: 8),
                 const QText(
                     'Дневник хранится на устройстве. Health Connect доступен только для чтения. Поиск и штрихкоды отправляются в Open Food Facts; дневник и медицинские данные туда не передаются.'),

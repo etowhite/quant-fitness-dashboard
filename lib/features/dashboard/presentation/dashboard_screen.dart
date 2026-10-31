@@ -1,4 +1,5 @@
 import '../../../core/localization/app_strings.dart';
+import '../../../core/home_widgets/home_widgets.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -9,7 +10,6 @@ import '../../../core/database/local_day.dart';
 import '../../../core/health/health_connect_service.dart';
 import '../../nutrition/application/food_diary_provider.dart';
 import '../../goals/application/user_goals_provider.dart';
-import '../../water/presentation/water_balance_card.dart';
 import '../application/daily_health_provider.dart';
 import '../domain/daily_health_metrics.dart';
 import 'widgets/dashboard_card.dart';
@@ -31,13 +31,28 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen>
   late DateTime _day;
   Timer? _midnightTimer;
   bool _refreshing = false;
+  final _activityKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
     _day = localDay(DateTime.now());
     WidgetsBinding.instance.addObserver(this);
+    HomeWidgets.route.addListener(_jumpToActivity);
     _scheduleMidnight();
+  }
+
+  void _jumpToActivity() {
+    if (HomeWidgets.route.value != 'activity') return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || HomeWidgets.route.value != 'activity') return;
+      final target = _activityKey.currentContext;
+      if (target != null) {
+        HomeWidgets.route.value = null;
+        Scrollable.ensureVisible(target,
+            duration: const Duration(milliseconds: 350), alignment: .1);
+      }
+    });
   }
 
   void _scheduleMidnight() {
@@ -95,11 +110,13 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen>
   void dispose() {
     _midnightTimer?.cancel();
     WidgetsBinding.instance.removeObserver(this);
+    HomeWidgets.route.removeListener(_jumpToActivity);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    _jumpToActivity();
     final health = ref.watch(dailyHealthProvider);
     final diary = ref.watch(foodDiaryProvider(_day));
     final goals = ref.watch(effectiveUserGoalsProvider);
@@ -183,11 +200,10 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen>
           ),
           const SizedBox(height: 16),
           HealthMetricsGrid(
+              key: _activityKey,
               metrics: metrics,
               loading: health.isLoading,
               stepGoal: goals.steps),
-          const SizedBox(height: 16),
-          WaterBalanceCard(date: _day),
           const SizedBox(height: 16),
           WeightChartCard(history: metrics?.weightHistory ?? []),
           if (stored != null)

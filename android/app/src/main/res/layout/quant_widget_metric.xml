@@ -1,0 +1,4 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/metric_root" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingTop="2dp" android:paddingBottom="2dp">
+<TextView android:id="@+id/metric_value" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="14sp" android:maxLines="1" android:ellipsize="end"/>
+<ProgressBar android:id="@+id/metric_progress" style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="4dp" android:max="1000" android:progressTint="#00E5FF"/>
+</LinearLayout>

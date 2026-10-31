@@ -1,3 +1,4 @@
+import '../../../shared/widgets/scroll_island.dart';
 import '../../../core/localization/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -72,10 +73,11 @@ class _MeasurementsScreenState extends ConsumerState<MeasurementsScreen> {
     final history = ref.watch(bodyMeasurementHistoryProvider);
     return Scaffold(
       appBar: AppBar(title: const QText('Замеры')),
-      floatingActionButton: FloatingActionButton.extended(
-          onPressed: _sheetOpen ? null : _newMeasurement,
-          icon: const Icon(Icons.add),
-          label: const QText('Новый замер')),
+      floatingActionButton: IslandAwareFab(
+          child: FloatingActionButton.extended(
+              onPressed: _sheetOpen ? null : _newMeasurement,
+              icon: const Icon(Icons.add),
+              label: const QText('Новый замер'))),
       body: ListView(
           padding: const EdgeInsets.fromLTRB(16, 12, 16, 120),
           children: [

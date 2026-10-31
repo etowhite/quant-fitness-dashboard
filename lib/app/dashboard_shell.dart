@@ -1,3 +1,6 @@
+import '../core/home_widgets/home_widgets.dart';
+import 'dart:ui';
+import '../shared/widgets/scroll_island.dart';
 import '../core/localization/app_strings.dart';
 import '../features/settings/presentation/settings_screen.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +33,25 @@ class _DashboardShellState extends ConsumerState<DashboardShell>
   late final Animation<double> _curve =
       CurvedAnimation(parent: _motion, curve: Curves.easeOutExpo);
   @override
+  void initState() {
+    super.initState();
+    HomeWidgets.route.addListener(_openWidgetRoute);
+    WidgetsBinding.instance.addPostFrameCallback((_) => _openWidgetRoute());
+  }
+
+  void _openWidgetRoute() {
+    if (!mounted) return;
+    final route = HomeWidgets.route.value;
+    if (route == null) return;
+    ref.read(selectedTabProvider.notifier).select(
+        route == 'nutrition' || route == 'water'
+            ? AppTab.nutrition
+            : AppTab.dashboard);
+  }
+
+  @override
   void dispose() {
+    HomeWidgets.route.removeListener(_openWidgetRoute);
     _motion.dispose();
     super.dispose();
   }
@@ -39,28 +60,59 @@ class _DashboardShellState extends ConsumerState<DashboardShell>
   Widget build(BuildContext context) {
     final tab = ref.watch(selectedTabProvider);
     ref.listen(selectedTabProvider, (old, next) {
-      if (old != next) _motion.forward(from: 0);
+      if (old != next) {
+        ref.read(navigationVisibleProvider.notifier).setVisible(true);
+        _motion.forward(from: 0);
+      }
     });
+    final visible = ref.watch(navigationVisibleProvider);
     return Scaffold(
-      body: SafeArea(
-          child: FadeTransition(
-              opacity: Tween<double>(begin: .35, end: 1).animate(_curve),
-              child: ScaleTransition(
-                  scale: Tween<double>(begin: .98, end: 1).animate(_curve),
-                  child: SlideTransition(
-                      position: Tween<Offset>(
-                              begin: const Offset(0, .015), end: Offset.zero)
-                          .animate(_curve),
-                      child: IndexedStack(index: tab.index, children: const [
-                        DashboardScreen(),
-                        NutritionScreen(),
-                        MeasurementsScreen(),
-                        SettingsScreen()
-                      ]))))),
-      bottomNavigationBar: FloatingBottomBar(
-          selected: tab,
-          onSelected: (tab) =>
-              ref.read(selectedTabProvider.notifier).select(tab)),
+      extendBody: true,
+      body: Stack(children: [
+        Positioned.fill(
+            child: ScrollIslandListener(
+          onVisibilityChanged: (v) =>
+              ref.read(navigationVisibleProvider.notifier).setVisible(v),
+          child: SafeArea(
+              bottom: false,
+              child: FadeTransition(
+                  opacity: Tween<double>(begin: .35, end: 1).animate(_curve),
+                  child: ScaleTransition(
+                      scale: Tween<double>(begin: .98, end: 1).animate(_curve),
+                      child: SlideTransition(
+                          position: Tween<Offset>(
+                                  begin: const Offset(0, .015),
+                                  end: Offset.zero)
+                              .animate(_curve),
+                          child: IndexedStack(
+                              index: tab.index,
+                              children: const [
+                                DashboardScreen(),
+                                NutritionScreen(),
+                                MeasurementsScreen(),
+                                SettingsScreen()
+                              ]))))),
+        )),
+        Positioned(
+            left: 16,
+            right: 16,
+            bottom: 16 + MediaQuery.paddingOf(context).bottom,
+            child: IgnorePointer(
+                ignoring: !visible,
+                child: AnimatedSlide(
+                    offset: visible ? Offset.zero : const Offset(0, 1.5),
+                    duration: const Duration(milliseconds: 280),
+                    curve: Curves.easeInOutCubicEmphasized,
+                    child: AnimatedOpacity(
+                      opacity: visible ? 1 : 0,
+                      duration: const Duration(milliseconds: 280),
+                      child: FloatingBottomBar(
+                          selected: tab,
+                          onSelected: (tab) => ref
+                              .read(selectedTabProvider.notifier)
+                              .select(tab)),
+                    )))),
+      ]),
     );
   }
 }
@@ -80,77 +132,83 @@ class FloatingBottomBar extends StatelessWidget {
       Icons.monitor_weight_outlined,
       Icons.settings_outlined
     ];
-    return SafeArea(
-        top: false,
-        child: Container(
-          margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-          padding: const EdgeInsets.all(6),
-          decoration: BoxDecoration(
-              color: scheme.surfaceContainer,
-              borderRadius: BorderRadius.circular(36),
-              border: Border.all(color: scheme.outlineVariant),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.black.withAlpha(20),
-                    blurRadius: 20,
-                    offset: const Offset(0, 4))
-              ]),
-          child: LayoutBuilder(
-              builder: (context, constraints) => Row(children: [
-                    for (final tab in AppTab.values)
-                      AnimatedContainer(
-                          duration: const Duration(milliseconds: 420),
-                          curve: Curves.easeOutExpo,
-                          width: constraints.maxWidth *
-                              (selected == tab ? .46 : .18),
-                          child: Semantics(
-                              selected: selected == tab,
-                              button: true,
-                              label: context.tr(labels[tab.index]),
-                              child: Tooltip(
-                                  message: context.tr(labels[tab.index]),
-                                  child: Material(
-                                      color: selected == tab
-                                          ? scheme.primaryContainer
-                                          : Colors.transparent,
-                                      shape: StadiumBorder(
-                                          side: BorderSide(
-                                              color: scheme.outlineVariant,
-                                              width: 1)),
-                                      clipBehavior: Clip.antiAlias,
-                                      child: InkWell(
-                                          key: ValueKey('tab-${tab.name}'),
-                                          onTap: () => onSelected(tab),
-                                          child: SizedBox(
-                                              height: 56,
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Icon(icons[tab.index],
-                                                        color: selected == tab
-                                                            ? scheme
-                                                                .onPrimaryContainer
-                                                            : scheme
-                                                                .onSurfaceVariant),
-                                                    if (selected == tab) ...[
-                                                      const SizedBox(width: 6),
-                                                      Flexible(
-                                                          child: QText(
-                                                              labels[tab.index],
-                                                              maxLines: 1,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              style: TextStyle(
-                                                                  color: scheme
-                                                                      .onPrimaryContainer,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600)))
-                                                    ],
-                                                  ]))))))),
-                  ])),
-        ));
+    return ClipRRect(
+        borderRadius: BorderRadius.circular(36),
+        child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
+            child: Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                  color: scheme.surfaceContainerHigh.withValues(alpha: .88),
+                  borderRadius: BorderRadius.circular(36),
+                  border: Border.all(color: scheme.outlineVariant),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withAlpha(20),
+                        blurRadius: 20,
+                        offset: const Offset(0, 4))
+                  ]),
+              child: LayoutBuilder(
+                  builder: (context, constraints) => Row(children: [
+                        for (final tab in AppTab.values)
+                          AnimatedContainer(
+                              duration: const Duration(milliseconds: 420),
+                              curve: Curves.easeOutExpo,
+                              width: constraints.maxWidth *
+                                  (selected == tab ? .46 : .18),
+                              child: Semantics(
+                                  selected: selected == tab,
+                                  button: true,
+                                  label: context.tr(labels[tab.index]),
+                                  child: Tooltip(
+                                      message: context.tr(labels[tab.index]),
+                                      child: Material(
+                                          color: selected == tab
+                                              ? scheme.primaryContainer
+                                              : Colors.transparent,
+                                          shape: StadiumBorder(
+                                              side: BorderSide(
+                                                  color: scheme.outlineVariant,
+                                                  width: 1)),
+                                          clipBehavior: Clip.antiAlias,
+                                          child: InkWell(
+                                              key: ValueKey('tab-${tab.name}'),
+                                              onTap: () => onSelected(tab),
+                                              child: SizedBox(
+                                                  height: 56,
+                                                  child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Icon(icons[tab.index],
+                                                            color: selected ==
+                                                                    tab
+                                                                ? scheme
+                                                                    .onPrimaryContainer
+                                                                : scheme
+                                                                    .onSurfaceVariant),
+                                                        if (selected ==
+                                                            tab) ...[
+                                                          const SizedBox(
+                                                              width: 6),
+                                                          Flexible(
+                                                              child: QText(
+                                                                  labels[tab
+                                                                      .index],
+                                                                  maxLines: 1,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  style: TextStyle(
+                                                                      color: scheme
+                                                                          .onPrimaryContainer,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600)))
+                                                        ],
+                                                      ]))))))),
+                      ])),
+            )));
   }
 }

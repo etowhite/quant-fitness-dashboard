@@ -1,3 +1,7 @@
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smart_fitness_dashboard/core/database/database_provider.dart';
+import 'package:smart_fitness_dashboard/core/database/local_day.dart';
 import 'package:smart_fitness_dashboard/app/dashboard_shell.dart';
 import 'package:smart_fitness_dashboard/features/settings/data/app_preferences_repository.dart';
 import 'package:smart_fitness_dashboard/core/localization/app_language.dart';
@@ -37,6 +41,22 @@ void main() {
     await tester.pumpAndSettle(const Duration(milliseconds: 100),
         EnginePhase.sendSemanticsUpdate, const Duration(seconds: 30));
     expect(find.text('Питание сегодня'), findsOneWidget);
+    const channel = MethodChannel('quant/home_widgets');
+    final nativeLayouts =
+        await channel.invokeListMethod<String>('testWidgetViews');
+    expect(nativeLayouts, hasLength(20));
+    final container =
+        ProviderScope.containerOf(tester.element(find.byType(DashboardShell)));
+    final db = await container.read(databaseServiceProvider.future);
+    final today = localDay(DateTime.now());
+    final before = await db.watchWater(today).first;
+    final initial = before.fold<int>(0, (sum, r) => sum + r.volumeMl);
+    final saved = db.watchWater(today).firstWhere((rows) =>
+        rows.fold<int>(0, (sum, r) => sum + r.volumeMl) == initial + 750);
+    for (var i = 0; i < 3; i++) {
+      await channel.invokeMethod<void>('testWidgetAddWater');
+    }
+    await saved.timeout(const Duration(seconds: 90));
     expect(tester.takeException(), isNull);
   });
 }

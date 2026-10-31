@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:isar_community/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -6,6 +7,7 @@ import '../../features/nutrition/data/food_log_entry.dart';
 import '../../features/nutrition/data/food_product.dart';
 import 'food_seed.dart';
 import 'local_day.dart';
+import 'widget_operation.dart';
 import '../validation/input_limits.dart';
 import '../../features/water/data/water_log_entry.dart';
 
@@ -22,7 +24,8 @@ class IsarDatabaseService {
         BodyMeasurementSchema,
         FoodProductSchema,
         FoodLogEntrySchema,
-        WaterLogEntrySchema
+        WaterLogEntrySchema,
+        WidgetOperationSchema,
       ],
       directory: path,
       name: name,
@@ -189,6 +192,92 @@ class IsarDatabaseService {
           .watch(fireImmediately: true);
 
   Future<bool> close() => isar.close();
+
+  Future<void> applyWidgetWater(String requestId, int? volume,
+      {DateTime? now}) async {
+    if (requestId.isEmpty ||
+        requestId.length > 100 ||
+        (volume != null && ![100, 250, 500].contains(volume))) {
+      throw ArgumentError('Invalid widget operation');
+    }
+    final timestamp = now ?? DateTime.now();
+    final day = localDay(timestamp);
+    await isar.writeTxn(() async {
+      if (await isar.widgetOperations
+              .where()
+              .requestIdEqualTo(requestId)
+              .findFirst() !=
+          null) {
+        return;
+      }
+      if (volume != null) {
+        final rows =
+            await isar.waterLogEntries.where().dateEqualTo(day).findAll();
+        if (rows.fold<int>(0, (sum, r) => sum + r.volumeMl) + volume >
+            InputLimits.waterDailyMl) {
+          throw ArgumentError('Daily water limit exceeded');
+        }
+        await isar.waterLogEntries.put(WaterLogEntry()
+          ..date = day
+          ..volumeMl = volume
+          ..recordedAt = timestamp);
+      } else {
+        final rows =
+            await isar.waterLogEntries.where().dateEqualTo(day).findAll();
+        rows.sort((a, b) {
+          final time = a.recordedAt.compareTo(b.recordedAt);
+          return time == 0 ? (a.id ?? 0).compareTo(b.id ?? 0) : time;
+        });
+        if (rows.isNotEmpty) await isar.waterLogEntries.delete(rows.last.id!);
+      }
+      await isar.widgetOperations.put(WidgetOperation()
+        ..requestId = requestId
+        ..recordedAt = timestamp);
+    });
+  }
+
+  /// Read both collections in one snapshot. Normalize timestamps to local days.
+  Future<Set<DateTime>> getRecordedDiaryDates() => isar.txn(() async => {
+        ...await isar.foodLogEntries.where().dateProperty().findAll(),
+        ...await isar.waterLogEntries.where().dateProperty().findAll(),
+      }.map(localDay).toSet());
+
+  Stream<Set<DateTime>> watchRecordedDiaryDates() {
+    late StreamController<Set<DateTime>> output;
+    StreamSubscription<void>? food;
+    StreamSubscription<void>? water;
+    var active = true;
+    var pending = Future<void>.value();
+    void refresh([void _]) {
+      pending = pending.then((_) async {
+        if (!active) return;
+        try {
+          final dates = await getRecordedDiaryDates();
+          if (active) output.add(dates);
+        } catch (error, stack) {
+          if (active) output.addError(error, stack);
+        }
+      });
+    }
+
+    output = StreamController<Set<DateTime>>(
+      onListen: () {
+        food = isar.foodLogEntries
+            .watchLazy()
+            .listen(refresh, onError: output.addError);
+        water = isar.waterLogEntries
+            .watchLazy()
+            .listen(refresh, onError: output.addError);
+        refresh();
+      },
+      onCancel: () async {
+        active = false;
+        await food?.cancel();
+        await water?.cancel();
+      },
+    );
+    return output.stream;
+  }
 
   Stream<List<WaterLogEntry>> watchWater(DateTime date) => isar.waterLogEntries
       .where()

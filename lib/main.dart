@@ -1,3 +1,5 @@
+import 'core/home_widgets/home_widgets.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/localization/locale_provider.dart';
 import 'core/security/app_lock.dart';
@@ -20,6 +22,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   GoogleFonts.config.allowRuntimeFetching = false;
   await initializeDateFormatting();
+  await HomeWidgets.init();
   runApp(const ProviderScope(child: SmartFitnessApp()));
 }
 
@@ -102,5 +105,18 @@ class _SmartFitnessAppState extends ConsumerState<SmartFitnessApp>
             ),
           ),
     );
+  }
+}
+
+@pragma('vm:entry-point')
+Future<void> widgetMain() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  const channel = MethodChannel('quant/widget_worker');
+  try {
+    final request = await channel.invokeMapMethod<String, dynamic>('ready');
+    final snapshot = await runWidgetJob(request!);
+    await channel.invokeMethod<void>('complete', snapshot);
+  } catch (_) {
+    await channel.invokeMethod<void>('failed');
   }
 }

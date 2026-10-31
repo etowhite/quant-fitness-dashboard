@@ -12,6 +12,7 @@ import '../../features/goals/domain/user_goals.dart';
 import '../notifications/notification_service.dart';
 import 'isar_database_service.dart';
 import 'food_seed.dart';
+import '../home_widgets/home_widgets.dart';
 import '../../features/water/application/water_presets_provider.dart';
 
 enum ResetCategory { diary, products, measurements, preferences }
@@ -69,5 +70,6 @@ class DataResetService {
       await preferences.save(
           theme: const ThemeSettings(), reminders: const ReminderSettings());
     }
+    await HomeWidgets.refresh();
   }
 }

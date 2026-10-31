@@ -1,3 +1,4 @@
+import '../home_widgets/home_widgets.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,6 +37,7 @@ class AppLockNotifier extends AsyncNotifier<bool> {
       throw StateError('Could not save app lock');
     }
     state = AsyncData(enabled);
+    await HomeWidgets.refresh();
     return true;
   }
 }

@@ -1,3 +1,4 @@
+import '../home_widgets/home_widgets.dart';
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,8 +22,22 @@ final databaseServiceProvider =
     throw StateError('Database provider disposed during initialization');
   }
   service = opened;
+  Timer? timer;
+  final changes = opened.watchRecordedDiaryDates().listen((_) {
+    timer?.cancel();
+    timer = Timer(const Duration(milliseconds: 350), HomeWidgets.refresh);
+  });
+  ref.onDispose(() {
+    timer?.cancel();
+    unawaited(changes.cancel());
+  });
   return opened;
 });
 
 final isarProvider = FutureProvider<Isar>(
     (ref) async => (await ref.watch(databaseServiceProvider.future)).isar);
+
+final recordedDiaryDatesProvider = StreamProvider<Set<DateTime>>((ref) async* {
+  final database = await ref.watch(databaseServiceProvider.future);
+  yield* database.watchRecordedDiaryDates();
+});

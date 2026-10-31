@@ -1,4 +1,5 @@
 import 'package:smart_fitness_dashboard/core/database/data_reset_service.dart';
+import 'package:smart_fitness_dashboard/core/home_widgets/home_widgets.dart';
 import 'package:smart_fitness_dashboard/core/notifications/notification_service.dart';
 import 'package:smart_fitness_dashboard/features/settings/data/app_preferences_repository.dart';
 import 'package:smart_fitness_dashboard/features/settings/domain/theme_settings.dart';
@@ -57,6 +58,53 @@ void main() {
           .toFilePath()
     });
   });
+  test('widget water operations are atomic, concurrent and retry-idempotent',
+      () async {
+    final directory = await Directory.systemTemp.createTemp('quant_widgets_');
+    final db = await IsarDatabaseService.init(
+        directory: directory.path, name: 'widgets');
+    try {
+      final today = DateTime(2026, 11, 1, 12);
+      await Future.wait(List.generate(
+          12, (i) => db.applyWidgetWater('tap-$i', 250, now: today)));
+      await db.applyWidgetWater('tap-0', 250, now: today);
+      var rows = await db.isar.waterLogEntries.where().findAll();
+      expect(rows.length, 12);
+      expect(rows.fold<int>(0, (sum, r) => sum + r.volumeMl), 3000);
+      final prefs = await SharedPreferences.getInstance();
+      await UserGoalsRepository().save(const UserGoals(waterMl: 2000));
+      var snapshot = await buildWidgetSnapshot(db, prefs, clock: today);
+      expect(snapshot['water'], 3000); // Keep the actual value above the goal.
+      expect(snapshot['waterGoal'], 2000);
+      expect(snapshot['steps'], isNull); // Missing data is never a fake zero.
+      await prefs.setString(
+          HomeWidgets.activityKey,
+          jsonEncode({
+            'day': HomeWidgets.dayKey(today),
+            'zone': today.timeZoneOffset.inMinutes,
+            'steps': 5000,
+          }));
+      await prefs.setBool('quant.appLock', true);
+      snapshot = await buildWidgetSnapshot(db, prefs, clock: today);
+      expect(snapshot['steps'], 5000);
+      expect(snapshot['hidden'], isTrue);
+      snapshot =
+          await buildWidgetSnapshot(db, prefs, clock: DateTime(2026, 11, 2));
+      expect(snapshot['steps'], isNull);
+      expect(snapshot['water'], 0);
+      await db.applyWidgetWater('undo-1', null, now: today);
+      await db.applyWidgetWater('undo-1', null, now: today);
+      expect(await db.isar.waterLogEntries.count(), 11);
+      await expectLater(
+          db.applyWidgetWater('invalid', 123, now: today), throwsArgumentError);
+      await db.applyWidgetWater('tomorrow', 100, now: DateTime(2026, 11, 2));
+      expect(await db.getRecordedDiaryDates(),
+          {DateTime(2026, 11, 1), DateTime(2026, 11, 2)});
+    } finally {
+      await db.close();
+      await directory.delete(recursive: true);
+    }
+  }, skip: !Platform.isWindows && !Platform.isLinux);
   test(
       'additive seeds, water isolation/undo, offline barcode cache and import rollback',
       () async {
@@ -79,6 +127,25 @@ void main() {
     await db.addWater(day, 150);
     await db.addWater(day, 250);
     await db.addWater(day.add(const Duration(days: 1)), 500);
+    expect(await db.getRecordedDiaryDates(), {day, DateTime(2026, 11, 1)});
+    final foodDay = DateTime(2026, 10, 29);
+    final foodId = await db.addFoodLogEntry(FoodLogEntry()
+      ..date = foodDay.add(const Duration(hours: 18))
+      ..mealType = 'Обед'
+      ..productName = 'Тест'
+      ..weightGrams = 100
+      ..calories = 100
+      ..proteins = 10
+      ..fats = 2
+      ..carbs = 10);
+    expect(await db.getRecordedDiaryDates(),
+        {day, DateTime(2026, 11, 1), foodDay});
+    final changedDates = db
+        .watchRecordedDiaryDates()
+        .firstWhere((dates) => !dates.contains(foodDay));
+    await db.deleteFoodLogEntry(foodId);
+    expect(await changedDates.timeout(const Duration(seconds: 5)),
+        {day, DateTime(2026, 11, 1)});
     await db.undoWater(day);
     expect(
         (await db.isar.waterLogEntries.where().dateEqualTo(day).findAll())

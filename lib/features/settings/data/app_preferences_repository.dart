@@ -1,3 +1,4 @@
+import '../../../core/home_widgets/home_widgets.dart';
 import '../../../core/localization/app_language.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -59,6 +60,7 @@ class AppPreferencesRepository {
           }))) {
         throw StateError('Не удалось сохранить настройки');
       }
+      await HomeWidgets.refresh();
     });
     _queue = result;
     return result;

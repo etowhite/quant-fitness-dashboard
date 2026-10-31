@@ -1,3 +1,4 @@
+import '../home_widgets/home_widgets.dart';
 import 'package:flutter/material.dart';
 import '../../features/settings/data/app_preferences_repository.dart';
 import '../localization/app_strings.dart';
@@ -40,8 +41,20 @@ class NotificationService {
 
   Future<void> _init() async {
     tzdata.initializeTimeZones();
-    await _plugin.initialize(const InitializationSettings(
-        android: AndroidInitializationSettings('ic_stat_quant')));
+    await _plugin.initialize(
+        const InitializationSettings(
+            android: AndroidInitializationSettings('ic_stat_quant')),
+        onDidReceiveNotificationResponse: (response) {
+      HomeWidgets.route.value = null;
+      HomeWidgets.route.value =
+          response.payload == 'water' ? 'water' : 'dashboard';
+    });
+    final launch = await _plugin.getNotificationAppLaunchDetails();
+    if (launch?.didNotificationLaunchApp == true) {
+      HomeWidgets.route.value = launch?.notificationResponse?.payload == 'water'
+          ? 'water'
+          : 'dashboard';
+    }
     await _plugin
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()!
@@ -86,6 +99,7 @@ class NotificationService {
       }
       await _plugin.zonedSchedule(slot.id, _strings.text(slot.title),
           _strings.text(slot.body), next, details,
+          payload: slot.id >= 100 && slot.id < 200 ? 'water' : 'dashboard',
           androidScheduleMode: exact
               ? AndroidScheduleMode.exactAllowWhileIdle
               : AndroidScheduleMode.inexactAllowWhileIdle,

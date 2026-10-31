@@ -89,18 +89,12 @@ class HealthMetricsGrid extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onSurfaceVariant)),
       _syncTime(context, metrics?.bodyDataAt),
     ]);
-    return LayoutBuilder(builder: (context, constraints) {
-      if (constraints.maxWidth < 340 ||
-          MediaQuery.textScalerOf(context).scale(1) > 1.4) {
-        return Column(children: [activity, const SizedBox(height: 16), body]);
-      }
-      return IntrinsicHeight(
-          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        Expanded(child: activity),
-        const SizedBox(width: 12),
-        Expanded(child: body)
-      ]));
-    });
+    return IntrinsicHeight(
+        child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      Expanded(child: activity),
+      const SizedBox(width: 12),
+      Expanded(child: body)
+    ]));
   }
 
   Widget _value(BuildContext context, String value) => QText(value,

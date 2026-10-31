@@ -9,6 +9,7 @@ import '../../features/measurements/data/body_measurement.dart';
 import '../../features/nutrition/data/food_log_entry.dart';
 import '../../features/nutrition/data/food_product.dart';
 import '../database/isar_database_service.dart';
+import '../home_widgets/home_widgets.dart';
 import 'backup_document.dart';
 import '../../features/water/data/water_log_entry.dart';
 
@@ -86,6 +87,8 @@ class BackupService {
           reminders: previousSettings.reminders,
           language: previousSettings.language);
       rethrow;
+    } finally {
+      await HomeWidgets.refresh();
     }
   }
 }

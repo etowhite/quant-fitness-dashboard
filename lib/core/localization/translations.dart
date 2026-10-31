@@ -1,4 +1,21 @@
 const english = <String, String>{
+  "Виджеты главного экрана": "Home screen widgets",
+  "Добавьте quant через меню виджетов Android":
+      "Add quant from the Android widget picker",
+  "Скрывать показатели на виджетах": "Hide widget values",
+  "Быстрое добавление воды доступно. Защищённые экраны требуют входа.":
+      "Quick water logging stays available. Protected screens require authentication.",
+  "Откройте quant для синхронизации": "Open quant to sync",
+  "Данные скрыты": "Data hidden",
+  "Не удалось сохранить": "Could not save",
+  "Б": "P",
+  "Ж": "F",
+  "У": "C",
+  "Предыдущий месяц": "Previous month",
+  "Следующий месяц": "Next month",
+  "Есть записи": "Has entries",
+  "Не удалось загрузить отметки. Повторить":
+      "Could not load diary markers. Retry",
   "Любые часы и фитнес-трекеры": "Any watch or fitness tracker",
   "Умные весы": "Smart scales",
   "Защита входа": "App lock",
@@ -32,8 +49,8 @@ const english = <String, String>{
       "Camera unavailable. Enter the barcode manually.",
   "Включая основной обмен": "Includes resting energy",
   "— ккал": "— kcal",
-  "Версия 1.4.2 · питание, движение и прогресс":
-      "Version 1.4.2 · nutrition, activity and progress",
+  "Версия 1.4.3 · питание, движение и прогресс":
+      "Version 1.4.3 · nutrition, activity and progress",
   "Дашборд": "Dashboard",
   "Питание": "Nutrition",
   "Замеры": "Measurements",
