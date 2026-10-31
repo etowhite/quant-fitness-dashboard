@@ -89,6 +89,9 @@ jobs:
         run: sudo chmod 666 /dev/kvm
       - run: flutter pub get
       - run: dart run build_runner build --delete-conflicting-outputs
+      - name: Configure integration build memory
+        run: |
+          sed -i 's/-Xmx2G/-Xmx4G/' android/gradle.properties
       - name: Run Android database and navigation integration tests
         uses: reactivecircus/android-emulator-runner@v2
         with:

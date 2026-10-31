@@ -27,8 +27,8 @@ Isar Community, Health Connect и Material 3 Expressive.
 
 ## Скачать APK
 
-[Свежий релиз и APK](https://github.com/etowhite/smart-fitness-dashboard/releases/latest)
-· [CI и артефакты](https://github.com/etowhite/smart-fitness-dashboard/actions/workflows/release_apk.yml)
+[Свежий релиз и APK](https://github.com/etowhite/quant-smart-fitness-dashboard/releases/latest)
+· [CI и артефакты](https://github.com/etowhite/quant-smart-fitness-dashboard/actions/workflows/release_apk.yml)
 
 Минимум Android 8 (API 26). Доступность Health Connect зависит от версии Android,
 установленного сервиса и поддержки записи данных исходными приложениями.
