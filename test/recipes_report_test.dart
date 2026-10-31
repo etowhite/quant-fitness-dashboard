@@ -2,6 +2,9 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smart_fitness_dashboard/features/nutrition/data/food_product.dart';
+import 'package:smart_fitness_dashboard/features/nutrition/presentation/recipes_screen.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:smart_fitness_dashboard/features/nutrition/data/recipe.dart';
 import 'package:smart_fitness_dashboard/features/nutrition/data/food_log_entry.dart';
@@ -15,6 +18,38 @@ import 'package:smart_fitness_dashboard/features/settings/domain/theme_settings.
 
 void main() {
   setUpAll(() => initializeDateFormatting());
+  testWidgets(
+      'recipe editor updates preview for cooked weight and fractional servings',
+      (tester) async {
+    final recipe = Recipe(ingredients: [
+      RecipeIngredient(
+          name: 'Ingredient',
+          grams: 200,
+          calories: 100,
+          proteins: 10,
+          fats: 5,
+          carbs: 15)
+    ], yieldGrams: 200, servings: 2);
+    final product = FoodProduct()
+      ..name = 'Test dish'
+      ..calories = 100
+      ..proteins = 10
+      ..fats = 5
+      ..carbs = 15
+      ..recipeJson = recipe.encode();
+    await tester.pumpWidget(ProviderScope(
+        child: MaterialApp(home: RecipeEditor(product: product))));
+    await tester.pumpAndSettle();
+    final fields = find.byType(TextFormField);
+    await tester.ensureVisible(fields.at(1));
+    await tester.enterText(fields.at(1), '400');
+    await tester.ensureVisible(fields.at(2));
+    await tester.enterText(fields.at(2), '4');
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.textContaining('На 100 г: 50 ккал'));
+    expect(find.textContaining('На порцию: 50 ккал'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
   test(
       'recipe yield and fractional portions preserve full precision; unknown stays unknown',
       () {

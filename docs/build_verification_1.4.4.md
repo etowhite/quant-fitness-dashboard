@@ -57,6 +57,16 @@
 
 ## Проверки
 
+- Локально: `flutter analyze` — без замечаний; `flutter test` — 71/71.
+- [CI 41249564838](https://github.com/etowhite/quant-fitness-dashboard/actions/runs/41249564838):
+  сборка, анализ, unit/widget-тесты, проверки APK/подписи и Android integration
+  на API 35 прошли. Проверены сохранение PNG и открытие системного меню отправки.
+- После CI дополнительно исправлены отступы/стиль текста PNG и размещение крайних
+  подписей оси; добавлен widget-тест редактирования выхода и числа порций.
+- [PNG за 7 дней](screenshots/v144-report-7.png) и
+  [PNG за 30 дней](screenshots/v144-report-30.png): демонстрационные данные,
+  ширина 320 px, масштаб текста 1,6, локальный Inter. Это проверка отрисовки,
+  а не пользовательские медицинские данные.
 - Build runner: новые поля в FoodProduct/FoodLogEntry, без заглушек.
 - Unit/widget: формулы и дробные порции, изменение выхода, неизвестные значения,
   нечисловые/нулевые/отрицательные массы; оба периода отчёта, пропуски/нулевые
@@ -82,3 +92,23 @@
 устройстве; CI использует Android 15. Доставка изображения выбранному адресату
 через другое приложение находится вне quant; успех отправки означает открытие
 системного меню, а не подтверждённую доставку.
+
+## APK
+
+`flutter build apk --release` завершился успешно. APK скопирован в корень
+проекта: `quant-release.apk` (также `build/releases/quant-release.apk`).
+Проверены minSdk 26, targetSdk 35, разрешения, запрет backup/cleartext/debug.
+Сертификат совпадает с постоянной подписью quant.
+
+## Основные изменённые файлы
+
+- `lib/features/reports/report_data.dart`, `report_screen.dart` — расчёты, UI и PNG.
+- `android/app/src/main/kotlin/com/example/smart_fitness_dashboard/ReportImages.kt`,
+  `MainActivity.kt`, `AndroidManifest.xml`, `res/xml/report_paths.xml` — галерея и share.
+- `lib/features/nutrition/data/recipe.dart`, модели продуктов/дневника и их схемы —
+  состав рецепта, стабильные ключи, избранное и снимок дневника.
+- `lib/core/database/isar_database_service.dart` — миграция, сохранение и частые продукты.
+- `lib/features/nutrition/presentation/recipes_screen.dart`,
+  `widgets/saved_food_widgets.dart`, `widgets/add_food_sheet.dart` — рецепты и выбор еды.
+- `lib/core/backup/backup_document.dart`, локализация, настройки, тесты,
+  README и проверка APK — совместимость и проверяемые сценарии.

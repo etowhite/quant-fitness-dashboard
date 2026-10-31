@@ -184,6 +184,7 @@ class ReportImage extends StatelessWidget {
     Widget average(String title, ReportAverage a, String unit,
             {String? footnote}) =>
         Card(
+            margin: const EdgeInsets.only(bottom: 12),
             child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
@@ -197,68 +198,75 @@ class ReportImage extends StatelessWidget {
                       Text('${context.tr('Дней с данными')}: ${a.days}'),
                       if (footnote != null) Text(footnote)
                     ])));
-    return ColoredBox(
-        color: t.scaffoldBackgroundColor,
-        child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Wrap(
-                      spacing: 12,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        const QuantLogo(size: 44),
-                        Text('quant', style: t.textTheme.headlineLarge)
-                      ]),
-                  const SizedBox(height: 8),
-                  QText('Отчёт за период', style: t.textTheme.titleLarge),
-                  Text('${date(data.start)} — ${date(data.end)}'),
-                  const SizedBox(height: 16),
-                  WeightChartCard(
-                      history: data.weights,
-                      subtitle:
-                          '${date(data.start)} — ${date(data.end)} · ${context.tr('кг')}'),
-                  Card(
-                      child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if (data.weights.isEmpty)
-                                  const QText('Нет измерений веса за период')
-                                else ...[
-                                  Text(
-                                      '${context.tr('Первое измерение')}: ${num(data.weights.first.value, digits: 1)} ${context.tr('кг')} · ${date(data.weights.first.date)}'),
-                                  if (data.weights.length > 1) ...[
-                                    Text(
-                                        '${context.tr('Последнее измерение')}: ${num(data.weights.last.value, digits: 1)} ${context.tr('кг')} · ${date(data.weights.last.date)}'),
-                                    Text(
-                                        '${context.tr('Изменение веса')}: ${num(data.weightChange, digits: 1)} ${context.tr('кг')}')
-                                  ] else
-                                    const QText(
-                                        'Одно измерение — изменение не рассчитывается'),
-                                ]
-                              ]))),
-                  average('Средние записанные калории', data.nutrition, 'ккал'),
-                  average('Средний записанный объём воды', data.hydration, 'мл',
-                      footnote:
-                          '${context.tr('Дней достижения цели')}: ${data.waterGoalDays} / ${data.hydration.days}'),
-                  average('Средние шаги', data.activity, 'шагов',
-                      footnote:
-                          '${context.tr('Дней достижения цели')}: ${data.stepGoalDays} / ${data.activity.days}'),
-                  const SizedBox(height: 12),
-                  Text(
-                      '${context.tr('Сравнение с текущими целями (история целей не ведётся)')}: ${data.waterGoal} ${context.tr('мл')}, ${data.stepGoal} ${context.tr('шагов')}.'),
-                  const SizedBox(height: 8),
-                  const QText(
-                      'Вода отражает только записанный объём. Дни без записей не включены в средние. Отсутствие данных не означает ноль.'),
-                  if (data.healthIncomplete) ...[
-                    const SizedBox(height: 8),
-                    const QText(
-                        'Данные Health Connect могут быть неполными: проверьте разрешения и синхронизацию в приложении.')
-                  ],
-                ])));
+    return DefaultTextStyle(
+        style: t.textTheme.bodyMedium!,
+        child: ColoredBox(
+            color: t.scaffoldBackgroundColor,
+            child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Wrap(
+                          spacing: 12,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            const QuantLogo(size: 44),
+                            Text('quant', style: t.textTheme.headlineLarge)
+                          ]),
+                      const SizedBox(height: 8),
+                      QText('Отчёт за период', style: t.textTheme.titleLarge),
+                      Text('${date(data.start)} — ${date(data.end)}'),
+                      const SizedBox(height: 16),
+                      WeightChartCard(
+                          history: data.weights,
+                          subtitle:
+                              '${date(data.start)} — ${date(data.end)} · ${context.tr('кг')}'),
+                      const SizedBox(height: 12),
+                      Card(
+                          child: Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    if (data.weights.isEmpty)
+                                      const QText(
+                                          'Нет измерений веса за период')
+                                    else ...[
+                                      Text(
+                                          '${context.tr('Первое измерение')}: ${num(data.weights.first.value, digits: 1)} ${context.tr('кг')} · ${date(data.weights.first.date)}'),
+                                      if (data.weights.length > 1) ...[
+                                        Text(
+                                            '${context.tr('Последнее измерение')}: ${num(data.weights.last.value, digits: 1)} ${context.tr('кг')} · ${date(data.weights.last.date)}'),
+                                        Text(
+                                            '${context.tr('Изменение веса')}: ${num(data.weightChange, digits: 1)} ${context.tr('кг')}')
+                                      ] else
+                                        const QText(
+                                            'Одно измерение — изменение не рассчитывается'),
+                                    ]
+                                  ]))),
+                      const SizedBox(height: 12),
+                      average(
+                          'Средние записанные калории', data.nutrition, 'ккал'),
+                      average(
+                          'Средний записанный объём воды', data.hydration, 'мл',
+                          footnote:
+                              '${context.tr('Дней достижения цели')}: ${data.waterGoalDays} / ${data.hydration.days}'),
+                      average('Средние шаги', data.activity, 'шагов',
+                          footnote:
+                              '${context.tr('Дней достижения цели')}: ${data.stepGoalDays} / ${data.activity.days}'),
+                      const SizedBox(height: 12),
+                      Text(
+                          '${context.tr('Сравнение с текущими целями (история целей не ведётся)')}: ${data.waterGoal} ${context.tr('мл')}, ${data.stepGoal} ${context.tr('шагов')}.'),
+                      const SizedBox(height: 8),
+                      const QText(
+                          'Вода отражает только записанный объём. Дни без записей не включены в средние. Отсутствие данных не означает ноль.'),
+                      if (data.healthIncomplete) ...[
+                        const SizedBox(height: 8),
+                        const QText(
+                            'Данные Health Connect могут быть неполными: проверьте разрешения и синхронизацию в приложении.')
+                      ],
+                    ]))));
   }
 }

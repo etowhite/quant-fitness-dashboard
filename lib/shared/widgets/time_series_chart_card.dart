@@ -51,11 +51,13 @@ class TimeSeriesChartCard extends StatelessWidget {
                       child: QText(emptyText, textAlign: TextAlign.center),
                     ))
               else
-                _chart(context, points),
+                LayoutBuilder(
+                    builder: (context, constraints) =>
+                        _chart(context, points, constraints.maxWidth)),
             ])));
   }
 
-  Widget _chart(BuildContext context, List<MetricPoint> points) {
+  Widget _chart(BuildContext context, List<MetricPoint> points, double width) {
     final accent = this.accent ?? Theme.of(context).colorScheme.secondary;
     final origin = points.first.date.millisecondsSinceEpoch;
     const dayMs = 86400000.0;
@@ -67,6 +69,8 @@ class TimeSeriesChartCard extends StatelessWidget {
     final maxValue = points.map((p) => p.value).reduce(math.max);
     final padding = math.max(0.5, (maxValue - minValue) * 0.2);
     final span = spots.last.x;
+    final labelWidth = 90 * MediaQuery.textScalerOf(context).scale(10) / 10;
+    final axisDivisions = ((width - 42) / labelWidth).floor().clamp(1, 3);
     String dateAt(double x, String pattern) =>
         DateFormat(pattern, context.languageCode).format(
             DateTime.fromMillisecondsSinceEpoch(origin + (x * dayMs).round()));
@@ -113,9 +117,13 @@ class TimeSeriesChartCard extends StatelessWidget {
                   sideTitles: SideTitles(
                       showTitles: true,
                       reservedSize: 32,
-                      interval: span / 3,
-                      getTitlesWidget: (value, meta) => Padding(
-                            padding: const EdgeInsets.only(top: 10),
+                      interval: span / axisDivisions,
+                      getTitlesWidget: (value, meta) => SideTitleWidget(
+                            axisSide: meta.axisSide,
+                            space: 10,
+                            fitInside: SideTitleFitInsideData.fromTitleMeta(
+                                meta,
+                                distanceFromEdge: 0),
                             child: QText(
                                 dateAt(value, span < 1 ? 'HH:mm' : 'd MMM'),
                                 style: TextStyle(
