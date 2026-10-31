@@ -85,7 +85,7 @@ class _BackupCardState extends ConsumerState<BackupCard> {
                 'В системном выборе укажите папку на устройстве. Данные Health Connect не включены.'),
             const SizedBox(height: 12),
             if (_busy) const LinearProgressIndicator(),
-            Wrap(spacing: 8, children: [
+            Wrap(spacing: 10, runSpacing: 10, children: [
               OutlinedButton.icon(
                   onPressed: _busy ? null : () => _run(false),
                   icon: const Icon(Icons.save_alt),

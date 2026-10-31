@@ -1,3 +1,4 @@
+import 'package:smart_fitness_dashboard/shared/widgets/labeled_field.dart';
 import '../../../core/localization/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -149,34 +150,35 @@ class _EditUserGoalsSheetState extends ConsumerState<EditUserGoalsSheet> {
                         for (var i = 0; i < 6; i++)
                           Padding(
                             padding: const EdgeInsets.only(top: 16),
-                            child: TextFormField(
-                                controller: _fields[i],
-                                enabled: !_saving,
-                                keyboardType: TextInputType.numberWithOptions(
-                                    decimal: i < 4),
-                                decoration: InputDecoration(
-                                    labelText: context.tr([
+                            child: LabeledField(
+                                label: context.tr([
                                   'Калории, ккал',
                                   'Белки, г',
                                   'Жиры, г',
                                   'Углеводы, г',
                                   'Шаги',
                                   'Вода, мл'
-                                ][i])),
-                                validator: (text) => i >= 4
-                                    ? ((int.tryParse(text?.trim() ?? '') ?? 0) <= 0 ||
-                                            (int.tryParse(text!.trim()) ?? 0) >
-                                                (i == 4
-                                                    ? InputLimits.dailySteps
-                                                    : InputLimits.waterGoalMl)
-                                        ? context.tr(
-                                            'Введите целое число от 1 до ${(i == 4 ? InputLimits.dailySteps : InputLimits.waterGoalMl)}')
-                                        : null)
-                                    : validateLocalizedNumber(context, text,
-                                        positive: true,
-                                        max: i == 0
-                                            ? InputLimits.dailyCalories
-                                            : InputLimits.dailyMacro)),
+                                ][i]),
+                                child: TextFormField(
+                                    controller: _fields[i],
+                                    enabled: !_saving,
+                                    keyboardType:
+                                        TextInputType.numberWithOptions(
+                                            decimal: i < 4),
+                                    decoration: const InputDecoration(),
+                                    validator: (text) => i >= 4
+                                        ? ((int.tryParse(text?.trim() ?? '') ?? 0) <= 0 ||
+                                                (int.tryParse(text!.trim()) ?? 0) >
+                                                    (i == 4
+                                                        ? InputLimits.dailySteps
+                                                        : InputLimits
+                                                            .waterGoalMl)
+                                            ? context.tr(
+                                                'Введите целое число от 1 до ${(i == 4 ? InputLimits.dailySteps : InputLimits.waterGoalMl)}')
+                                            : null)
+                                        : validateLocalizedNumber(context, text,
+                                            positive: true,
+                                            max: i == 0 ? InputLimits.dailyCalories : InputLimits.dailyMacro))),
                           ),
                         if (_error != null) QText(_error!),
                         const SizedBox(height: 24),

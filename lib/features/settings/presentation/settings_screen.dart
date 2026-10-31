@@ -62,7 +62,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     return Scaffold(
         appBar: AppBar(title: const QText('Настройки')),
         body: ListView(
-            padding: const EdgeInsets.fromLTRB(20, 12, 20, 32),
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 120),
             children: [
               const LanguageCard(),
               const SizedBox(height: 16),
@@ -131,10 +131,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         const Divider(),
                         _meal('Взвешивание и замеры', s.measurements,
                             (v) => _reminders(s.copyWith(measurements: v))),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 16),
                         const QText('Периодичность замеров'),
                         const SizedBox(height: 8),
                         DropdownButtonFormField<int>(
+                            isExpanded: true,
                             key: ValueKey(s.weekday),
                             initialValue: s.weekday,
                             decoration: InputDecoration(
@@ -168,37 +169,51 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         const QText(
                             'Напоминания локальные. Android может задерживать их для экономии батареи. Точный режим требует отдельного разрешения.'),
                         const SizedBox(height: 8),
-                        OutlinedButton.icon(
-                            onPressed: _busy
-                                ? null
-                                : () => _run(() async {
-                                      await ref
-                                          .read(notificationServiceProvider)
-                                          .requestExact();
-                                      await ref
-                                          .read(
-                                              reminderSettingsProvider.notifier)
-                                          .refreshSchedule();
-                                    }),
-                            icon: const Icon(Icons.alarm),
-                            label: const QText('Разрешить точные напоминания')),
-                        FilledButton.tonalIcon(
-                            onPressed: _busy
-                                ? null
-                                : () => _run(() async {
-                                      final sent = await ref
-                                          .read(notificationServiceProvider)
-                                          .testNotification();
-                                      if (context.mounted) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(SnackBar(
-                                                content: QText(sent
-                                                    ? 'Тестовое уведомление отправлено'
-                                                    : 'Разрешите уведомления в настройках Android')));
-                                      }
-                                    }),
-                            icon: const Icon(Icons.notifications_outlined),
-                            label: const QText('Проверить уведомление')),
+                        SizedBox(
+                            width: double.infinity,
+                            height: 48,
+                            child: OutlinedButton.icon(
+                                onPressed: _busy
+                                    ? null
+                                    : () => _run(() async {
+                                          await ref
+                                              .read(notificationServiceProvider)
+                                              .requestExact();
+                                          await ref
+                                              .read(reminderSettingsProvider
+                                                  .notifier)
+                                              .refreshSchedule();
+                                        }),
+                                icon: const Icon(Icons.alarm),
+                                label: const QText(
+                                    'Разрешить точные напоминания',
+                                    maxLines: 1,
+                                    softWrap: false,
+                                    overflow: TextOverflow.ellipsis))),
+                        const SizedBox(height: 12),
+                        SizedBox(
+                            width: double.infinity,
+                            height: 48,
+                            child: FilledButton.tonalIcon(
+                                onPressed: _busy
+                                    ? null
+                                    : () => _run(() async {
+                                          final sent = await ref
+                                              .read(notificationServiceProvider)
+                                              .testNotification();
+                                          if (context.mounted) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                                    content: QText(sent
+                                                        ? 'Тестовое уведомление отправлено'
+                                                        : 'Разрешите уведомления в настройках Android')));
+                                          }
+                                        }),
+                                icon: const Icon(Icons.notifications_outlined),
+                                label: const QText('Проверить уведомление',
+                                    maxLines: 1,
+                                    softWrap: false,
+                                    overflow: TextOverflow.ellipsis))),
                       ])),
               const SizedBox(height: 16),
               const BackupCard(),
@@ -212,7 +227,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                           TextStyle(fontSize: 28, fontWeight: FontWeight.w700))
                 ]),
                 const SizedBox(height: 12),
-                const QText('Версия 1.4.0 · питание, движение и прогресс'),
+                const QText('Версия 1.4.2 · питание, движение и прогресс'),
                 const SizedBox(height: 8),
                 const QText(
                     'Дневник хранится на устройстве. Health Connect доступен только для чтения. Поиск и штрихкоды отправляются в Open Food Facts; дневник и медицинские данные туда не передаются.'),

@@ -125,7 +125,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen>
       color: Theme.of(context).colorScheme.secondary,
       child: ListView(
         physics: const AlwaysScrollableScrollPhysics(),
-        padding: const EdgeInsets.fromLTRB(20, 16, 20, 28),
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 120),
         children: [
           DashboardHeader(
               date: _day,

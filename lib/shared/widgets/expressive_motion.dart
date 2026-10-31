@@ -46,7 +46,9 @@ class CapsuleChoice extends StatelessWidget {
                 ],
                 Flexible(
                     child: QText(label,
-                        maxLines: 1, overflow: TextOverflow.ellipsis)),
+                        maxLines: 1,
+                        softWrap: false,
+                        overflow: TextOverflow.ellipsis)),
               ])),
         ));
   }

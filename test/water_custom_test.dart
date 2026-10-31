@@ -61,6 +61,13 @@ void main() {
         container: ref,
         child: MaterialApp(home: Scaffold(body: WaterBalanceCard(date: day)))));
     await tester.pumpAndSettle();
+    final buttons = tester.widget<Wrap>(find.byType(Wrap));
+    expect(buttons.spacing, 10);
+    expect(buttons.runSpacing, 10);
+    for (final button
+        in tester.widgetList<OutlinedButton>(find.byType(OutlinedButton))) {
+      expect(button.style?.tapTargetSize, MaterialTapTargetSize.shrinkWrap);
+    }
     await tester.tap(find.text('Свой объем'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Добавить воду'));

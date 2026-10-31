@@ -132,7 +132,7 @@ class _NutritionScreenState extends ConsumerState<NutritionScreen> {
         Expanded(
             child: diary.when(
           data: (day) => ListView(
-              padding: const EdgeInsets.fromLTRB(20, 12, 20, 100),
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 120),
               children: [
                 DailyNutritionSummary(totals: day.totals, goals: goals),
                 const SizedBox(height: 16),

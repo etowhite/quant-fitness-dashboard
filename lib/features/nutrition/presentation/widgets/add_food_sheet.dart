@@ -1,3 +1,4 @@
+import 'package:smart_fitness_dashboard/shared/widgets/labeled_field.dart';
 import '../../../../core/localization/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -219,19 +220,20 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
                                       .colorScheme
                                       .onSurfaceVariant)),
                           const SizedBox(height: 16),
-                          DropdownButtonFormField<String>(
-                            initialValue: _meal,
-                            isExpanded: true,
-                            decoration: InputDecoration(
-                                labelText: context.tr('Прием пищи')),
-                            items: IsarDatabaseService.mealTypes
-                                .map((meal) => DropdownMenuItem(
-                                    value: meal, child: QText(meal)))
-                                .toList(),
-                            onChanged: _saving
-                                ? null
-                                : (meal) => setState(() => _meal = meal!),
-                          ),
+                          LabeledField(
+                              label: context.tr('Прием пищи'),
+                              child: DropdownButtonFormField<String>(
+                                initialValue: _meal,
+                                isExpanded: true,
+                                decoration: const InputDecoration(),
+                                items: IsarDatabaseService.mealTypes
+                                    .map((meal) => DropdownMenuItem(
+                                        value: meal, child: QText(meal)))
+                                    .toList(),
+                                onChanged: _saving
+                                    ? null
+                                    : (meal) => setState(() => _meal = meal!),
+                              )),
                           const SizedBox(height: 16),
                           if (_selected == null)
                             ..._searchWidgets()
@@ -249,13 +251,14 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
         ? ref.watch(onlineProductProvider(_query))
         : const AsyncData(<FoodProduct>[]);
     return [
-      TextField(
-          controller: _search,
-          onChanged: _searchChanged,
-          decoration: InputDecoration(
-              labelText: context.tr('Найти продукт'),
-              hintText: context.tr('Начните вводить название'),
-              prefixIcon: const Icon(Icons.search))),
+      LabeledField(
+          label: context.tr('Найти продукт'),
+          child: TextField(
+              controller: _search,
+              onChanged: _searchChanged,
+              decoration: InputDecoration(
+                  hintText: context.tr('Начните вводить название'),
+                  prefixIcon: const Icon(Icons.search)))),
       const SizedBox(height: 8),
       AnimatedSwitcher(
           duration: const Duration(milliseconds: 250),
@@ -263,7 +266,7 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
               ? const LinearProgressIndicator(key: ValueKey('search-loading'))
               : const SizedBox(height: 4)),
       if (_error != null) QText(_error!),
-      Wrap(spacing: 8, runSpacing: 8, children: [
+      Wrap(spacing: 10, runSpacing: 10, children: [
         OutlinedButton.icon(
             onPressed: _lookingUp ? null : _barcode,
             icon: const Icon(Icons.qr_code_scanner),
@@ -371,30 +374,33 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
                     _error = null;
                   }),
           child: const QText('Выбрать другой продукт')),
+      const SizedBox(height: 16),
       Form(
           key: _portionForm,
-          child: TextFormField(
-            controller: _weight,
-            enabled: !_saving,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            decoration: InputDecoration(
-                labelText: context.tr('Вес порции'),
-                suffixText: context.tr('г')),
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: _validatePortion,
-            onChanged: (_) => setState(() {}),
-          )),
+          child: LabeledField(
+              label: context.tr('Вес порции'),
+              child: TextFormField(
+                controller: _weight,
+                enabled: !_saving,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                decoration: InputDecoration(suffixText: context.tr('г')),
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: _validatePortion,
+                onChanged: (_) => setState(() {}),
+              ))),
       const SizedBox(height: 12),
-      Wrap(spacing: 8, runSpacing: 8, children: [
+      Wrap(spacing: 10, runSpacing: 10, children: [
         for (final weight in [50, 100, 150, 200, 250])
           ChoiceChip(
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               label: QText('$weight г'),
               selected: grams == weight,
               onSelected: _saving
                   ? null
                   : (_) => setState(() => _weight.text = '$weight'))
       ]),
-      const SizedBox(height: 20),
+      const SizedBox(height: 16),
       if (grams != null)
         QText(
             '${(product.calories * factor).toStringAsFixed(0)} ккал\n'

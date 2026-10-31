@@ -1,3 +1,7 @@
+import 'package:flutter/services.dart';
+import '../../../shared/widgets/labeled_field.dart';
+import '../../../shared/widgets/expressive_motion.dart';
+import '../../settings/presentation/widgets/appearance_card.dart';
 import '../../water/application/water_presets_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,7 +15,6 @@ import '../../goals/application/user_goals_provider.dart';
 import '../../goals/domain/user_goals.dart';
 import '../../settings/application/theme_settings_provider.dart';
 import '../../settings/application/reminder_settings_provider.dart';
-import '../../settings/domain/theme_settings.dart';
 import '../../dashboard/application/daily_health_provider.dart';
 import '../application/onboarding_provider.dart';
 
@@ -100,11 +103,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: children)));
-  Widget _page(String title, String subtitle, List<Widget> children) =>
+  Widget _page(String title, String subtitle, List<Widget> children,
+          {List<Widget> leading = const []}) =>
       SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(24, 8, 24, 20),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            ...leading,
             QText('Шаг ${_step + 1} из 3',
                 style: Theme.of(context)
                     .textTheme
@@ -125,8 +130,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           ]));
   @override
   Widget build(BuildContext context) {
-    final theme =
-        ref.watch(themeSettingsProvider).valueOrNull ?? const ThemeSettings();
     final language =
         ref.watch(localeProvider).valueOrNull ?? AppLanguage.system;
     final goals = ref.watch(effectiveUserGoalsProvider);
@@ -157,16 +160,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           ? Theme.of(context).colorScheme.primary
                           : Theme.of(context).colorScheme.outlineVariant)),
           ])),
-      if (_step == 0)
-        Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: OutlinedButton.icon(
-                onPressed: _busy ? null : () => _run(_import),
-                style: OutlinedButton.styleFrom(
-                    shape: const StadiumBorder(),
-                    minimumSize: const Size.fromHeight(52)),
-                icon: const Icon(Icons.file_open_outlined),
-                label: const QText('Импорт резервной копии JSON'))),
       if (_busy) const LinearProgressIndicator(),
       Expanded(
           child: PageView(
@@ -194,52 +187,42 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       ]))
               ]),
               const SizedBox(height: 16),
-              SegmentedButton<AppLanguage>(
-                  segments: const [
-                    ButtonSegment(value: AppLanguage.ru, label: QText('RU')),
-                    ButtonSegment(value: AppLanguage.en, label: QText('EN')),
-                    ButtonSegment(
-                        value: AppLanguage.system, label: QText('Авто'))
-                  ],
-                  selected: {
-                    language
-                  },
-                  onSelectionChanged: _busy
-                      ? null
-                      : (v) => _run(() =>
-                          ref.read(localeProvider.notifier).save(v.first))),
-              const SizedBox(height: 16),
-              Wrap(spacing: 8, runSpacing: 8, children: [
-                for (final p in AccentPalette.values)
-                  ChoiceChip(
-                      avatar:
-                          CircleAvatar(backgroundColor: p.primary, radius: 8),
-                      label: QText(p.label),
-                      selected: p == theme.palette,
-                      onSelected: _busy
+              _panel([
+                const QText('Язык'),
+                const SizedBox(height: 12),
+                Row(children: [
+                  for (final option in [
+                    (AppLanguage.ru, 'RU'),
+                    (AppLanguage.en, 'EN'),
+                    (AppLanguage.system, 'Авто'),
+                  ]) ...[
+                    if (option.$1 != AppLanguage.ru) const SizedBox(width: 8),
+                    Expanded(
+                        child: CapsuleChoice(
+                      label: option.$2,
+                      selected: language == option.$1,
+                      onPressed: _busy
                           ? null
-                          : (_) => _run(() => ref
-                              .read(themeSettingsProvider.notifier)
-                              .save(theme.copyWith(palette: p))))
-              ]),
-              const SizedBox(height: 12),
-              SegmentedButton<ThemeMode>(
-                  segments: const [
-                    ButtonSegment(
-                        value: ThemeMode.light, label: QText('Светлая')),
-                    ButtonSegment(
-                        value: ThemeMode.dark, label: QText('Темная')),
-                    ButtonSegment(value: ThemeMode.system, label: QText('Авто'))
+                          : () => _run(() => ref
+                              .read(localeProvider.notifier)
+                              .save(option.$1)),
+                    )),
                   ],
-                  selected: {
-                    theme.mode
-                  },
-                  onSelectionChanged: _busy
-                      ? null
-                      : (v) => _run(() => ref
-                          .read(themeSettingsProvider.notifier)
-                          .save(theme.copyWith(mode: v.first)))),
-            ]),
+                ]),
+              ]),
+              const SizedBox(height: 16),
+              const AppearanceCard(),
+            ],
+                leading: [
+                  OutlinedButton.icon(
+                      onPressed: _busy ? null : () => _run(_import),
+                      style: OutlinedButton.styleFrom(
+                          shape: const StadiumBorder(),
+                          minimumSize: const Size.fromHeight(52)),
+                      icon: const Icon(Icons.file_open_outlined),
+                      label: const QText('Импорт резервной копии JSON')),
+                  const SizedBox(height: 20),
+                ]),
             _page('Твои дневные ориентиры',
                 'Небольшие шаги складываются в большой прогресс.', [
               Wrap(
@@ -268,7 +251,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     () => _goals(goals, calories: goals.calories - 50),
                     () => _goals(goals, calories: goals.calories + 50),
                     500,
-                    20000),
+                    20000,
+                    (v) => _goals(goals, calories: v.toDouble())),
                 const Divider(),
                 _stepper(
                     'Шаги',
@@ -277,7 +261,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     () => _goals(goals, steps: goals.steps - 500),
                     () => _goals(goals, steps: goals.steps + 500),
                     500,
-                    100000),
+                    100000,
+                    (v) => _goals(goals, steps: v)),
                 const Divider(),
                 _stepper(
                     'Вода',
@@ -286,7 +271,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     () => _goals(goals, water: goals.waterMl - 250),
                     () => _goals(goals, water: goals.waterMl + 250),
                     250,
-                    20000)
+                    20000,
+                    (v) => _goals(goals, water: v))
               ]),
             ]),
             _page(
@@ -335,22 +321,93 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           carbs: old.carbs,
           steps: steps ?? old.steps,
           waterMl: water ?? old.waterMl)));
+  Future<void> _editGoal(
+      String label, int value, int min, int max, ValueChanged<int> save) async {
+    final controller = TextEditingController(text: '$value');
+    final form = GlobalKey<FormState>();
+    final result = await showDialog<int>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: QText(label),
+        content: Form(
+            key: form,
+            child: LabeledField(
+              label: dialogContext.tr(label),
+              child: TextFormField(
+                key: const ValueKey('goal-value-input'),
+                controller: controller,
+                autofocus: true,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  LengthLimitingTextInputFormatter(6)
+                ],
+                validator: (text) {
+                  final number = int.tryParse(text ?? '');
+                  return number == null || number < min || number > max
+                      ? dialogContext.tr('Введите целое число от $min до $max')
+                      : null;
+                },
+                onFieldSubmitted: (_) {
+                  if (form.currentState!.validate()) {
+                    Navigator.pop(dialogContext, int.parse(controller.text));
+                  }
+                },
+              ),
+            )),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(dialogContext),
+              child: const QText('Отмена')),
+          FilledButton(
+              onPressed: () {
+                if (form.currentState!.validate()) {
+                  Navigator.pop(dialogContext, int.parse(controller.text));
+                }
+              },
+              child: const QText('Сохранить')),
+        ],
+      ),
+    );
+    await Future<void>.delayed(const Duration(milliseconds: 250));
+    controller.dispose();
+    if (mounted && result != null) save(result);
+  }
+
   Widget _stepper(String label, int value, int step, VoidCallback minus,
-          VoidCallback plus, int min, int max) =>
+          VoidCallback plus, int min, int max, ValueChanged<int> onEdit) =>
       Padding(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
             Expanded(
+                child: InkWell(
+              key: ValueKey('edit-goal-$label'),
+              borderRadius: BorderRadius.circular(16),
+              onTap: _busy
+                  ? null
+                  : () => _editGoal(label, value, min, max, onEdit),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                  QText(label),
-                  QText(
-                      '$value${label == 'Калории' ? ' ккал' : label == 'Вода' ? ' мл' : ''}',
-                      style: Theme.of(context).textTheme.headlineSmall)
-                ])),
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    QText(label),
+                    Row(children: [
+                      Flexible(
+                          child: QText(
+                              '$value${label == 'Калории' ? ' ккал' : label == 'Вода' ? ' мл' : ''}',
+                              maxLines: 1,
+                              softWrap: false,
+                              style:
+                                  Theme.of(context).textTheme.headlineSmall)),
+                      const SizedBox(width: 6),
+                      const Icon(Icons.edit_outlined, size: 14),
+                    ]),
+                  ],
+                ),
+              ),
+            )),
             IconButton.filledTonal(
                 onPressed: _busy || value - step < min ? null : minus,
                 icon: const Icon(Icons.remove),

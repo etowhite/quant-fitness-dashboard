@@ -1,3 +1,4 @@
+import 'package:smart_fitness_dashboard/shared/widgets/labeled_field.dart';
 import '../../../core/localization/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,25 +36,26 @@ class _WaterBalanceCardState extends ConsumerState<WaterBalanceCard> {
                   content: Form(
                       key: form,
                       child: Column(mainAxisSize: MainAxisSize.min, children: [
-                        TextFormField(
-                            controller: field,
-                            autofocus: true,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                              LengthLimitingTextInputFormatter(4)
-                            ],
-                            decoration: InputDecoration(
-                                labelText: context.tr('Объем, мл'),
-                                hintText: '330'),
-                            validator: (v) {
-                              final number = int.tryParse(v ?? '');
-                              return number == null ||
-                                      number < 1 ||
-                                      number > 5000
-                                  ? context.tr('Введите от 1 до 5000 мл')
-                                  : null;
-                            }),
+                        LabeledField(
+                            label: context.tr('Объем, мл'),
+                            child: TextFormField(
+                                controller: field,
+                                autofocus: true,
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly,
+                                  LengthLimitingTextInputFormatter(4)
+                                ],
+                                decoration:
+                                    const InputDecoration(hintText: '330'),
+                                validator: (v) {
+                                  final number = int.tryParse(v ?? '');
+                                  return number == null ||
+                                          number < 1 ||
+                                          number > 5000
+                                      ? context.tr('Введите от 1 до 5000 мл')
+                                      : null;
+                                })),
                         CheckboxListTile(
                             contentPadding: EdgeInsets.zero,
                             title: const QText('Сохранить кнопку'),
@@ -167,7 +169,7 @@ class _WaterBalanceCardState extends ConsumerState<WaterBalanceCard> {
                                   .withAlpha(26),
                               minHeight: 6),
                           const SizedBox(height: 12),
-                          Wrap(spacing: 8, children: [
+                          Wrap(spacing: 10, runSpacing: 10, children: [
                             for (final volume in {
                               150,
                               250,
@@ -176,6 +178,8 @@ class _WaterBalanceCardState extends ConsumerState<WaterBalanceCard> {
                             })
                               OutlinedButton(
                                   style: OutlinedButton.styleFrom(
+                                      tapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
                                       shape: const StadiumBorder()),
                                   onPressed:
                                       _busy ? null : () => _change(volume),
@@ -183,10 +187,15 @@ class _WaterBalanceCardState extends ConsumerState<WaterBalanceCard> {
                             OutlinedButton.icon(
                                 onPressed: _busy ? null : _custom,
                                 style: OutlinedButton.styleFrom(
+                                    tapTargetSize:
+                                        MaterialTapTargetSize.shrinkWrap,
                                     shape: const StadiumBorder()),
                                 icon: const Icon(Icons.add),
                                 label: const QText('Свой объем')),
                             IconButton(
+                                style: IconButton.styleFrom(
+                                    tapTargetSize:
+                                        MaterialTapTargetSize.shrinkWrap),
                                 onPressed: _busy || rows.isEmpty
                                     ? null
                                     : () => _change(null),

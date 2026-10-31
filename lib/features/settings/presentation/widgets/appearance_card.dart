@@ -48,6 +48,8 @@ class AppearanceCard extends ConsumerWidget {
                                     const EdgeInsets.symmetric(horizontal: 3),
                                 child: CapsuleChoice(
                                     label: mode.$2,
+                                    compact:
+                                        MediaQuery.sizeOf(context).width < 380,
                                     selected: mode.$1 == s.mode,
                                     onPressed: () => _save(context, ref,
                                         s.copyWith(mode: mode.$1)))))

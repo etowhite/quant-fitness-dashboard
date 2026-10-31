@@ -1,3 +1,4 @@
+import 'package:smart_fitness_dashboard/shared/widgets/labeled_field.dart';
 import '../../../../core/localization/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -80,33 +81,37 @@ class _CreateProductFormState extends ConsumerState<CreateProductForm> {
           const SizedBox(height: 8),
           const QText('Пищевая ценность на 100 г'),
           const SizedBox(height: 16),
-          TextFormField(
-              controller: _name,
-              enabled: !_saving,
-              maxLength: InputLimits.productName,
-              decoration: InputDecoration(labelText: context.tr('Название')),
-              validator: (value) => value == null || value.trim().isEmpty
-                  ? context.tr('Введите название')
-                  : null),
+          LabeledField(
+              label: context.tr('Название'),
+              child: TextFormField(
+                  controller: _name,
+                  enabled: !_saving,
+                  maxLength: InputLimits.productName,
+                  decoration: const InputDecoration(),
+                  validator: (value) => value == null || value.trim().isEmpty
+                      ? context.tr('Введите название')
+                      : null)),
           for (var i = 0; i < _numbers.length; i++)
             Padding(
               padding: const EdgeInsets.only(top: 12),
-              child: TextFormField(
-                  controller: _numbers[i],
-                  enabled: !_saving,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
-                  decoration: InputDecoration(
-                      labelText: context.tr([
+              child: LabeledField(
+                  label: context.tr([
                     'Калории, ккал',
                     'Белки, г',
                     'Жиры, г',
                     'Углеводы, г'
-                  ][i])),
-                  validator: (value) => validateLocalizedNumber(context, value,
-                      max: i == 0
-                          ? InputLimits.caloriesPer100g
-                          : InputLimits.macroPer100g)),
+                  ][i]),
+                  child: TextFormField(
+                      controller: _numbers[i],
+                      enabled: !_saving,
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
+                      decoration: const InputDecoration(),
+                      validator: (value) => validateLocalizedNumber(
+                          context, value,
+                          max: i == 0
+                              ? InputLimits.caloriesPer100g
+                              : InputLimits.macroPer100g))),
             ),
           if (_error != null)
             Padding(

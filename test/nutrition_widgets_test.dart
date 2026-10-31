@@ -34,6 +34,20 @@ void main() {
     await tester.tap(find.text('Тестовый продукт'));
     await tester.pumpAndSettle();
     expect(find.textContaining('100 ккал\n'), findsOneWidget);
+    for (final input in tester.widgetList<TextField>(find.byType(TextField))) {
+      expect(input.decoration?.labelText, isNull);
+    }
+    expect(
+        tester.getTopLeft(find.text('Вес порции')).dy -
+            tester
+                .getBottomLeft(
+                    find.widgetWithText(TextButton, 'Выбрать другой продукт'))
+                .dy,
+        greaterThanOrEqualTo(16));
+    final chips = tester.widget<Wrap>(
+        find.ancestor(of: find.text('50 г'), matching: find.byType(Wrap)));
+    expect(chips.spacing, 10);
+    expect(chips.runSpacing, 10);
     await tester.enterText(find.byType(TextFormField), '150,6');
     await tester.pump();
     expect(find.textContaining('Б 15.1'), findsOneWidget);

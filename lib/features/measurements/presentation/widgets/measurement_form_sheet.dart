@@ -1,3 +1,4 @@
+import 'package:smart_fitness_dashboard/shared/widgets/labeled_field.dart';
 import '../../../../core/localization/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -157,35 +158,34 @@ class _MeasurementFormSheetState extends ConsumerState<MeasurementFormSheet> {
                         for (var i = 0; i < 4; i++)
                           Padding(
                             padding: const EdgeInsets.only(top: 16),
-                            child: TextFormField(
-                                controller: _values[i],
-                                enabled: !_saving && !_loading && !_loadFailed,
-                                keyboardType:
-                                    const TextInputType.numberWithOptions(
-                                        decimal: true),
-                                decoration: InputDecoration(
-                                    labelText: context.tr([
-                                      'Грудь',
-                                      'Талия',
-                                      'Бедра',
-                                      'Бицепс'
-                                    ][i]),
-                                    suffixText: context.tr('см')),
-                                validator: (text) =>
-                                    text == null || text.trim().isEmpty
+                            child: LabeledField(
+                                label: context.tr(
+                                    ['Грудь', 'Талия', 'Бедра', 'Бицепс'][i]),
+                                child: TextFormField(
+                                    controller: _values[i],
+                                    enabled:
+                                        !_saving && !_loading && !_loadFailed,
+                                    keyboardType:
+                                        const TextInputType.numberWithOptions(
+                                            decimal: true),
+                                    decoration: InputDecoration(
+                                        suffixText: context.tr('см')),
+                                    validator: (text) => text == null ||
+                                            text.trim().isEmpty
                                         ? null
                                         : validateLocalizedNumber(context, text,
                                             positive: true,
-                                            max: InputLimits.circumferenceCm)),
+                                            max: InputLimits.circumferenceCm))),
                           ),
                         const SizedBox(height: 16),
-                        TextFormField(
-                            controller: _note,
-                            enabled: !_saving && !_loading && !_loadFailed,
-                            maxLines: 3,
-                            maxLength: InputLimits.note,
-                            decoration: InputDecoration(
-                                labelText: context.tr('Заметка'))),
+                        LabeledField(
+                            label: context.tr('Заметка'),
+                            child: TextFormField(
+                                controller: _note,
+                                enabled: !_saving && !_loading && !_loadFailed,
+                                maxLines: 3,
+                                maxLength: InputLimits.note,
+                                decoration: const InputDecoration())),
                         if (_error != null) ...[
                           QText(_error!),
                           if (_loadFailed)

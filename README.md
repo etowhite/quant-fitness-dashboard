@@ -197,7 +197,8 @@ quant не может заставить устройство передать �
 поддерживается для совместимости; при изменении сервиса потребуется миграция.
 
 Inter: лицензия SIL Open Font License в `assets/fonts/OFL.txt`.
-Подробности текущих проверок: [quant 1.4.1](docs/build_verification_1.4.1.md)
+Подробности текущих проверок: [quant 1.4.2](docs/build_verification_1.4.2.md),
+[постоянная подпись 1.4.1](docs/build_verification_1.4.1.md)
 и [функциональные проверки 1.4.0](docs/build_verification_1.4.md).
 
 ## Онбординг, локализация и сброс

@@ -77,7 +77,7 @@ class _MeasurementsScreenState extends ConsumerState<MeasurementsScreen> {
           icon: const Icon(Icons.add),
           label: const QText('Новый замер')),
       body: ListView(
-          padding: const EdgeInsets.fromLTRB(20, 12, 20, 100),
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 120),
           children: [
             QText('Антропометрия',
                 style: Theme.of(context).textTheme.titleLarge),

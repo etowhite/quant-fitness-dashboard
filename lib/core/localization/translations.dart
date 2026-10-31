@@ -32,8 +32,8 @@ const english = <String, String>{
       "Camera unavailable. Enter the barcode manually.",
   "Включая основной обмен": "Includes resting energy",
   "— ккал": "— kcal",
-  "Версия 1.4.0 · питание, движение и прогресс":
-      "Version 1.4.0 · nutrition, activity and progress",
+  "Версия 1.4.2 · питание, движение и прогресс":
+      "Version 1.4.2 · nutrition, activity and progress",
   "Дашборд": "Dashboard",
   "Питание": "Nutrition",
   "Замеры": "Measurements",
@@ -382,6 +382,7 @@ const templates = <String, String>{
   "{0} часа": "{0} hours",
   "Максимум: {0}": "Maximum: {0}",
   "Введите целое число от 1 до {0}": "Enter a whole number from 1 to {0}",
+  "Введите целое число от {0} до {1}": "Enter a whole number from {0} to {1}",
   "Не больше {0} символов": "Maximum {0} characters",
   "Б {0} · Ж {1} · У {2} г": "P {0} · F {1} · C {2} g",
   "Все параметры и заметка за {0} будут удалены.":
