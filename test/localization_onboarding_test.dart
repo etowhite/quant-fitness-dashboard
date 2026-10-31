@@ -144,6 +144,9 @@ void main() {
     await tester.tap(find.text('Next'));
     await tester.pumpAndSettle();
     expect(find.text('Your daily goals'), findsOneWidget);
+    expect(tester.widgetList<ActionChip>(find.byType(ActionChip)).map((chip) => chip.shape), everyElement(isA<StadiumBorder>()));
+    final presets = find.ancestor(of: find.text('Cut'), matching: find.byType(Wrap)).first;
+    expect(tester.widget<Wrap>(presets).alignment, WrapAlignment.center);
     await tester.tap(find.byTooltip('Increase').first);
     await tester.pumpAndSettle();
     expect(c.read(effectiveUserGoalsProvider).calories, 2250);
