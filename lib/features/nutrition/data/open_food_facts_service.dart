@@ -33,7 +33,7 @@ class OpenFoodFactsService {
         await _client.getUrl(uri).timeout(const Duration(seconds: 12));
     request.followRedirects = false;
     request.headers.set(HttpHeaders.userAgentHeader,
-        'quant/1.3 (https://github.com/etowhite/quant-smart-fitness-dashboard)');
+        'quant/1.3 (https://github.com/etowhite/quant-fitness-dashboard)');
     request.headers.set(HttpHeaders.acceptHeader, 'application/json');
     final response = await request.close().timeout(const Duration(seconds: 12));
     if (response.statusCode == 404) {

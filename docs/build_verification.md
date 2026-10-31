@@ -26,7 +26,7 @@
 Облачный эмулятор **Android 35 успешно прошел оба integration-теста**:
 инициализация приложения и навигация по четырем вкладкам, реальный Isar
 с сохранением данных. Сборка, анализ, 44 unit/widget-теста, security regression
-checks и публикация также прошли в [CI build-4](https://github.com/etowhite/quant-smart-fitness-dashboard/actions/runs/41221927230).
+checks и публикация также прошли в [CI build-4](https://github.com/etowhite/quant-fitness-dashboard/actions/runs/41221927230).
 Причины прежних ошибок исправлены: устаревший SDK package tools, glibc Isar
 на Ubuntu 22.04 и недостаточный heap Gradle при debug-сборке для эмулятора.
 Системные окна Health Connect, реальная камера, доставка уведомлений после
@@ -42,7 +42,7 @@ checks и публикация также прошли в [CI build-4](https://g
 Опубликованный APK из CI: **77 693 169 байт**.
 SHA-256: `b2ef7797289d2279951b97ccb538c1c325f0d45d701da21a43b52517322f5627`.
 Файл: `build/releases/quant-release.apk`.
-[Релиз v1.3.0](https://github.com/etowhite/quant-smart-fitness-dashboard/releases/tag/v1.3.0).
+[Релиз v1.3.0](https://github.com/etowhite/quant-fitness-dashboard/releases/tag/v1.3.0).
 Локальный APK и APK CI подписаны разными debug-ключами; обновление между ними
 требует одинаковой подписи или переустановки с предварительным JSON-экспортом.
 
