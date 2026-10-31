@@ -1,0 +1,190 @@
+# quant
+
+<img src="assets/branding/quant-logo.svg" width="112" alt="quant — кольца активности в форме q" />
+
+Android-приложение для питания, воды, активности и замеров. Flutter, Riverpod,
+Isar Community, Health Connect и Material 3 Expressive.
+
+## Возможности
+
+- **Дашборд:** калории/БЖУ, водный баланс, шаги, активные калории, вес, жир и график веса.
+- **Питание:** четыре приема пищи, выбор даты, порции, собственные продукты, удаление свайпом.
+- **Вода:** +150 / +250 / +500 мл и отмена последней порции, независимые дни и общая дневная цель.
+- **547 офлайн продуктов и блюд** в 19 категориях: справочные значения на 100 г,
+  русские названия, сухие/готовые крупы, мясо, рыба, молочка, овощи, фрукты и другое.
+- **Open Food Facts:** поиск с debounce 500 мс, штрихкод камерой или вручную;
+  выбранные результаты сохраняются в Isar. Локальные результаты появляются сразу.
+- **Замеры:** грудь, талия, бедра, бицепс, частичные записи, заметки, дельты, графики и история.
+- **Настройки:** цели калорий/БЖУ/шагов/воды, JSON-копия, оформление и локальные напоминания.
+- **Русский / English / Auto:** язык интерфейса, дат, диалогов и уведомлений меняется без перезапуска. Пользовательские названия и заметки не переводятся.
+- **Онбординг из трех шагов:** быстрый импорт JSON, выбор языка/стиля, цели со степперами и опциональное подключение Health Connect/уведомлений. Можно пропустить или пройти повторно.
+- **Управление данными:** выборочная очистка категорий или полный сброс с предложением экспорта и возвратом на первый шаг.
+- Светлая / темная / системная тема, AMOLED и четыре палитры: Cyber Neon,
+  Electric Violet, Sunset Coral, Mint & Ocean. Inter поставляется локально.
+- Вода каждые 1,5/2/3 часа в дневном окне, завтрак/обед/ужин, ежедневные или
+  еженедельные замеры. Тестовое уведомление и отдельный запрос точных будильников.
+- Фирменный векторный логотип, Android Adaptive Icon и тематическая иконка Android 13+.
+
+## Скачать APK
+
+[Свежий релиз и APK](https://github.com/etowhite/smart-fitness-dashboard/releases/latest)
+· [CI и артефакты](https://github.com/etowhite/smart-fitness-dashboard/actions/workflows/release_apk.yml)
+
+Минимум Android 8 (API 26). Доступность Health Connect зависит от версии Android,
+установленного сервиса и поддержки записи данных исходными приложениями.
+
+## Интерфейс
+
+<img src="docs/screenshots/onboarding-en-dark.png" width="240" alt="Onboarding quant" /> <img src="docs/screenshots/goals-en-dark.png" width="240" alt="Daily goals" /> <img src="docs/screenshots/settings-en-light.png" width="240" alt="Light theme settings" />
+
+Отрисовка Flutter-виджетов на ширине 390 px с локальным Inter. Это превью UI,
+не подтверждение запуска на Android-устройстве.
+
+## Архитектура
+
+```mermaid
+flowchart TD
+  Shell[quant · 4 вкладки] --> Dashboard[Дашборд]
+  Shell --> Nutrition[Питание]
+  Shell --> Measurements[Замеры]
+  Shell --> Settings[Настройки]
+  Dashboard --> Providers[Riverpod providers / watchers]
+  Nutrition --> Providers
+  Measurements --> Providers
+  Providers --> Isar[(Isar · питание, продукты, замеры, вода)]
+  Dashboard --> Health[Health Connect · только чтение]
+  Nutrition --> OFF[Open Food Facts · HTTPS]
+  OFF --> Isar
+  Settings --> Prefs[(SharedPreferences · цели, темы, напоминания)]
+  Settings --> Notifications[Локальные уведомления Android]
+  Settings --> Backup[JSON · системный выбор файла]
+  Backup --> Isar
+  Backup --> Prefs
+```
+
+- `lib/core/`: БД, Health Connect, уведомления, резервные копии, тема, валидация.
+- `lib/features/`: dashboard, nutrition, water, measurements, goals, settings.
+- `lib/shared/`: графики, логотип, общие модели.
+- `assets/data/`: офлайн-каталог; `assets/fonts/`: Inter и лицензия.
+- `test/`: unit/widget и тест реальной Isar на Windows/Linux.
+- `integration_test/`: Android-проверки базы и четырех вкладок.
+
+## Сборка
+
+Проверенная конфигурация: Flutter **3.35.7**, Dart **3.9.2**, Java **17**,
+Android SDK / Build Tools **35**, minSdk **26**. Нижняя граница SDK в pubspec
+оставлена `>=3.4.0 <4.0.0`; конкретные зависимости могут требовать более новый Dart.
+Используйте указанную проверенную версию Flutter.
+
+```sh
+flutter pub get
+dart run build_runner build --delete-conflicting-outputs
+flutter analyze --fatal-infos
+flutter test
+dart pub deps --json > .dart_tool/dependency-tree.json
+node tool/security_check.mjs --advisories
+flutter build apk --release
+node tool/check_apk.mjs
+```
+
+Исходный APK: `build/app/outputs/flutter-apk/app-release.apk`.
+Файл для распространения: `build/app/outputs/flutter-apk/quant-release.apk`.
+На Windows используйте путь к checkout без кириллицы для Android AOT-сборки.
+Для проверки упакованных разрешений задайте `ANDROID_HOME` или `ANDROID_SDK_ROOT`.
+
+```sh
+flutter test integration_test -d emulator-5554
+```
+
+GitHub Actions при push в `main` выполняет генерацию, анализ, тесты, OSV-проверку,
+сборку и проверку APK, загружает Artifacts и публикует GitHub Release.
+Отдельная задача запускает Android 35 эмулятор; результат виден в Actions.
+Локальная проверка Android runtime не считается пройденной без работающего устройства.
+
+## Подпись релиза
+
+Выполните **из корня проекта** (пароли вводятся интерактивно):
+
+```sh
+keytool -genkeypair -v -keystore android/upload-keystore.jks -storetype JKS -keyalg RSA -keysize 2048 -validity 10000 -alias upload
+```
+
+Скопируйте `android/key.properties.example` в `android/key.properties`, укажите
+`storeFile=upload-keystore.jks`, alias и пароли. Путь keystore считается от `android/`.
+Если `key.properties` отсутствует, используется debug-подпись: APK устанавливается,
+но для публикации и стабильных обновлений нужен постоянный приватный ключ.
+Неполный существующий файл намеренно вызывает понятную ошибку сборки.
+Ключи, пароли и APK исключены из Git. CI по умолчанию использует debug-подпись;
+ее ключ может различаться между runners, поэтому для последовательных обновлений
+настройте собственный keystore через GitHub Secrets.
+
+## Health Connect
+
+Только READ: шаги, активные калории, вес, процент жира и отдельный доступ к истории.
+ACTIVITY_RECOGNITION запрашивается перед Health Connect. Шаги читаются агрегатом
+`getTotalStepsInInterval`. Совпадающие записи очищаются, при одинаковых интервалах
+предпочтение отдается Mi Fitness/Picooc. Перекрытия с разными границами не суммируются
+с интеллектуальным объединением: для таких записей возможны особенности источников.
+
+«Последние данные» — timestamp записи источника, не время нажатия синхронизации.
+Настройте выгрузку **в Health Connect** в Mi Fitness/Picooc: приложение не может
+заставить часы или весы передать новые данные. Чтение истории старше стандартного
+окна зависит от поддержки READ_HEALTH_DATA_HISTORY и согласия пользователя.
+
+## Данные и приватность
+
+- Дневник, вода, замеры и каталог находятся в приватной папке Android; цели и
+  настройки — в SharedPreferences. Отдельного шифрования БД нет, защита опирается
+  на Android sandbox и шифрование устройства. Root/скомпрометированное устройство не покрываются.
+- Системные backup/device transfer и cleartext-трафик отключены. Диагностические
+  print/debugPrint отсутствуют. В релизе удаляются вызовы Android Log.
+- Интернет используется для Open Food Facts: отправляются текст поиска и штрихкод.
+  Журнал питания и данные Health Connect сервису не передаются. Камера нужна только
+  для сканера, ручной ввод работает без нее.
+- Уведомления локальные, не требуют сервера. Разрешения запрашиваются по действию
+  пользователя. Без точных будильников используется неточное расписание; экономия
+  батареи Android/производителя может задерживать доставку. После force-stop откройте
+  приложение. После смены часового пояса откройте его для пересоздания расписания.
+- JSON v4 содержит все четыре коллекции, цели, тему, язык и напоминания; читает также v1/v2/v3.
+  Health Connect в копию не включается. Импорт **заменяет** данные после подтверждения,
+  проверяет типы/границы и лимит 10 МБ. JSON не зашифрован: храните его в надежном месте.
+  Isar и SharedPreferences не образуют единую crash-atomic транзакцию; при отключении
+  питания во время импорта повторите восстановление из исходного файла.
+- Проверка OSV покрывает известные advisory для точных версий Pub; это не полный
+  аудит нативных Maven/NDK-зависимостей или гарантия отсутствия уязвимостей.
+
+## Источники продуктов
+
+525 записей основаны на [USDA FoodData Central SR Legacy 2018](https://fdc.nal.usda.gov/download-datasets/).
+В JSON сохранены FDC ID и исходные английские описания. Значения общие, не
+сертифицированные карточки конкретных российских брендов. 22 блюда с пометкой
+«пример рецептуры» рассчитаны по ингредиентам USDA и явно указанному готовому выходу.
+КБЖУ зависят от марки, рецепта и способа приготовления; сверяйте упаковку.
+Скрипты воспроизведения: `tool/build_food_catalogue.py`, `tool/add_regional_recipes.py`;
+первый читает CSV SR Legacy из `.toolchains/usda/FoodData_Central_sr_legacy_food_csv_2018-04`.
+
+[Open Food Facts](https://world.openfoodfacts.org/) — данные сообщества по лицензии
+[ODbL](https://opendatacommons.org/licenses/odbl/1-0/), условия
+[повторного использования](https://world.openfoodfacts.org/data).
+Кэшированные карточки сохраняют атрибуцию. Поиск ограничен 10 запросами в минуту
+и имеет кэш; штрихкоды используют API v2 по заданному контракту. API v2 пока
+поддерживается для совместимости; при изменении сервиса потребуется миграция.
+
+Inter: лицензия SIL Open Font License в `assets/fonts/OFL.txt`.
+Подробности текущих проверок: [docs/build_verification.md](docs/build_verification.md).
+
+## Онбординг, локализация и сброс
+
+`AppStrings` / `QText` и словари переводов обходятся без генерации ARB.
+`flutter_localizations` переводит системные Material-диалоги. LocaleProvider
+сохраняет RU/EN/System, SharedPreferences хранит отдельный флаг
+`hasCompletedOnboarding`. Импорт на первом шаге после подтверждения сразу
+открывает дашборд. Пропуск не запрашивает разрешений; неотредактированные
+цели остаются стандартными. Можно подключить Health Connect позже.
+
+Выборочная очистка дневника удаляет только питание и воду. Очистка продуктов
+заново загружает встроенный каталог. Сброс целей/оформления/расписания не
+возвращает на онбординг и сохраняет язык. Полный сброс выполняет очистку всех
+четырех коллекций и посев в одной Isar-транзакции, отменяет уведомления,
+очищает SharedPreferences и открывает онбординг. Два хранилища не поддерживают
+общую crash-atomic транзакцию: при прерывании операции повторите сброс.

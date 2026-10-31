@@ -1,0 +1,115 @@
+name: quant release APK
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: android-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.35.7'
+          channel: stable
+          cache: true
+      - uses: android-actions/setup-android@v3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Android SDK
+        run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0' 'platform-tools'
+      - name: Resolve dependencies
+        run: flutter pub get
+      - name: Security regression and dependency advisory checks
+        run: |
+          dart pub deps --json > .dart_tool/dependency-tree.json
+          node tool/security_check.mjs --advisories
+      - name: Generate Isar schemas
+        run: dart run build_runner build --delete-conflicting-outputs
+      - name: Analyze
+        run: flutter analyze --fatal-infos
+      - name: Unit and widget tests
+        run: flutter test --coverage
+      - name: Release APK
+        run: flutter build apk --release
+      - name: Verify packaged Android permissions and flags
+        run: node tool/check_apk.mjs
+      - name: Rename quant APK
+        run: cp build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/quant-release.apk
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: quant-release
+          path: build/app/outputs/flutter-apk/quant-release.apk
+          if-no-files-found: error
+          retention-days: 14
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/lcov.info
+
+  android-integration:
+    needs: build
+    runs-on: ubuntu-22.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.35.7'
+          channel: stable
+          cache: true
+      - uses: android-actions/setup-android@v3
+      - name: Enable KVM
+        run: sudo chmod 666 /dev/kvm
+      - run: flutter pub get
+      - run: dart run build_runner build --delete-conflicting-outputs
+      - name: Run Android database and navigation integration tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_2
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: flutter test integration_test -d emulator-5554
+
+  publish:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: quant-release
+          path: release
+      - name: Publish downloadable APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release create "build-${{ github.run_number }}" release/quant-release.apk --target "${{ github.sha }}" --title "quant · build ${{ github.run_number }}" --notes "Automated quant APK. Analyze, unit/widget tests and security regression checks passed. Without android/key.properties this APK uses the debug signing key. Emulator results are reported separately in Actions."
