@@ -30,8 +30,6 @@ class _MeasurementsScreenState extends ConsumerState<MeasurementsScreen> {
           isScrollControlled: true,
           useSafeArea: true,
           backgroundColor: Theme.of(context).colorScheme.surface,
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
           builder: (_) => const MeasurementFormSheet());
     } finally {
       if (mounted) setState(() => _sheetOpen = false);

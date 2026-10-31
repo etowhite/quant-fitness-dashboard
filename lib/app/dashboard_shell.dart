@@ -113,7 +113,10 @@ class FloatingBottomBar extends StatelessWidget {
                                       color: selected == tab
                                           ? scheme.primaryContainer
                                           : Colors.transparent,
-                                      shape: const StadiumBorder(),
+                                      shape: StadiumBorder(
+                                          side: BorderSide(
+                                              color: scheme.outlineVariant,
+                                              width: 1)),
                                       clipBehavior: Clip.antiAlias,
                                       child: InkWell(
                                           key: ValueKey('tab-${tab.name}'),

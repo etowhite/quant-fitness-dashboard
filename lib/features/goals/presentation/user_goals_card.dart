@@ -24,7 +24,7 @@ class UserGoalsCard extends ConsumerWidget {
                   Expanded(
                       child: QText('Дневные цели',
                           style: Theme.of(context).textTheme.titleLarge)),
-                  TextButton(
+                  OutlinedButton(
                       onPressed: state.isLoading
                           ? null
                           : () => showModalBottomSheet<void>(
@@ -33,9 +33,6 @@ class UserGoalsCard extends ConsumerWidget {
                                 useSafeArea: true,
                                 backgroundColor:
                                     Theme.of(context).colorScheme.surface,
-                                shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(24))),
                                 builder: (_) =>
                                     EditUserGoalsSheet(initial: goals),
                               ),

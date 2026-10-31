@@ -95,11 +95,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   }
 
   Widget _panel(List<Widget> children) => Card(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(28),
-          side: BorderSide(
-              color:
-                  Theme.of(context).colorScheme.outlineVariant.withAlpha(100))),
       child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -247,19 +242,23 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             ]),
             _page('Твои дневные ориентиры',
                 'Небольшие шаги складываются в большой прогресс.', [
-              Wrap(alignment: WrapAlignment.center, spacing: 8, runSpacing: 8, children: [
-                for (final preset in [
-                  ('Сушка', 1800.0),
-                  ('Баланс', 2200.0),
-                  ('Набор', 2600.0)
-                ])
-                  ActionChip(
-                      shape: const StadiumBorder(),
-                      label: QText(preset.$1),
-                      onPressed: _busy
-                          ? null
-                          : () => _goals(goals, calories: preset.$2))
-              ]),
+              Wrap(
+                  alignment: WrapAlignment.center,
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    for (final preset in [
+                      ('Сушка', 1800.0),
+                      ('Баланс', 2200.0),
+                      ('Набор', 2600.0)
+                    ])
+                      ActionChip(
+                          shape: const StadiumBorder(),
+                          label: QText(preset.$1),
+                          onPressed: _busy
+                              ? null
+                              : () => _goals(goals, calories: preset.$2))
+                  ]),
               const SizedBox(height: 16),
               _panel([
                 _stepper(

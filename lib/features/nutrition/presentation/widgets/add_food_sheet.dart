@@ -28,8 +28,6 @@ Future<bool?> showAddFoodSheet(
           reverseDuration: Duration(milliseconds: 300)),
       useSafeArea: true,
       backgroundColor: Theme.of(context).colorScheme.surface,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
       builder: (_) => AddFoodSheet(date: date, initialMeal: mealType),
     );
 
@@ -278,7 +276,7 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
             icon: const Icon(Icons.add),
             label: const QText('Создать свой продукт')),
       ]),
-      const Divider(height: 24, thickness: .5),
+      const Divider(height: 24, thickness: 1),
       const SizedBox(height: 8),
       products.when(
         skipLoadingOnReload: false,
@@ -289,7 +287,7 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
             : Column(children: [
                 for (final product in items) ...[
                   if (product != items.first)
-                    const Divider(height: 1, thickness: .5),
+                    const Divider(height: 1, thickness: 1),
                   ListTile(
                     contentPadding: EdgeInsets.zero,
                     title: Text(product.name),
@@ -334,7 +332,7 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
                             (local) =>
                                 local.barcode != null &&
                                 local.barcode == p.barcode))) ...[
-                      const Divider(height: 1, thickness: .5),
+                      const Divider(height: 1, thickness: 1),
                       ListTile(
                           contentPadding: EdgeInsets.zero,
                           title: Text(p.name),

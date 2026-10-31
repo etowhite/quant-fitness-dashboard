@@ -25,16 +25,15 @@ class CapsuleChoice extends StatelessWidget {
           duration: expressiveDuration,
           curve: Curves.easeOutExpo,
           decoration: ShapeDecoration(
-              shape: StadiumBorder(
-                  side: BorderSide(
-                      color:
-                          selected ? scheme.primary : scheme.outlineVariant)),
+              shape:
+                  StadiumBorder(side: BorderSide(color: scheme.outlineVariant)),
               color: selected ? scheme.primary : scheme.surface),
           child: TextButton(
               onPressed: onPressed,
               style: TextButton.styleFrom(
                   minimumSize: const Size(64, 48),
                   shape: const StadiumBorder(),
+                  side: BorderSide.none,
                   foregroundColor:
                       selected ? scheme.onPrimary : scheme.onSurface,
                   textStyle:

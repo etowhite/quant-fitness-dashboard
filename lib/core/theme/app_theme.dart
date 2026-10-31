@@ -15,6 +15,12 @@ abstract final class AppTheme {
   static ThemeData get dark => build(const ThemeSettings(), Brightness.dark);
   static ThemeData build(ThemeSettings settings, Brightness brightness) {
     final dark = brightness == Brightness.dark;
+    final outlineColor =
+        dark ? const Color(0xFF2E2E36) : const Color(0xFFD0D5DD);
+    final border = BorderSide(color: outlineColor, width: 1);
+    final capsule = StadiumBorder(side: border);
+    final inputBorder = OutlineInputBorder(
+        borderRadius: BorderRadius.circular(24), borderSide: border);
     final palette = settings.palette;
     final primary = dark
         ? palette.primary
@@ -50,6 +56,8 @@ abstract final class AppTheme {
             .copyWith(
       primary: primary,
       secondary: secondary,
+      outline: outlineColor,
+      outlineVariant: outlineColor,
       onPrimary:
           ThemeData.estimateBrightnessForColor(primary) == Brightness.light
               ? const Color(0xFF102118)
@@ -69,6 +77,32 @@ abstract final class AppTheme {
     final text = base.textTheme;
     return base.copyWith(
       scaffoldBackgroundColor: background,
+      dividerTheme:
+          DividerThemeData(color: outlineColor, thickness: 1, space: 24),
+      chipTheme: base.chipTheme.copyWith(side: border, shape: capsule),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+              side: border, shape: capsule, minimumSize: const Size(48, 48))),
+      textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+              side: border, shape: capsule, minimumSize: const Size(48, 48))),
+      filledButtonTheme: FilledButtonThemeData(
+          style: FilledButton.styleFrom(
+              side: border, shape: capsule, minimumSize: const Size(48, 48))),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+              side: border, shape: capsule, minimumSize: const Size(48, 48))),
+      iconButtonTheme: IconButtonThemeData(
+          style: ButtonStyle(
+              side: WidgetStatePropertyAll(border),
+              shape: WidgetStatePropertyAll(capsule))),
+      switchTheme: SwitchThemeData(
+          trackOutlineColor: WidgetStatePropertyAll(outlineColor),
+          trackOutlineWidth: const WidgetStatePropertyAll(1)),
+      checkboxTheme: CheckboxThemeData(side: border),
+      dialogTheme: DialogThemeData(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24), side: border)),
       textTheme: text.copyWith(
           headlineMedium: text.headlineMedium
               ?.copyWith(fontWeight: FontWeight.w700, letterSpacing: -0.6),
@@ -84,14 +118,19 @@ abstract final class AppTheme {
           elevation: 0,
           margin: EdgeInsets.zero,
           clipBehavior: Clip.antiAlias,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24))),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24), side: border)),
       inputDecorationTheme: InputDecorationTheme(
           filled: true,
           fillColor: scheme.surfaceContainerHighest.withAlpha(dark ? 90 : 120),
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16),
-              borderSide: BorderSide.none)),
+          border: inputBorder,
+          enabledBorder: inputBorder,
+          disabledBorder: inputBorder,
+          focusedBorder: inputBorder,
+          errorBorder: inputBorder.copyWith(
+              borderSide: BorderSide(color: scheme.error, width: 1)),
+          focusedErrorBorder: inputBorder.copyWith(
+              borderSide: BorderSide(color: scheme.error, width: 1))),
       navigationBarTheme: NavigationBarThemeData(
           backgroundColor: scheme.surface,
           elevation: 0,
@@ -107,8 +146,10 @@ abstract final class AppTheme {
           type: BottomNavigationBarType.fixed),
       bottomSheetTheme: BottomSheetThemeData(
           backgroundColor: scheme.surface,
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(24)))),
+          shape: RoundedRectangleBorder(
+              side: border,
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(24)))),
     );
   }
 }

@@ -63,7 +63,7 @@ class MealSectionCard extends StatelessWidget {
                                     .onSurfaceVariant)),
                       ),
                     for (final entry in entries) ...[
-                      const Divider(height: 1, thickness: .5),
+                      const Divider(height: 1, thickness: 1),
                       Dismissible(
                         key: ValueKey('food-log-${entry.id}'),
                         direction: DismissDirection.endToStart,

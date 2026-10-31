@@ -23,10 +23,6 @@ class AppearanceCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(themeSettingsProvider);
     return Card(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(28),
-            side: BorderSide(
-                color: Theme.of(context).colorScheme.outlineVariant)),
         child: Padding(
             padding: const EdgeInsets.all(20),
             child: settings.when(

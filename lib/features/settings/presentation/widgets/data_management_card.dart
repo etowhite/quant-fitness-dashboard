@@ -97,10 +97,6 @@ class _DataManagementCardState extends ConsumerState<DataManagementCard> {
 
   @override
   Widget build(BuildContext context) => Card(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
-          side: BorderSide(
-              color: Theme.of(context).colorScheme.error.withAlpha(90))),
       child: Padding(
           padding: const EdgeInsets.all(20),
           child:

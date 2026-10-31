@@ -12,10 +12,6 @@ class LanguageCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final value = ref.watch(localeProvider).valueOrNull ?? AppLanguage.system;
     return Card(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(28),
-            side: BorderSide(
-                color: Theme.of(context).colorScheme.outlineVariant)),
         child: Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
@@ -39,9 +35,10 @@ class LanguageCard extends ConsumerWidget {
                               focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(32),
                                   borderSide: BorderSide(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                      width: 2))),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .outlineVariant,
+                                      width: 1))),
                           items: const [
                             DropdownMenuItem(
                                 value: AppLanguage.ru, child: Text('Русский')),
