@@ -4,6 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/database/database_provider.dart';
 import '../../goals/application/user_goals_provider.dart';
 import '../application/water_provider.dart';
+import '../application/water_presets_provider.dart';
+import '../../../shared/widgets/expressive_motion.dart';
+import 'package:flutter/services.dart';
 
 class WaterBalanceCard extends ConsumerStatefulWidget {
   const WaterBalanceCard({required this.date, super.key});
@@ -15,6 +18,89 @@ class WaterBalanceCard extends ConsumerStatefulWidget {
 class _WaterBalanceCardState extends ConsumerState<WaterBalanceCard> {
   bool _busy = false;
   String? _error;
+  Future<void> _custom() async {
+    final field = TextEditingController();
+    final form = GlobalKey<FormState>();
+    var remember = false;
+    final presets = await ref.read(waterPresetsProvider.future);
+    if (!mounted) {
+      field.dispose();
+      return;
+    }
+    final result = await showDialog<({int volume, bool remember})>(
+        context: context,
+        builder: (context) => StatefulBuilder(
+            builder: (context, update) => AlertDialog(
+                  title: const QText('Свой объем воды'),
+                  content: Form(
+                      key: form,
+                      child: Column(mainAxisSize: MainAxisSize.min, children: [
+                        TextFormField(
+                            controller: field,
+                            autofocus: true,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(4)
+                            ],
+                            decoration: InputDecoration(
+                                labelText: context.tr('Объем, мл'),
+                                hintText: '330'),
+                            validator: (v) {
+                              final number = int.tryParse(v ?? '');
+                              return number == null ||
+                                      number < 1 ||
+                                      number > 5000
+                                  ? context.tr('Введите от 1 до 5000 мл')
+                                  : null;
+                            }),
+                        CheckboxListTile(
+                            contentPadding: EdgeInsets.zero,
+                            title: const QText('Сохранить кнопку'),
+                            subtitle: presets.length >= 8
+                                ? const QText('Можно сохранить до 8 кнопок')
+                                : null,
+                            value: remember,
+                            onChanged: presets.length >= 8
+                                ? null
+                                : (v) => update(() => remember = v ?? false)),
+                      ])),
+                  actions: [
+                    TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const QText('Отмена')),
+                    FilledButton(
+                        onPressed: () {
+                          if (form.currentState!.validate()) {
+                            Navigator.pop(context, (
+                              volume: int.parse(field.text),
+                              remember: remember
+                            ));
+                          }
+                        },
+                        child: const QText('Добавить воду'))
+                  ],
+                )));
+    // Wait for the dialog exit animation before disposing its controller.
+    await Future<void>.delayed(const Duration(milliseconds: 250));
+    field.dispose();
+    if (!mounted || result == null) return;
+    try {
+      if (result.remember &&
+          ![150, 250, 500, ...presets].contains(result.volume)) {
+        await ref
+            .read(waterPresetsProvider.notifier)
+            .save([...presets, result.volume]);
+      }
+      await _change(result.volume);
+    } catch (_) {
+      if (mounted) {
+        setState(
+            () => _error = 'Не удалось сохранить воду. Повторите попытку.');
+      }
+    }
+  }
+
   Future<void> _change(int? volume) async {
     if (_busy) return;
     final date = widget.date;
@@ -63,29 +149,43 @@ class _WaterBalanceCardState extends ConsumerState<WaterBalanceCard> {
                     return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          QText('$total / $goal мл',
+                          AnimatedMetric(
+                              value: total.toDouble(),
+                              format: (value) => '${value.round()} / $goal мл',
                               style: TextStyle(
                                   color:
                                       Theme.of(context).colorScheme.secondary,
                                   fontSize: 22,
                                   fontWeight: FontWeight.w600)),
                           const SizedBox(height: 10),
-                          LinearProgressIndicator(
+                          AnimatedProgress(
                               value: (total / goal).clamp(0.0, 1.0),
                               color: Theme.of(context).colorScheme.secondary,
                               backgroundColor: Theme.of(context)
                                   .colorScheme
                                   .secondary
                                   .withAlpha(26),
-                              minHeight: 6,
-                              borderRadius: BorderRadius.circular(8)),
+                              minHeight: 6),
                           const SizedBox(height: 12),
                           Wrap(spacing: 8, children: [
-                            for (final volume in [150, 250, 500])
+                            for (final volume in {
+                              150,
+                              250,
+                              500,
+                              ...?ref.watch(waterPresetsProvider).valueOrNull
+                            })
                               OutlinedButton(
+                                  style: OutlinedButton.styleFrom(
+                                      shape: const StadiumBorder()),
                                   onPressed:
                                       _busy ? null : () => _change(volume),
                                   child: QText('+$volume мл')),
+                            OutlinedButton.icon(
+                                onPressed: _busy ? null : _custom,
+                                style: OutlinedButton.styleFrom(
+                                    shape: const StadiumBorder()),
+                                icon: const Icon(Icons.add),
+                                label: const QText('Свой объем')),
                             IconButton(
                                 onPressed: _busy || rows.isEmpty
                                     ? null

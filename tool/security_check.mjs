@@ -7,8 +7,8 @@ const manifest = fs.readFileSync('android/app/src/main/AndroidManifest.xml', 'ut
 const healthPermissions = [...manifest.matchAll(/android\.permission\.health\.([A-Z_]+)/g)]
   .map((match) => match[1]).sort();
 assert(JSON.stringify(healthPermissions) === JSON.stringify([
-  'READ_ACTIVE_CALORIES_BURNED', 'READ_BODY_FAT', 'READ_HEALTH_DATA_HISTORY', 'READ_STEPS', 'READ_WEIGHT',
-]), 'Manifest must request only the four data READ permissions and history.');
+  'READ_ACTIVE_CALORIES_BURNED', 'READ_BODY_FAT', 'READ_HEALTH_DATA_HISTORY', 'READ_STEPS', 'READ_TOTAL_CALORIES_BURNED', 'READ_WEIGHT',
+]), 'Manifest must request only the five data READ permissions and history.');
 for (const attribute of ['allowBackup="false"', 'fullBackupContent="false"',
   'usesCleartextTraffic="false"', 'dataExtractionRules="@xml/data_extraction_rules"']) {
   assert(manifest.includes(attribute), `Missing manifest protection: ${attribute}`);

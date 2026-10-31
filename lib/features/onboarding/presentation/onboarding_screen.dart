@@ -1,3 +1,4 @@
+import '../../water/application/water_presets_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/localization/app_language.dart';
@@ -49,7 +50,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       ref.read(onboardingProvider.notifier).setCompleted(true);
   void _move(int page) => _pages.animateToPage(page,
       duration: const Duration(milliseconds: 400),
-      curve: Curves.easeInOutCubic);
+      curve: Curves.easeInOutCubicEmphasized);
   Future<void> _connect() async {
     try {
       await ref
@@ -89,6 +90,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     ref.invalidate(themeSettingsProvider);
     ref.invalidate(localeProvider);
     ref.invalidate(reminderSettingsProvider);
+    ref.invalidate(waterPresetsProvider);
     await _finish();
   }
 
@@ -289,7 +291,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             ]),
             _page(
                 'Подключить Health Connect и уведомления?',
-                'quant читает шаги Mi Fitness и вес/жир Picooc через Health Connect локально на устройстве. Сначала включи выгрузку в исходных приложениях. Разрешения можно отозвать в любой момент.',
+                'quant читает шаги любых часов и фитнес-трекеров и вес/жир умных весов через Health Connect локально на устройстве. Сначала включи выгрузку в исходных приложениях. Разрешения можно отозвать в любой момент.',
                 [
                   _panel([
                     const Center(child: QuantLogo(size: 128)),
@@ -336,10 +338,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   Widget _stepper(String label, int value, int step, VoidCallback minus,
           VoidCallback plus, int min, int max) =>
       Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Row(children: [
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
             Expanded(
                 child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                   QText(label),

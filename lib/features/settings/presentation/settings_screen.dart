@@ -1,3 +1,5 @@
+import 'widgets/appearance_card.dart';
+import '../../../core/security/app_lock.dart';
 import 'widgets/language_card.dart';
 import 'widgets/data_management_card.dart';
 import '../../../core/localization/app_strings.dart';
@@ -6,9 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../shared/widgets/quant_logo.dart';
 import '../../goals/presentation/user_goals_card.dart';
 import '../../measurements/presentation/widgets/backup_card.dart';
-import '../application/theme_settings_provider.dart';
 import '../application/reminder_settings_provider.dart';
-import '../domain/theme_settings.dart';
 import '../domain/reminder_settings.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
@@ -35,8 +35,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     }
   }
 
-  void _theme(ThemeSettings value) =>
-      _run(() => ref.read(themeSettingsProvider.notifier).save(value));
   void _reminders(ReminderSettings value) =>
       _run(() => ref.read(reminderSettingsProvider.notifier).save(value));
   String _time(int minute) =>
@@ -59,7 +57,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ])));
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(themeSettingsProvider);
     final reminders = ref.watch(reminderSettingsProvider);
     final status = ref.watch(notificationStatusProvider);
     return Scaffold(
@@ -69,94 +66,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             children: [
               const LanguageCard(),
               const SizedBox(height: 16),
-              theme.when(
-                  loading: () => const LinearProgressIndicator(),
-                  error: (_, __) => _retry('Не удалось загрузить оформление',
-                      () => ref.invalidate(themeSettingsProvider)),
-                  data: (s) => _card('Оформление', [
-                        QText('Material 3 Expressive',
-                            style: Theme.of(context).textTheme.bodySmall),
-                        const SizedBox(height: 12),
-                        SizedBox(
-                            width: double.infinity,
-                            child: SegmentedButton<ThemeMode>(
-                                segments: const [
-                                  ButtonSegment(
-                                      value: ThemeMode.light,
-                                      label: QText('Светлая')),
-                                  ButtonSegment(
-                                      value: ThemeMode.dark,
-                                      label: QText('Темная')),
-                                  ButtonSegment(
-                                      value: ThemeMode.system,
-                                      label: QText('Авто')),
-                                ],
-                                selected: {
-                                  s.mode
-                                },
-                                onSelectionChanged: _busy
-                                    ? null
-                                    : (v) =>
-                                        _theme(s.copyWith(mode: v.first)))),
-                        const SizedBox(height: 20),
-                        Wrap(spacing: 12, runSpacing: 12, children: [
-                          for (final p in AccentPalette.values)
-                            Semantics(
-                                selected: s.palette == p,
-                                child: Tooltip(
-                                    message: p.label,
-                                    child: InkWell(
-                                        borderRadius: BorderRadius.circular(24),
-                                        onTap: _busy
-                                            ? null
-                                            : () =>
-                                                _theme(s.copyWith(palette: p)),
-                                        child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              AnimatedContainer(
-                                                  duration: const Duration(
-                                                      milliseconds: 300),
-                                                  width: 48,
-                                                  height: 48,
-                                                  decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      gradient:
-                                                          LinearGradient(
-                                                              colors: [
-                                                            p.primary,
-                                                            p.secondary
-                                                          ]),
-                                                      border: Border.all(
-                                                          color: s.palette == p
-                                                              ? Theme.of(
-                                                                      context)
-                                                                  .colorScheme
-                                                                  .onSurface
-                                                              : Colors
-                                                                  .transparent,
-                                                          width: 3)),
-                                                  child: s.palette == p
-                                                      ? const Icon(Icons.check,
-                                                          color:
-                                                              Color(0xFF121212))
-                                                      : null),
-                                              const SizedBox(height: 6),
-                                              QText(p.label,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .labelSmall),
-                                            ]))))
-                        ]),
-                        SwitchListTile(
-                            contentPadding: EdgeInsets.zero,
-                            title: const QText('Чистый черный фон'),
-                            subtitle: const QText('AMOLED · для темной темы'),
-                            value: s.amoled,
-                            onChanged: _busy
-                                ? null
-                                : (v) => _theme(s.copyWith(amoled: v))),
-                      ])),
+              const AppearanceCard(),
+              const SizedBox(height: 16),
+              const AppLockCard(),
               const SizedBox(height: 16),
               const UserGoalsCard(),
               const SizedBox(height: 16),
@@ -210,18 +122,26 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         const Divider(),
                         _meal('Завтрак', s.breakfast,
                             (v) => _reminders(s.copyWith(breakfast: v))),
+                        const Divider(height: 1, thickness: .5),
                         _meal('Обед', s.lunch,
                             (v) => _reminders(s.copyWith(lunch: v))),
+                        const Divider(height: 1, thickness: .5),
                         _meal('Ужин', s.dinner,
                             (v) => _reminders(s.copyWith(dinner: v))),
                         const Divider(),
                         _meal('Взвешивание и замеры', s.measurements,
                             (v) => _reminders(s.copyWith(measurements: v))),
+                        const SizedBox(height: 12),
+                        const QText('Периодичность замеров'),
+                        const SizedBox(height: 8),
                         DropdownButtonFormField<int>(
                             key: ValueKey(s.weekday),
                             initialValue: s.weekday,
                             decoration: InputDecoration(
-                                labelText: context.tr('Периодичность замеров')),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 14),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(32))),
                             items: [
                               for (var i = 0; i < 8; i++)
                                 DropdownMenuItem(
@@ -292,7 +212,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                           TextStyle(fontSize: 28, fontWeight: FontWeight.w700))
                 ]),
                 const SizedBox(height: 12),
-                const QText('Версия 1.3.0 · питание, движение и прогресс'),
+                const QText('Версия 1.4.0 · питание, движение и прогресс'),
                 const SizedBox(height: 8),
                 const QText(
                     'Дневник хранится на устройстве. Health Connect доступен только для чтения. Поиск и штрихкоды отправляются в Open Food Facts; дневник и медицинские данные туда не передаются.'),
@@ -311,20 +231,19 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       ]);
   Widget _meal(String title, MealReminder meal,
           void Function(MealReminder) changed) =>
-      Column(children: [
-        SwitchListTile(
-            contentPadding: EdgeInsets.zero,
-            title: QText(title),
-            value: meal.enabled,
-            onChanged:
-                _busy ? null : (v) => changed(meal.copyWith(enabled: v))),
-        Align(
-            alignment: Alignment.centerLeft,
-            child: TextButton(
-                onPressed: _busy
-                    ? null
-                    : () => _pick(
-                        meal.minute, (v) => changed(meal.copyWith(minute: v))),
-                child: QText(_time(meal.minute)))),
+      Row(children: [
+        Expanded(
+            child: SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                title: QText(title),
+                value: meal.enabled,
+                onChanged:
+                    _busy ? null : (v) => changed(meal.copyWith(enabled: v)))),
+        ActionChip(
+            label: Text(_time(meal.minute)),
+            onPressed: _busy
+                ? null
+                : () => _pick(
+                    meal.minute, (v) => changed(meal.copyWith(minute: v)))),
       ]);
 }

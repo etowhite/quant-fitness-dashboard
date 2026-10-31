@@ -1,3 +1,4 @@
+import '../../../../shared/widgets/expressive_motion.dart';
 import '../../../../core/localization/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -29,7 +30,7 @@ class HealthMetricsGrid extends StatelessWidget {
             ? '0.0'
             : '${delta > 0 ? '+' : '−'}${delta.abs().toStringAsFixed(1)}';
     final activity =
-        _card(context, 'Активность', 'Mi Fitness · Health Connect', [
+        _card(context, 'Активность', 'Любые часы и фитнес-трекеры', [
       _value(
           context,
           steps == null
@@ -42,7 +43,7 @@ class HealthMetricsGrid extends StatelessWidget {
       const SizedBox(height: 14),
       ClipRRect(
           borderRadius: BorderRadius.circular(8),
-          child: LinearProgressIndicator(
+          child: AnimatedProgress(
             value: steps == null || stepGoal <= 0
                 ? 0
                 : (steps / stepGoal).clamp(0.0, 1.0).toDouble(),
@@ -59,11 +60,15 @@ class HealthMetricsGrid extends StatelessWidget {
               TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)),
       const SizedBox(height: 14),
       QText(calories == null
-          ? '— активных ккал'
-          : '${calories.round()} активных ккал'),
+          ? '— ккал'
+          : metrics?.caloriesAreTotal == true
+              ? '${calories.round()} общих ккал'
+              : '${calories.round()} активных ккал'),
+      if (metrics?.caloriesAreTotal == true)
+        const QText('Включая основной обмен', style: TextStyle(fontSize: 11)),
       _syncTime(context, metrics?.activityDataAt),
     ]);
-    final body = _card(context, 'Состав тела', 'Picooc · Health Connect', [
+    final body = _card(context, 'Состав тела', 'Умные весы', [
       _value(context,
           weight == null ? '— кг' : '${weight.value.toStringAsFixed(1)} кг'),
       if (weight != null)

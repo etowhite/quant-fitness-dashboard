@@ -13,7 +13,7 @@ final onlineProductProvider = FutureProvider.autoDispose
   var active = true;
   if (query.trim().length < 2) return [];
   final debounce = Completer<void>();
-  final timer = Timer(const Duration(milliseconds: 500), debounce.complete);
+  final timer = Timer(const Duration(milliseconds: 350), debounce.complete);
   ref.onDispose(() {
     active = false;
     timer.cancel();

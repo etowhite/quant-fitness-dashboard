@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../database/database_provider.dart';
 import '../localization/locale_provider.dart';
+import '../security/app_lock.dart';
+import '../../features/water/application/water_presets_provider.dart';
 import '../../app/dashboard_shell.dart';
 import '../../features/goals/application/user_goals_provider.dart';
 import '../../features/settings/application/theme_settings_provider.dart';
@@ -19,7 +21,9 @@ void invalidatePreferences(WidgetRef ref, {bool factory = false}) {
   ref.invalidate(themeSettingsProvider);
   ref.invalidate(localeProvider);
   ref.invalidate(reminderSettingsProvider);
+  ref.invalidate(waterPresetsProvider);
   if (factory) {
+    ref.invalidate(appLockProvider);
     ref.invalidate(selectedTabProvider);
     ref.invalidate(onboardingProvider);
   }

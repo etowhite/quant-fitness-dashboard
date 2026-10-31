@@ -1,5 +1,6 @@
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/localization/locale_provider.dart';
+import 'core/security/app_lock.dart';
 import 'features/onboarding/application/onboarding_provider.dart';
 import 'features/onboarding/presentation/onboarding_screen.dart';
 import 'core/localization/app_strings.dart';
@@ -59,6 +60,8 @@ class _SmartFitnessAppState extends ConsumerState<SmartFitnessApp>
     final language = ref.watch(localeProvider).valueOrNull;
     return MaterialApp(
       title: 'quant',
+      builder: (context, child) =>
+          AppLockGate(child: child ?? const SizedBox.shrink()),
       locale: language?.locale,
       supportedLocales: AppStrings.supportedLocales,
       localizationsDelegates: const [

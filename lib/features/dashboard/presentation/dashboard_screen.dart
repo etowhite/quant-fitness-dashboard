@@ -121,13 +121,16 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen>
     final busy = health.isLoading || _refreshing;
 
     return RefreshIndicator(
-      onRefresh: () => _sync(),
+      onRefresh: () => _sync(requestPermissions: true),
       color: Theme.of(context).colorScheme.secondary,
       child: ListView(
         physics: const AlwaysScrollableScrollPhysics(),
         padding: const EdgeInsets.fromLTRB(20, 16, 20, 28),
         children: [
-          DashboardHeader(date: _day, syncing: busy, onSync: () => _sync()),
+          DashboardHeader(
+              date: _day,
+              syncing: busy,
+              onSync: () => _sync(requestPermissions: true)),
           const SizedBox(height: 24),
           if (metrics?.historyAvailable == true &&
               !metrics!.historyAuthorized) ...[

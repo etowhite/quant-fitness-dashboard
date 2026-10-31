@@ -176,11 +176,11 @@ void main() {
     await tester.pumpAndSettle();
     expect(container.read(themeSettingsProvider).requireValue.mode,
         ThemeMode.light);
-    await tester.ensureVisible(find.byTooltip('Sunset Coral'));
-    await tester.tap(find.byTooltip('Sunset Coral'));
+    await tester.ensureVisible(find.text('Роза'));
+    await tester.tap(find.text('Роза'));
     await tester.pumpAndSettle();
     expect(container.read(themeSettingsProvider).requireValue.palette,
-        AccentPalette.sunsetCoral);
+        AccentPalette.rose);
     expect(tester.takeException(), isNull);
   });
 }

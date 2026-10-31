@@ -12,6 +12,7 @@ import '../../features/goals/domain/user_goals.dart';
 import '../notifications/notification_service.dart';
 import 'isar_database_service.dart';
 import 'food_seed.dart';
+import '../../features/water/application/water_presets_provider.dart';
 
 enum ResetCategory { diary, products, measurements, preferences }
 
@@ -63,6 +64,7 @@ class DataResetService {
       final prefs = await SharedPreferences.getInstance();
       if (!await prefs.clear()) throw StateError('Could not clear preferences');
     } else if (selected.contains(ResetCategory.preferences)) {
+      await WaterPresetsRepository().save([]);
       await goals.save(const UserGoals());
       await preferences.save(
           theme: const ThemeSettings(), reminders: const ReminderSettings());

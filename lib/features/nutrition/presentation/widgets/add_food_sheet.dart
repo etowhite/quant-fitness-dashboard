@@ -2,8 +2,6 @@ import '../../../../core/localization/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter/services.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:isar_community/isar.dart';
 
 import '../../../../core/database/database_provider.dart';
@@ -25,6 +23,9 @@ Future<bool?> showAddFoodSheet(
     showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
+      sheetAnimationStyle: const AnimationStyle(
+          duration: Duration(milliseconds: 420),
+          reverseDuration: Duration(milliseconds: 300)),
       useSafeArea: true,
       backgroundColor: Theme.of(context).colorScheme.surface,
       shape: const RoundedRectangleBorder(
@@ -95,48 +96,12 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
   }
 
   Future<void> _barcode() async {
-    final controller = TextEditingController();
-    String? code;
-    try {
-      code = await showDialog<String>(
-          context: context,
-          builder: (c) => AlertDialog(
-                  title: const QText('Поиск по штрихкоду'),
-                  content: TextField(
-                      controller: controller,
-                      keyboardType: TextInputType.number,
-                      maxLength: 14,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      decoration: InputDecoration(
-                          hintText: context.tr('8 или 12–14 цифр'))),
-                  actions: [
-                    TextButton(
-                        onPressed: () => Navigator.pop(c, 'scan'),
-                        child: const QText('Камера')),
-                    TextButton(
-                        onPressed: () => Navigator.pop(c),
-                        child: const QText('Отмена')),
-                    FilledButton(
-                        onPressed: () =>
-                            Navigator.pop(c, controller.text.trim()),
-                        child: const QText('Найти'))
-                  ]));
-    } finally {
-      controller.dispose();
-    }
+    final code = await Navigator.push<String>(
+        context,
+        MaterialPageRoute(
+            fullscreenDialog: true,
+            builder: (_) => const BarcodeScannerScreen()));
     if (!mounted || code == null) return;
-    if (code == 'scan') {
-      final permission = await Permission.camera.request();
-      if (!mounted) return;
-      if (!permission.isGranted) {
-        setState(() =>
-            _error = 'Камера не разрешена. Используйте ручной ввод штрихкода.');
-        return;
-      }
-      code = await Navigator.push<String>(context,
-          MaterialPageRoute(builder: (_) => const BarcodeScannerScreen()));
-      if (!mounted || code == null) return;
-    }
     if (!OpenFoodFactsService.validBarcode(code)) {
       setState(() => _error = 'Введите 8 или 12–14 цифр штрихкода.');
       return;
@@ -282,6 +247,9 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
 
   List<Widget> _searchWidgets() {
     final products = ref.watch(productSearchProvider(_query));
+    final online = _query.length >= 2
+        ? ref.watch(onlineProductProvider(_query))
+        : const AsyncData(<FoodProduct>[]);
     return [
       TextField(
           controller: _search,
@@ -291,19 +259,26 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
               hintText: context.tr('Начните вводить название'),
               prefixIcon: const Icon(Icons.search))),
       const SizedBox(height: 8),
-      TextButton.icon(
-          onPressed: _lookingUp ? null : _barcode,
-          icon: const Icon(Icons.qr_code_scanner),
-          label: const QText('Найти по штрихкоду')),
-      if (_lookingUp) const LinearProgressIndicator(),
+      AnimatedSwitcher(
+          duration: const Duration(milliseconds: 250),
+          child: _lookingUp || online.isLoading
+              ? const LinearProgressIndicator(key: ValueKey('search-loading'))
+              : const SizedBox(height: 4)),
       if (_error != null) QText(_error!),
-      TextButton.icon(
-          onPressed: () {
-            FocusScope.of(context).unfocus();
-            setState(() => _creating = true);
-          },
-          icon: const Icon(Icons.add),
-          label: const QText('Создать свой продукт')),
+      Wrap(spacing: 8, runSpacing: 8, children: [
+        OutlinedButton.icon(
+            onPressed: _lookingUp ? null : _barcode,
+            icon: const Icon(Icons.qr_code_scanner),
+            label: const QText('Найти по штрихкоду')),
+        OutlinedButton.icon(
+            onPressed: () {
+              FocusScope.of(context).unfocus();
+              setState(() => _creating = true);
+            },
+            icon: const Icon(Icons.add),
+            label: const QText('Создать свой продукт')),
+      ]),
+      const Divider(height: 24, thickness: .5),
       const SizedBox(height: 8),
       products.when(
         skipLoadingOnReload: false,
@@ -312,7 +287,9 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
                 padding: EdgeInsets.all(20),
                 child: QText('Продукты не найдены. Создайте свой продукт.'))
             : Column(children: [
-                for (final product in items)
+                for (final product in items) ...[
+                  if (product != items.first)
+                    const Divider(height: 1, thickness: .5),
                   ListTile(
                     contentPadding: EdgeInsets.zero,
                     title: Text(product.name),
@@ -324,6 +301,7 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
                       setState(() => _selected = product);
                     },
                   ),
+                ],
                 if (items.length == 30)
                   const QText('Уточните название, чтобы сузить поиск.'),
               ]),
@@ -346,12 +324,17 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
             style: TextStyle(
                 fontSize: 12,
                 color: Theme.of(context).colorScheme.onSurfaceVariant)),
-        ref.watch(onlineProductProvider(_query)).when(
+        online.when(
             skipLoadingOnReload: false,
             data: (items) => items.isEmpty
                 ? const QText('Нет продуктов с полным КБЖУ.')
                 : Column(children: [
-                    for (final p in items)
+                    for (final p in items.where((p) =>
+                        !(products.valueOrNull ?? <FoodProduct>[]).any(
+                            (local) =>
+                                local.barcode != null &&
+                                local.barcode == p.barcode))) ...[
+                      const Divider(height: 1, thickness: .5),
                       ListTile(
                           contentPadding: EdgeInsets.zero,
                           title: Text(p.name),
@@ -359,9 +342,9 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
                               '${p.calories.round()} ккал / 100 г · сохранить офлайн'),
                           trailing: const Icon(Icons.cloud_download_outlined),
                           onTap: _lookingUp ? null : () => _chooseOnline(p)),
+                    ],
                   ]),
-            loading: () => const Padding(
-                padding: EdgeInsets.all(12), child: LinearProgressIndicator()),
+            loading: () => const SizedBox.shrink(),
             error: (_, __) => TextButton(
                 onPressed: () => ref.invalidate(onlineProductProvider(_query)),
                 child: const QText('Онлайн-поиск недоступен. Повторить'))),

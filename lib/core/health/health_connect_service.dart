@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:health/health.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'interval_totals.dart';
 
 import '../../features/dashboard/domain/daily_health_metrics.dart';
 
@@ -10,29 +11,14 @@ enum HealthAccess { granted, denied, unavailable, updateRequired }
 // Resolve only coincident records; distinct measurements remain distinct.
 // Overlapping intervals with different boundaries cannot safely be summed away.
 List<HealthDataPoint> prioritizeHealthSources(List<HealthDataPoint> points) {
-  int priority(HealthDataPoint p) {
-    // DataOrigin package identity, never an app's editable display label.
-    final source = p.sourceId.toLowerCase();
-    bool package(String name) => source == name || source.startsWith('$name.');
-    final body = p.type == HealthDataType.WEIGHT ||
-        p.type == HealthDataType.BODY_FAT_PERCENTAGE;
-    if (body && package('com.picooc')) {
-      return 2;
-    }
-    if (!body && package('com.xiaomi.wearable')) {
-      return 2;
-    }
-    return 0;
-  }
-
   final sorted = [...points]..sort((a, b) {
-      final rank = priority(b).compareTo(priority(a));
-      return rank != 0 ? rank : a.uuid.compareTo(b.uuid);
+      final source = a.sourceId.compareTo(b.sourceId);
+      return source != 0 ? source : a.uuid.compareTo(b.uuid);
     });
   final selected = <String, HealthDataPoint>{};
   for (final p in sorted) {
     final key = '${p.type.name}:${p.dateFrom.microsecondsSinceEpoch}:'
-        '${p.type == HealthDataType.ACTIVE_ENERGY_BURNED ? p.dateTo.microsecondsSinceEpoch : ''}';
+        '${p.dateTo.microsecondsSinceEpoch}';
     selected.putIfAbsent(key, () => p);
   }
   return selected.values.toList();
@@ -60,17 +46,21 @@ class HealthConnectService {
   final Health _health;
   final DateTime Function() _clock;
   Future<void>? _configuration;
+  bool get isSupportedPlatform => Platform.isAndroid;
+  Future<bool> activityPermissionGranted() =>
+      Permission.activityRecognition.isGranted;
 
   static const types = [
     HealthDataType.STEPS,
     HealthDataType.ACTIVE_ENERGY_BURNED,
+    HealthDataType.TOTAL_CALORIES_BURNED,
     HealthDataType.WEIGHT,
     HealthDataType.BODY_FAT_PERCENTAGE,
   ];
   static final _permissions = List.filled(types.length, HealthDataAccess.READ);
 
   Future<void> configure() async {
-    if (!Platform.isAndroid) {
+    if (!isSupportedPlatform) {
       throw const HealthAccessException(HealthAccess.unavailable);
     }
     try {
@@ -82,7 +72,7 @@ class HealthConnectService {
   }
 
   Future<HealthAccess> checkAccess() async {
-    if (!Platform.isAndroid) return HealthAccess.unavailable;
+    if (!isSupportedPlatform) return HealthAccess.unavailable;
     await configure();
     final status = await _health.getHealthConnectSdkStatus();
     if (status == HealthConnectSdkStatus.sdkUnavailableProviderUpdateRequired) {
@@ -91,11 +81,23 @@ class HealthConnectService {
     if (status != HealthConnectSdkStatus.sdkAvailable) {
       return HealthAccess.unavailable;
     }
-    return await Permission.activityRecognition.isGranted &&
-            await _health.hasPermissions(types, permissions: _permissions) ==
-                true
-        ? HealthAccess.granted
-        : HealthAccess.denied;
+    // Partial access still permits useful weight/energy data.
+    for (final type in types) {
+      if (await _canRead(type)) return HealthAccess.granted;
+    }
+    return HealthAccess.denied;
+  }
+
+  Future<bool> _canRead(HealthDataType type) async =>
+      await _health
+          .hasPermissions([type], permissions: [HealthDataAccess.READ]) ==
+      true;
+
+  Future<List<HealthDataPoint>> _read(
+      HealthDataType type, DateTime start, DateTime end) async {
+    if (!await _canRead(type)) return [];
+    return _health.removeDuplicates(await _health
+        .getHealthDataFromTypes(types: [type], startTime: start, endTime: end));
   }
 
   Future<HealthAccess> requestPermissions() async {
@@ -104,18 +106,18 @@ class HealthConnectService {
         access == HealthAccess.updateRequired) {
       return access;
     }
-    if (!await Permission.activityRecognition.isGranted &&
-        !await Permission.activityRecognition.request().isGranted) {
-      return HealthAccess.denied;
+    if (!await Permission.activityRecognition.isGranted) {
+      await Permission.activityRecognition.request();
     }
-    if (access == HealthAccess.denied) {
+    if (await _health.hasPermissions(types, permissions: _permissions) !=
+        true) {
       await _health.requestAuthorization(types, permissions: _permissions);
     }
     if (await _health.isHealthDataHistoryAvailable() &&
         !await _health.isHealthDataHistoryAuthorized()) {
       await _health.requestHealthDataHistoryAuthorization();
     }
-    // Recheck all four permissions: partial authorization is not full access.
+    // Recheck after the dialog; optional denials do not hide granted data.
     return checkAccess();
   }
 
@@ -129,47 +131,55 @@ class HealthConnectService {
     final historyAuthorized =
         historyAvailable && await _health.isHealthDataHistoryAuthorized();
     final measurementStart = historyAuthorized ? DateTime(1970) : since;
-    var steps = await _health.getTotalStepsInInterval(midnight, now);
+    int? steps;
+    if (await _canRead(HealthDataType.STEPS) &&
+        await activityPermissionGranted()) {
+      try {
+        steps = await _health.getTotalStepsInInterval(midnight, now);
+      } catch (_) {
+        /* Some providers cannot aggregate; use read-only raw samples. */
+      }
+    }
     if (steps != null && (steps < 0 || steps > 1000000)) steps = null;
     // The aggregate may return zero for an interval with no records.
-    final samples = await _health.getHealthDataFromTypes(
-      types: [HealthDataType.STEPS],
-      startTime: midnight,
-      endTime: now,
-    );
+    final samples = await _read(HealthDataType.STEPS, midnight, now);
+    if ((steps ?? 0) == 0 && samples.isNotEmpty) {
+      steps = nonOverlappingTotal(
+              samples.where((p) => p.unit == HealthDataUnit.COUNT).toList(),
+              midnight,
+              now,
+              maxValue: 1000000)
+          .round();
+    }
     if (steps == 0 && samples.isEmpty) steps = null;
-    final calories = await _health.getHealthDataFromTypes(
-      types: [HealthDataType.ACTIVE_ENERGY_BURNED],
-      startTime: midnight,
-      endTime: now,
-    );
-    final measurements = await _health.getHealthDataFromTypes(
-      types: [HealthDataType.WEIGHT, HealthDataType.BODY_FAT_PERCENTAGE],
-      startTime: measurementStart,
-      endTime: now,
-    );
-    final energy = prioritizeHealthSources(_health.removeDuplicates(calories));
+    var energy =
+        await _read(HealthDataType.ACTIVE_ENERGY_BURNED, midnight, now);
+    double energyTotal(List<HealthDataPoint> points) => nonOverlappingTotal(
+        points.where((p) => p.unit == HealthDataUnit.KILOCALORIE).toList(),
+        midnight,
+        now,
+        maxValue: 100000);
+    var totalCalories = energyTotal(energy);
+    var caloriesAreTotal = false;
+    if (totalCalories == 0) {
+      final fallback =
+          await _read(HealthDataType.TOTAL_CALORIES_BURNED, midnight, now);
+      if (fallback.isNotEmpty) {
+        energy = fallback;
+        totalCalories = energyTotal(fallback);
+        caloriesAreTotal = true;
+      }
+    }
+    final measurements = [
+      ...await _read(HealthDataType.WEIGHT, measurementStart, now),
+      ...await _read(HealthDataType.BODY_FAT_PERCENTAGE, measurementStart, now),
+    ];
     final unique =
         prioritizeHealthSources(_health.removeDuplicates(measurements));
     final weights =
         _points(unique, HealthDataType.WEIGHT, measurementStart, now);
     final fat = _points(
         unique, HealthDataType.BODY_FAT_PERCENTAGE, measurementStart, now);
-    double? totalCalories;
-    for (final point in energy) {
-      final value = point.value;
-      if (value is! NumericHealthValue) continue;
-      if (point.unit != HealthDataUnit.KILOCALORIE) {
-        throw StateError('Unexpected energy unit: ${point.unit}');
-      }
-      final numeric = value.numericValue.toDouble();
-      if (!numeric.isFinite || numeric < 0 || numeric > 100000) continue;
-      final total = (totalCalories ?? 0) + numeric;
-      if (!total.isFinite || total > 100000) {
-        throw StateError('Invalid daily energy total');
-      }
-      totalCalories = total;
-    }
     return DailyHealthMetrics(
       fetchedAt: now,
       activityDataAt: _lastTimestamp([...samples, ...energy], now),
@@ -177,7 +187,8 @@ class HealthConnectService {
       historyAuthorized: historyAuthorized,
       historyAvailable: historyAvailable,
       stepsToday: steps,
-      activeCaloriesToday: totalCalories,
+      activeCaloriesToday: energy.isEmpty ? null : totalCalories,
+      caloriesAreTotal: caloriesAreTotal,
       latestWeight: weights.isEmpty ? null : weights.last,
       latestBodyFat: fat.isEmpty ? null : fat.last,
       weightHistory: weights.where((p) => !p.date.isBefore(since)).toList(),

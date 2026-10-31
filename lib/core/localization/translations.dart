@@ -1,4 +1,39 @@
 const english = <String, String>{
+  "Любые часы и фитнес-трекеры": "Any watch or fitness tracker",
+  "Умные весы": "Smart scales",
+  "Защита входа": "App lock",
+  "Биометрия или ПИН-код устройства · блокировка через минуту в фоне":
+      "Biometrics or device PIN · locks after a minute in the background",
+  "Подтвердите вход в quant": "Unlock quant with your device credentials",
+  "Ваши данные под защитой": "Your data is protected",
+  "Разблокировать": "Unlock",
+  "Не удалось подтвердить вход. Проверьте блокировку устройства и повторите.":
+      "Could not unlock. Check your device screen lock and try again.",
+  "Подтверждение отменено": "Authentication cancelled",
+  "Настройте ПИН-код или биометрию в настройках Android.":
+      "Set up a device PIN or biometrics in Android settings.",
+  "Цветовая палитра": "Color palette",
+  "Роза": "Rose",
+  "Лаванда": "Lavender",
+  "Шалфей": "Sage",
+  "Океан": "Ocean",
+  "Янтарь": "Amber",
+  "Неон": "Neon",
+  "Свой объем": "Custom",
+  "Свой объем воды": "Custom water volume",
+  "Объем, мл": "Volume, ml",
+  "Введите от 1 до 5000 мл": "Enter 1 to 5000 ml",
+  "Сохранить кнопку": "Save quick button",
+  "Можно сохранить до 8 кнопок": "You can save up to 8 buttons",
+  "Добавить воду": "Add water",
+  "Ввести штрихкод вручную": "Enter barcode manually",
+  "Фонарик": "Flashlight",
+  "Камера недоступна. Введите штрихкод вручную.":
+      "Camera unavailable. Enter the barcode manually.",
+  "Включая основной обмен": "Includes resting energy",
+  "— ккал": "— kcal",
+  "Версия 1.4.0 · питание, движение и прогресс":
+      "Version 1.4.0 · nutrition, activity and progress",
   "Дашборд": "Dashboard",
   "Питание": "Nutrition",
   "Замеры": "Measurements",
@@ -247,8 +282,8 @@ const english = <String, String>{
   "Импорт резервной копии JSON": "Import JSON backup",
   "Подключить Health Connect и уведомления?":
       "Connect Health Connect & reminders?",
-  "quant читает шаги Mi Fitness и вес/жир Picooc через Health Connect локально на устройстве. Сначала включи выгрузку в исходных приложениях. Разрешения можно отозвать в любой момент.":
-      "quant reads Mi Fitness steps and Picooc weight/body fat through Health Connect on your device. Enable sharing in the source apps first. You can revoke access anytime.",
+  "quant читает шаги любых часов и фитнес-трекеров и вес/жир умных весов через Health Connect локально на устройстве. Сначала включи выгрузку в исходных приложениях. Разрешения можно отозвать в любой момент.":
+      "quant reads steps from any watch or fitness tracker and weight/body fat from smart scales through Health Connect on your device. Enable sharing in the source apps first. You can revoke access anytime.",
   "Подключить и начать": "Connect & Start",
   "Продолжить без подключения": "Continue without connecting",
   "Пройти ознакомление заново": "Replay Onboarding",
@@ -330,6 +365,7 @@ const english = <String, String>{
       "Recipe calculation using USDA SR Legacy (2018)"
 };
 const templates = <String, String>{
+  "{0} общих ккал": "{0} total kcal",
   "Шаг {0} из 3": "Step {0} of 3",
   "Записей: {0}": "Entries: {0}",
   "Цель: {0} шагов": "Goal: {0} steps",

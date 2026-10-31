@@ -1,3 +1,4 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -8,6 +9,7 @@ import 'package:smart_fitness_dashboard/features/goals/application/user_goals_pr
 import 'package:smart_fitness_dashboard/features/goals/domain/user_goals.dart';
 
 void main() {
+  setUp(() => SharedPreferences.setMockInitialValues({}));
   testWidgets(
       'water progress uses user goal and selected day; quick portions available',
       (tester) async {

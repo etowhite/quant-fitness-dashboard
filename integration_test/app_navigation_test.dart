@@ -1,3 +1,4 @@
+import 'package:smart_fitness_dashboard/app/dashboard_shell.dart';
 import 'package:smart_fitness_dashboard/features/settings/data/app_preferences_repository.dart';
 import 'package:smart_fitness_dashboard/core/localization/app_language.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,28 +17,23 @@ void main() {
     await AppPreferencesRepository().save(language: AppLanguage.ru);
     await app.main();
     for (var i = 0;
-        i < 100 && find.byType(NavigationBar).evaluate().isEmpty;
+        i < 100 && find.byType(FloatingBottomBar).evaluate().isEmpty;
         i++) {
       await tester.pump(const Duration(milliseconds: 200));
     }
-    expect(find.byType(NavigationBar), findsOneWidget);
-    final navigation = find.byType(NavigationBar);
-    await tester
-        .tap(find.descendant(of: navigation, matching: find.text('Питание')));
+    expect(find.byType(FloatingBottomBar), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('tab-nutrition')));
     await tester.pumpAndSettle(const Duration(milliseconds: 100),
         EnginePhase.sendSemanticsUpdate, const Duration(seconds: 30));
     expect(find.text('Сводка дня'), findsOneWidget);
-    await tester
-        .tap(find.descendant(of: navigation, matching: find.text('Замеры')));
+    await tester.tap(find.byKey(const ValueKey('tab-measurements')));
     await tester.pumpAndSettle(const Duration(milliseconds: 100),
         EnginePhase.sendSemanticsUpdate, const Duration(seconds: 30));
     expect(find.text('Антропометрия'), findsOneWidget);
-    await tester
-        .tap(find.descendant(of: navigation, matching: find.text('Настройки')));
+    await tester.tap(find.byKey(const ValueKey('tab-settings')));
     await tester.pumpAndSettle();
     expect(find.text('Оформление'), findsOneWidget);
-    await tester
-        .tap(find.descendant(of: navigation, matching: find.text('Дашборд')));
+    await tester.tap(find.byKey(const ValueKey('tab-dashboard')));
     await tester.pumpAndSettle(const Duration(milliseconds: 100),
         EnginePhase.sendSemanticsUpdate, const Duration(seconds: 30));
     expect(find.text('Питание сегодня'), findsOneWidget);

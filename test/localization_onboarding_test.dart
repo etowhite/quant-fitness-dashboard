@@ -160,7 +160,9 @@ void main() {
     await tester.pumpWidget(UncontrolledProviderScope(
         container: c, child: const LocalizedHarness(settings: true)));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('EN'));
+    await tester.tap(find.byType(DropdownButtonFormField<AppLanguage>));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('English').last);
     await tester.pumpAndSettle();
     expect(find.text('Settings'), findsOneWidget);
     expect(find.text('Language'), findsOneWidget);

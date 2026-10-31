@@ -1,3 +1,4 @@
+import '../../../../features/water/application/water_presets_provider.dart';
 import '../../../../core/localization/app_strings.dart';
 import '../../../../core/localization/locale_provider.dart';
 import '../../../settings/application/theme_settings_provider.dart';
@@ -50,6 +51,7 @@ class _BackupCardState extends ConsumerState<BackupCard> {
         ref.invalidate(themeSettingsProvider);
         ref.invalidate(localeProvider);
         ref.invalidate(reminderSettingsProvider);
+        ref.invalidate(waterPresetsProvider);
         message = 'Данные восстановлены';
       } else if (await service.export()) {
         message = 'Резервная копия сохранена';

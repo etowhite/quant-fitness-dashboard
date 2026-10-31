@@ -1,3 +1,4 @@
+import '../../../../shared/widgets/expressive_motion.dart';
 import '../../../../core/localization/app_strings.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +35,9 @@ class NutritionSummaryCard extends StatelessWidget {
                     Theme.of(context).colorScheme.primary.withAlpha(26),
               )),
               Column(mainAxisSize: MainAxisSize.min, children: [
-                QText(remaining.abs().round().toString(),
+                AnimatedMetric(
+                    value: remaining.abs(),
+                    format: (value) => value.round().toString(),
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                         color: Theme.of(context).colorScheme.primary)),
                 QText(remaining >= 0 ? 'ккал осталось' : 'ккал сверх нормы',
@@ -54,7 +57,9 @@ class NutritionSummaryCard extends StatelessWidget {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       QText('Питание сегодня', style: Theme.of(context).textTheme.titleLarge),
       const SizedBox(height: 6),
-      QText('${totals.calories.round()} / ${calorieGoal.round()} ккал',
+      AnimatedMetric(
+          value: totals.calories,
+          format: (value) => '${value.round()} / ${calorieGoal.round()} ккал',
           style:
               TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)),
       const SizedBox(height: 24),
@@ -85,14 +90,17 @@ class NutritionSummaryCard extends StatelessWidget {
         children: [
           Wrap(alignment: WrapAlignment.spaceBetween, spacing: 16, children: [
             QText(name),
-            QText('${value.toStringAsFixed(1)} / ${goal.round()} г',
+            AnimatedMetric(
+                value: value,
+                format: (current) =>
+                    '${current.toStringAsFixed(1)} / ${goal.round()} г',
                 style: TextStyle(
                     color: Theme.of(context).colorScheme.onSurfaceVariant)),
           ]),
           const SizedBox(height: 8),
           ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: LinearProgressIndicator(
+              child: AnimatedProgress(
                 value: _progress(value, goal),
                 minHeight: 6,
                 color: Theme.of(context).colorScheme.primary,

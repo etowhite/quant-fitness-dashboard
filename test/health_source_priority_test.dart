@@ -19,14 +19,13 @@ void main() {
           sourceId: source,
           sourceName: source);
 
-  test('Picooc and Mi Fitness win coincident records regardless of input order',
-      () {
+  test('coincident records resolve deterministically for any provider', () {
     final points = [
       point('phone', 70, HealthDataType.WEIGHT),
-      point('com.picooc', 71, HealthDataType.WEIGHT),
+      point('com.vendor.scale', 71, HealthDataType.WEIGHT),
       point('phone', 200, HealthDataType.ACTIVE_ENERGY_BURNED),
-      point('com.xiaomi.wearable', 180, HealthDataType.ACTIVE_ENERGY_BURNED),
-      point('com.picooc', 72, HealthDataType.WEIGHT, minute: 1)
+      point('com.vendor.tracker', 180, HealthDataType.ACTIVE_ENERGY_BURNED),
+      point('com.vendor.scale', 72, HealthDataType.WEIGHT, minute: 1)
     ];
     for (final input in [points, points.reversed.toList()]) {
       final result = prioritizeHealthSources(input);

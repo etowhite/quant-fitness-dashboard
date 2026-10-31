@@ -1,4 +1,5 @@
 import '../localization/app_language.dart';
+import '../../features/water/application/water_presets_provider.dart';
 import '../../features/settings/domain/theme_settings.dart';
 import '../../features/settings/domain/reminder_settings.dart';
 import 'dart:convert';
@@ -19,12 +20,14 @@ class BackupDocument {
       required this.entries,
       required this.measurements,
       this.language = AppLanguage.system,
+      this.waterPresets = const [],
       this.theme = const ThemeSettings(),
       this.reminders = const ReminderSettings(),
       this.water = const []});
   static const maxBytes = 10 * 1024 * 1024;
   final UserGoals goals;
   final AppLanguage language;
+  final List<int> waterPresets;
   final ThemeSettings theme;
   final ReminderSettings reminders;
   final List<FoodProduct> products;
@@ -34,7 +37,8 @@ class BackupDocument {
 
   String encode() => jsonEncode({
         'format': 'smart_fitness_backup',
-        'version': 4,
+        'version': 5,
+        'waterPresets': WaterPresetsRepository.validate(waterPresets),
         'language': language.name,
         'application': 'quant',
         'theme': theme.toJson(),
@@ -98,7 +102,8 @@ class BackupDocument {
         (raw['version'] != 1 &&
             raw['version'] != 2 &&
             raw['version'] != 3 &&
-            raw['version'] != 4)) {
+            raw['version'] != 4 &&
+            raw['version'] != 5)) {
       throw const FormatException('Неподдерживаемый формат копии');
     }
     List<Map<String, dynamic>> rows(String key) {
@@ -232,13 +237,16 @@ class BackupDocument {
         entries: entries,
         measurements: measurements,
         water: water,
-        language: raw['version'] == 4
+        waterPresets: raw['version'] == 5
+            ? WaterPresetsRepository.validate(raw['waterPresets'])
+            : [],
+        language: (raw['version'] as int) >= 4
             ? AppLanguage.parse(raw['language'])
             : AppLanguage.system,
-        theme: (raw['version'] == 3 || raw['version'] == 4)
+        theme: (raw['version'] as int) >= 3
             ? ThemeSettings.fromJson(_settingsMap(raw, 'theme'))
             : const ThemeSettings(),
-        reminders: (raw['version'] == 3 || raw['version'] == 4)
+        reminders: (raw['version'] as int) >= 3
             ? ReminderSettings.fromJson(_settingsMap(raw, 'reminders'))
             : const ReminderSettings());
   }

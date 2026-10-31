@@ -13,6 +13,9 @@ function dump(...args) {
 }
 const allowed = new Set([
   'android.permission.INTERNET',
+  'android.permission.USE_BIOMETRIC',
+  'android.permission.USE_FINGERPRINT',
+  'android.permission.health.READ_TOTAL_CALORIES_BURNED',
   'android.permission.POST_NOTIFICATIONS',
   'android.permission.SCHEDULE_EXACT_ALARM',
   'android.permission.RECEIVE_BOOT_COMPLETED',

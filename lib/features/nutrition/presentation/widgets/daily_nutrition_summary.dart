@@ -1,3 +1,4 @@
+import '../../../../shared/widgets/expressive_motion.dart';
 import '../../../../core/localization/app_strings.dart';
 import 'package:flutter/material.dart';
 
@@ -35,8 +36,10 @@ class DailyNutritionSummary extends StatelessWidget {
               style: TextStyle(
                   color: Theme.of(context).colorScheme.onSurfaceVariant)),
           const SizedBox(height: 4),
-          QText(
-              '${value.toStringAsFixed(label == 'Калории' ? 0 : 1)} / ${goal.toStringAsFixed(goal == goal.roundToDouble() ? 0 : 1)} $unit',
+          AnimatedMetric(
+              value: value,
+              format: (current) =>
+                  '${current.toStringAsFixed(label == 'Калории' ? 0 : 1)} / ${goal.toStringAsFixed(goal == goal.roundToDouble() ? 0 : 1)} $unit',
               style: TextStyle(
                   color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w600)),

@@ -9,6 +9,7 @@ class DailyHealthMetrics {
     this.bodyDataAt,
     this.historyAuthorized = false,
     this.historyAvailable = false,
+    this.caloriesAreTotal = false,
     required this.stepsToday,
     required this.activeCaloriesToday,
     required this.latestWeight,
@@ -20,6 +21,7 @@ class DailyHealthMetrics {
   final DateTime? activityDataAt, bodyDataAt;
   final bool historyAuthorized;
   final bool historyAvailable;
+  final bool caloriesAreTotal;
   // Null means no samples; zero is a real measured value.
   final int? stepsToday;
   final double? activeCaloriesToday;

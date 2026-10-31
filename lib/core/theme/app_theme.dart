@@ -23,6 +23,11 @@ abstract final class AppTheme {
             AccentPalette.electricViolet => const Color(0xFF6D28D9),
             AccentPalette.sunsetCoral => const Color(0xFFC73647),
             AccentPalette.mintOcean => const Color(0xFF047857),
+            AccentPalette.rose => const Color(0xFFA33462),
+            AccentPalette.lavender => const Color(0xFF7053A2),
+            AccentPalette.sage => const Color(0xFF3F6C4B),
+            AccentPalette.ocean => const Color(0xFF0369A1),
+            AccentPalette.amber => const Color(0xFF975700),
           };
     final secondary = dark
         ? palette.secondary
@@ -31,6 +36,11 @@ abstract final class AppTheme {
             AccentPalette.electricViolet => const Color(0xFF0E7490),
             AccentPalette.sunsetCoral => const Color(0xFFA15C00),
             AccentPalette.mintOcean => const Color(0xFF1D4ED8),
+            AccentPalette.rose => const Color(0xFF813C79),
+            AccentPalette.lavender => const Color(0xFF67568B),
+            AccentPalette.sage => const Color(0xFF336D5A),
+            AccentPalette.ocean => const Color(0xFF1D4ED8),
+            AccentPalette.amber => const Color(0xFFB54708),
           };
     final background = dark
         ? (settings.amoled ? Colors.black : AppColors.background)

@@ -12,37 +12,60 @@ class LanguageCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final value = ref.watch(localeProvider).valueOrNull ?? AppLanguage.system;
     return Card(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(28),
+            side: BorderSide(
+                color: Theme.of(context).colorScheme.outlineVariant)),
         child: Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  QText('Язык', style: Theme.of(context).textTheme.titleLarge),
-                  const SizedBox(height: 12),
-                  SegmentedButton<AppLanguage>(
-                      segments: const [
-                        ButtonSegment(
-                            value: AppLanguage.ru, label: QText('RU')),
-                        ButtonSegment(
-                            value: AppLanguage.en, label: QText('EN')),
-                        ButtonSegment(
-                            value: AppLanguage.system, label: QText('Авто'))
-                      ],
-                      selected: {
-                        value
-                      },
-                      onSelectionChanged: (v) async {
-                        try {
-                          await ref.read(localeProvider.notifier).save(v.first);
-                        } catch (_) {
-                          if (context.mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: QText(
-                                        'Не удалось сохранить настройки.')));
-                          }
-                        }
-                      }),
+                  Row(children: [
+                    const Icon(Icons.language),
+                    const SizedBox(width: 12),
+                    const Expanded(child: QText('Язык')),
+                    SizedBox(
+                        width: 150,
+                        child: DropdownButtonFormField<AppLanguage>(
+                          isExpanded: true,
+                          key: ValueKey(value),
+                          initialValue: value,
+                          decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 12),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(32)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(32),
+                                  borderSide: BorderSide(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      width: 2))),
+                          items: const [
+                            DropdownMenuItem(
+                                value: AppLanguage.ru, child: Text('Русский')),
+                            DropdownMenuItem(
+                                value: AppLanguage.en, child: Text('English')),
+                            DropdownMenuItem(
+                                value: AppLanguage.system, child: QText('Авто'))
+                          ],
+                          onChanged: (v) async {
+                            if (v == null) return;
+                            try {
+                              await ref.read(localeProvider.notifier).save(v);
+                            } catch (_) {
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: QText(
+                                            'Не удалось сохранить настройки.')));
+                              }
+                            }
+                          },
+                        )),
+                  ]),
+                  const Divider(height: 28),
                   const SizedBox(height: 12),
                   OutlinedButton.icon(
                       onPressed: () async {
