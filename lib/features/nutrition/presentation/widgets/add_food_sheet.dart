@@ -15,11 +15,14 @@ import 'create_product_form.dart';
 import '../../application/online_product_provider.dart';
 import '../../data/open_food_facts_service.dart';
 import 'barcode_scanner_screen.dart';
+import 'saved_food_widgets.dart';
+import '../../data/recipe.dart';
 
 Future<bool?> showAddFoodSheet(
   BuildContext context, {
   required DateTime date,
   String mealType = 'Завтрак',
+  FoodProduct? product,
 }) =>
     showModalBottomSheet<bool>(
       context: context,
@@ -29,12 +32,14 @@ Future<bool?> showAddFoodSheet(
           reverseDuration: Duration(milliseconds: 300)),
       useSafeArea: true,
       backgroundColor: Theme.of(context).colorScheme.surface,
-      builder: (_) => AddFoodSheet(date: date, initialMeal: mealType),
+      builder: (_) =>
+          AddFoodSheet(date: date, initialMeal: mealType, product: product),
     );
 
 class AddFoodSheet extends ConsumerStatefulWidget {
   const AddFoodSheet(
-      {required this.date, required this.initialMeal, super.key});
+      {required this.date, required this.initialMeal, this.product, super.key});
+  final FoodProduct? product;
   final DateTime date;
   final String initialMeal;
 
@@ -52,12 +57,14 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
   bool _creating = false;
   bool _saving = false;
   bool _lookingUp = false;
+  bool _byServings = false;
   String? _error;
 
   @override
   void initState() {
     super.initState();
     _meal = widget.initialMeal;
+    _selected = widget.product;
   }
 
   @override
@@ -137,7 +144,7 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
   Future<void> _add() async {
     if (_saving || !_portionForm.currentState!.validate()) return;
     final product = _selected!;
-    final grams = parseNutritionNumber(_weight.text, positive: true)!;
+    final grams = _grams!;
     final meal = _meal;
     FocusScope.of(context).unfocus();
     setState(() {
@@ -166,7 +173,12 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
     final error = validateLocalizedNumber(context, text,
         positive: true, max: InputLimits.portionGrams);
     if (error != null) return error;
-    final factor = parseNutritionNumber(text!, positive: true)! / 100;
+    final amount = parseNutritionNumber(text!, positive: true)!;
+    final grams = _byServings ? amount * _servingGrams! : amount;
+    if (grams > InputLimits.portionGrams) {
+      return context.tr('Слишком большой вес порции');
+    }
+    final factor = grams / 100;
     final product = _selected!;
     if (![product.calories, product.proteins, product.fats, product.carbs]
         .every((value) => (value * factor).isFinite)) {
@@ -251,6 +263,12 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
         ? ref.watch(onlineProductProvider(_query))
         : const AsyncData(<FoodProduct>[]);
     return [
+      SavedFoods(
+          onSelected: (p) => setState(() {
+                _selected = p;
+                _byServings = false;
+                _weight.text = '100';
+              })),
       LabeledField(
           label: context.tr('Найти продукт'),
           child: TextField(
@@ -294,9 +312,11 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
                   ListTile(
                     contentPadding: EdgeInsets.zero,
                     title: Text(product.name),
-                    subtitle: QText(
-                        '${product.category} · ${product.calories.round()} ккал\nБ ${product.proteins.toStringAsFixed(1)} · Ж ${product.fats.toStringAsFixed(1)} · У ${product.carbs.toStringAsFixed(1)} / 100 г${product.source == null ? '' : '\n${product.source}'}'),
-                    trailing: const Icon(Icons.chevron_right),
+                    subtitle: QText(product.recipeJson != null &&
+                            !Recipe.decode(product.recipeJson!).complete
+                        ? 'Расчёт неполный: у ингредиента нет КБЖУ. Добавление в дневник недоступно.'
+                        : '${product.category} · ${product.calories.round()} ккал\nБ ${product.proteins.toStringAsFixed(1)} · Ж ${product.fats.toStringAsFixed(1)} · У ${product.carbs.toStringAsFixed(1)} / 100 г${product.source == null ? '' : '\n${product.source}'}'),
+                    trailing: FavoriteButton(product: product),
                     onTap: () {
                       FocusScope.of(context).unfocus();
                       setState(() => _selected = product);
@@ -341,7 +361,7 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
                           title: Text(p.name),
                           subtitle: QText(
                               '${p.calories.round()} ккал / 100 г · сохранить офлайн'),
-                          trailing: const Icon(Icons.cloud_download_outlined),
+                          trailing: FavoriteButton(product: p),
                           onTap: _lookingUp ? null : () => _chooseOnline(p)),
                     ],
                   ]),
@@ -355,12 +375,37 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
 
   List<Widget> _portionWidgets() {
     final product = _selected!;
-    final grams = _validatePortion(_weight.text) == null
-        ? parseNutritionNumber(_weight.text, positive: true)
-        : null;
+    final recipe =
+        product.recipeJson == null ? null : Recipe.decode(product.recipeJson!);
+    final grams = _validatePortion(_weight.text) == null ? _grams : null;
     final factor = (grams ?? 0) / 100;
     return [
-      Text(product.name, style: Theme.of(context).textTheme.titleMedium),
+      Row(children: [
+        Expanded(
+            child: Text(product.name,
+                style: Theme.of(context).textTheme.titleMedium)),
+        FavoriteButton(product: product)
+      ]),
+      if (recipe != null && !recipe.complete)
+        const QText(
+            'Расчёт неполный: у ингредиента нет КБЖУ. Добавление в дневник недоступно.'),
+      if (recipe?.servings != null)
+        Wrap(spacing: 8, children: [
+          ChoiceChip(
+              label: const QText('Граммы'),
+              selected: !_byServings,
+              onSelected: (_) => setState(() {
+                    _byServings = false;
+                    _weight.text = '100';
+                  })),
+          ChoiceChip(
+              label: const QText('Порции'),
+              selected: _byServings,
+              onSelected: (_) => setState(() {
+                    _byServings = true;
+                    _weight.text = '1';
+                  })),
+        ]),
       if (product.source != null)
         QText(product.source!,
             style: TextStyle(
@@ -371,6 +416,8 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
               ? null
               : () => setState(() {
                     _selected = null;
+                    _byServings = false;
+                    _weight.text = '100';
                     _error = null;
                   }),
           child: const QText('Выбрать другой продукт')),
@@ -378,30 +425,33 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
       Form(
           key: _portionForm,
           child: LabeledField(
-              label: context.tr('Вес порции'),
+              label:
+                  context.tr(_byServings ? 'Количество порций' : 'Вес порции'),
               child: TextFormField(
                 controller: _weight,
                 enabled: !_saving,
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
-                decoration: InputDecoration(suffixText: context.tr('г')),
+                decoration: InputDecoration(
+                    suffixText: context.tr(_byServings ? 'порций' : 'г')),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: _validatePortion,
                 onChanged: (_) => setState(() {}),
               ))),
       const SizedBox(height: 12),
-      Wrap(spacing: 10, runSpacing: 10, children: [
-        for (final weight in [50, 100, 150, 200, 250])
-          ChoiceChip(
-              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              label: QText('$weight г'),
-              selected: grams == weight,
-              onSelected: _saving
-                  ? null
-                  : (_) => setState(() => _weight.text = '$weight'))
-      ]),
+      if (!_byServings)
+        Wrap(spacing: 10, runSpacing: 10, children: [
+          for (final weight in [50, 100, 150, 200, 250])
+            ChoiceChip(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                label: QText('$weight г'),
+                selected: grams == weight,
+                onSelected: _saving
+                    ? null
+                    : (_) => setState(() => _weight.text = '$weight'))
+        ]),
       const SizedBox(height: 16),
-      if (grams != null)
+      if (grams != null && recipe?.complete != false)
         QText(
             '${(product.calories * factor).toStringAsFixed(0)} ккал\n'
             'Б ${(product.proteins * factor).toStringAsFixed(1)} · Ж ${(product.fats * factor).toStringAsFixed(1)} · У ${(product.carbs * factor).toStringAsFixed(1)} г',
@@ -412,8 +462,20 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
       if (_error != null) QText(_error!),
       const SizedBox(height: 20),
       FilledButton(
-          onPressed: _saving ? null : _add,
+          onPressed: _saving || recipe?.complete == false ? null : _add,
           child: QText(_saving ? 'Добавление…' : 'Добавить в дневник')),
     ];
+  }
+
+  double? get _servingGrams {
+    final raw = _selected?.recipeJson;
+    if (raw == null) return null;
+    final r = Recipe.decode(raw);
+    return r.servings == null ? null : r.yieldGrams / r.servings!;
+  }
+
+  double? get _grams {
+    final value = parseNutritionNumber(_weight.text, positive: true);
+    return value == null ? null : value * (_byServings ? _servingGrams! : 1);
   }
 }

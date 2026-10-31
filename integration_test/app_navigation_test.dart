@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'dart:ui' as ui;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smart_fitness_dashboard/core/database/database_provider.dart';
 import 'package:smart_fitness_dashboard/core/database/local_day.dart';
@@ -57,6 +58,20 @@ void main() {
       await channel.invokeMethod<void>('testWidgetAddWater');
     }
     await saved.timeout(const Duration(seconds: 90));
+    // Exercise native MediaStore and FileProvider with an actual PNG, not a path.
+    final recorder = ui.PictureRecorder();
+    final canvas = Canvas(recorder);
+    canvas.drawColor(const Color(0xFF121212), BlendMode.src);
+    final picture = recorder.endRecording();
+    final image = await picture.toImage(320, 240);
+    final png = await image.toByteData(format: ui.ImageByteFormat.png);
+    image.dispose();
+    picture.dispose();
+    const reports = MethodChannel('quant/report_image');
+    expect(await reports.invokeMethod<bool>('save', png!.buffer.asUint8List()),
+        true);
+    expect(await reports.invokeMethod<bool>('share', png.buffer.asUint8List()),
+        true);
     expect(tester.takeException(), isNull);
   });
 }

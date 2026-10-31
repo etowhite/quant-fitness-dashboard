@@ -1,4 +1,3 @@
-import 'package:isar_community/isar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../features/nutrition/data/food_product.dart';
 import '../../features/nutrition/data/food_log_entry.dart';
@@ -27,10 +26,7 @@ class DataResetService {
   Future<Map<ResetCategory, int>> counts() async => {
         ResetCategory.diary: await database.isar.foodLogEntries.count() +
             await database.isar.waterLogEntries.count(),
-        ResetCategory.products: await database.isar.foodProducts
-            .filter()
-            .catalogueKeyIsNull()
-            .count(),
+        ResetCategory.products: await database.isar.foodProducts.count(),
         ResetCategory.measurements:
             await database.isar.bodyMeasurements.count(),
         ResetCategory.preferences: 3,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'translations.dart';
+import 'food_feature_strings.dart';
 
 class AppStrings {
   const AppStrings(this.locale);
@@ -12,7 +13,7 @@ class AppStrings {
       const AppStrings(Locale('ru'));
   String text(String source) {
     if (locale.languageCode != 'en') return source;
-    final direct = english[source];
+    final direct = foodFeatureEnglish[source] ?? english[source];
     if (direct != null) return direct;
     for (final entry in templates.entries) {
       final parts = entry.key.split(RegExp(r'\{\d+\}'));

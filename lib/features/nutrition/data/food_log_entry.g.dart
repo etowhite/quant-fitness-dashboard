@@ -42,18 +42,23 @@ const FoodLogEntrySchema = CollectionSchema(
       name: r'mealType',
       type: IsarType.string,
     ),
-    r'productName': PropertySchema(
+    r'productKey': PropertySchema(
       id: 5,
+      name: r'productKey',
+      type: IsarType.string,
+    ),
+    r'productName': PropertySchema(
+      id: 6,
       name: r'productName',
       type: IsarType.string,
     ),
     r'proteins': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'proteins',
       type: IsarType.double,
     ),
     r'weightGrams': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'weightGrams',
       type: IsarType.double,
     )
@@ -76,6 +81,19 @@ const FoodLogEntrySchema = CollectionSchema(
           caseSensitive: false,
         )
       ],
+    ),
+    r'productKey': IndexSchema(
+      id: -1319694291112507169,
+      name: r'productKey',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'productKey',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
     )
   },
   links: {},
@@ -93,6 +111,12 @@ int _foodLogEntryEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.mealType.length * 3;
+  {
+    final value = object.productKey;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   bytesCount += 3 + object.productName.length * 3;
   return bytesCount;
 }
@@ -108,9 +132,10 @@ void _foodLogEntrySerialize(
   writer.writeDateTime(offsets[2], object.date);
   writer.writeDouble(offsets[3], object.fats);
   writer.writeString(offsets[4], object.mealType);
-  writer.writeString(offsets[5], object.productName);
-  writer.writeDouble(offsets[6], object.proteins);
-  writer.writeDouble(offsets[7], object.weightGrams);
+  writer.writeString(offsets[5], object.productKey);
+  writer.writeString(offsets[6], object.productName);
+  writer.writeDouble(offsets[7], object.proteins);
+  writer.writeDouble(offsets[8], object.weightGrams);
 }
 
 FoodLogEntry _foodLogEntryDeserialize(
@@ -126,9 +151,10 @@ FoodLogEntry _foodLogEntryDeserialize(
   object.fats = reader.readDouble(offsets[3]);
   object.id = id;
   object.mealType = reader.readString(offsets[4]);
-  object.productName = reader.readString(offsets[5]);
-  object.proteins = reader.readDouble(offsets[6]);
-  object.weightGrams = reader.readDouble(offsets[7]);
+  object.productKey = reader.readStringOrNull(offsets[5]);
+  object.productName = reader.readString(offsets[6]);
+  object.proteins = reader.readDouble(offsets[7]);
+  object.weightGrams = reader.readDouble(offsets[8]);
   return object;
 }
 
@@ -150,10 +176,12 @@ P _foodLogEntryDeserializeProp<P>(
     case 4:
       return (reader.readString(offset)) as P;
     case 5:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 6:
-      return (reader.readDouble(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 7:
+      return (reader.readDouble(offset)) as P;
+    case 8:
       return (reader.readDouble(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -346,6 +374,73 @@ extension FoodLogEntryQueryWhere
         upper: [upperDate],
         includeUpper: includeUpper,
       ));
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterWhereClause>
+      productKeyIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'productKey',
+        value: [null],
+      ));
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterWhereClause>
+      productKeyIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'productKey',
+        lower: [null],
+        includeLower: false,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterWhereClause> productKeyEqualTo(
+      String? productKey) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'productKey',
+        value: [productKey],
+      ));
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterWhereClause>
+      productKeyNotEqualTo(String? productKey) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'productKey',
+              lower: [],
+              upper: [productKey],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'productKey',
+              lower: [productKey],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'productKey',
+              lower: [productKey],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'productKey',
+              lower: [],
+              upper: [productKey],
+              includeUpper: false,
+            ));
+      }
     });
   }
 }
@@ -805,6 +900,160 @@ extension FoodLogEntryQueryFilter
   }
 
   QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterFilterCondition>
+      productKeyIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'productKey',
+      ));
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterFilterCondition>
+      productKeyIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'productKey',
+      ));
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterFilterCondition>
+      productKeyEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'productKey',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterFilterCondition>
+      productKeyGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'productKey',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterFilterCondition>
+      productKeyLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'productKey',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterFilterCondition>
+      productKeyBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'productKey',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterFilterCondition>
+      productKeyStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'productKey',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterFilterCondition>
+      productKeyEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'productKey',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterFilterCondition>
+      productKeyContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'productKey',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterFilterCondition>
+      productKeyMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'productKey',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterFilterCondition>
+      productKeyIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'productKey',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterFilterCondition>
+      productKeyIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'productKey',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterFilterCondition>
       productNameEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -1141,6 +1390,19 @@ extension FoodLogEntryQuerySortBy
     });
   }
 
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterSortBy> sortByProductKey() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'productKey', Sort.asc);
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterSortBy>
+      sortByProductKeyDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'productKey', Sort.desc);
+    });
+  }
+
   QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterSortBy> sortByProductName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'productName', Sort.asc);
@@ -1254,6 +1516,19 @@ extension FoodLogEntryQuerySortThenBy
     });
   }
 
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterSortBy> thenByProductKey() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'productKey', Sort.asc);
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterSortBy>
+      thenByProductKeyDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'productKey', Sort.desc);
+    });
+  }
+
   QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterSortBy> thenByProductName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'productName', Sort.asc);
@@ -1326,6 +1601,13 @@ extension FoodLogEntryQueryWhereDistinct
     });
   }
 
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QDistinct> distinctByProductKey(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'productKey', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<FoodLogEntry, FoodLogEntry, QDistinct> distinctByProductName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1381,6 +1663,12 @@ extension FoodLogEntryQueryProperty
   QueryBuilder<FoodLogEntry, String, QQueryOperations> mealTypeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'mealType');
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, String?, QQueryOperations> productKeyProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'productKey');
     });
   }
 

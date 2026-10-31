@@ -55,6 +55,8 @@ class MainActivity : FlutterFragmentActivity() {
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "quant/report_image")
+            .setMethodCallHandler { call, result -> ReportImages.handle(this, call, result) }
         widgetChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "quant/home_widgets").also { channel ->
             channel.setMethodCallHandler { call, result ->
                 when(call.method) {

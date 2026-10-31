@@ -3,6 +3,7 @@ import '../../features/water/application/water_presets_provider.dart';
 import '../../features/settings/domain/theme_settings.dart';
 import '../../features/settings/domain/reminder_settings.dart';
 import 'dart:convert';
+import '../../features/nutrition/data/recipe.dart';
 
 import '../../features/goals/domain/user_goals.dart';
 import '../../features/measurements/data/body_measurement.dart';
@@ -37,7 +38,7 @@ class BackupDocument {
 
   String encode() => jsonEncode({
         'format': 'smart_fitness_backup',
-        'version': 5,
+        'version': 6,
         'waterPresets': WaterPresetsRepository.validate(waterPresets),
         'language': language.name,
         'application': 'quant',
@@ -55,7 +56,10 @@ class BackupDocument {
               'category': p.category,
               'catalogueKey': p.catalogueKey,
               'barcode': p.barcode,
-              'source': p.source
+              'source': p.source,
+              'stableKey': p.stableKey,
+              'isFavorite': p.isFavorite,
+              'recipeJson': p.recipeJson
             }
         ],
         'entries': [
@@ -64,6 +68,7 @@ class BackupDocument {
               'date': e.date.toIso8601String(),
               'mealType': e.mealType,
               'productName': e.productName,
+              'productKey': e.productKey,
               'weightGrams': e.weightGrams,
               'calories': e.calories,
               'proteins': e.proteins,
@@ -103,7 +108,8 @@ class BackupDocument {
             raw['version'] != 2 &&
             raw['version'] != 3 &&
             raw['version'] != 4 &&
-            raw['version'] != 5)) {
+            raw['version'] != 5 &&
+            raw['version'] != 6)) {
       throw const FormatException('Неподдерживаемый формат копии');
     }
     List<Map<String, dynamic>> rows(String key) {
@@ -160,7 +166,32 @@ class BackupDocument {
               r['catalogueKey'] == null ? null : text(r, 'catalogueKey', 100)
           ..barcode = r['barcode'] == null ? null : text(r, 'barcode', 14)
           ..source = r['source'] == null ? null : text(r, 'source', 200)
+          ..stableKey =
+              r['stableKey'] == null ? null : text(r, 'stableKey', 200)
+          ..isFavorite = r['isFavorite'] == true
+          ..recipeJson =
+              r['recipeJson'] == null ? null : text(r, 'recipeJson', 200000)
     ];
+    final keys = <String>{};
+    final productRows = rows('products');
+    for (final (index, p) in products.indexed) {
+      p.stableKey ??= IsarDatabaseService.productIdentity(p);
+      final rawFavorite = productRows[index]['isFavorite'];
+      if (rawFavorite != null && rawFavorite is! bool) {
+        throw const FormatException('Invalid favorite flag');
+      }
+      if (p.stableKey != null && !keys.add(p.stableKey!)) {
+        throw const FormatException('Duplicate product key');
+      }
+      if (p.recipeJson != null) {
+        final r = Recipe.decode(p.recipeJson!);
+        final v = r.per100;
+        p.calories = v?[0] ?? 0;
+        p.proteins = v?[1] ?? 0;
+        p.fats = v?[2] ?? 0;
+        p.carbs = v?[3] ?? 0;
+      }
+    }
     final entries = <FoodLogEntry>[];
     for (final r in rows('entries')) {
       final meal = text(r, 'mealType', 20);
@@ -171,6 +202,8 @@ class BackupDocument {
         ..date = date(r)
         ..mealType = meal
         ..productName = text(r, 'productName', InputLimits.productName)
+        ..productKey =
+            r['productKey'] == null ? null : text(r, 'productKey', 200)
         ..weightGrams =
             number(r, 'weightGrams', InputLimits.portionGrams, positive: true)
         ..calories = number(r, 'calories', 100000)
@@ -237,7 +270,7 @@ class BackupDocument {
         entries: entries,
         measurements: measurements,
         water: water,
-        waterPresets: raw['version'] == 5
+        waterPresets: (raw['version'] as int) >= 5
             ? WaterPresetsRepository.validate(raw['waterPresets'])
             : [],
         language: (raw['version'] as int) >= 4

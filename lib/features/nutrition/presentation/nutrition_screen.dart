@@ -1,6 +1,7 @@
 import '../../../core/home_widgets/home_widgets.dart';
 import '../../../shared/widgets/scroll_island.dart';
 import 'widgets/diary_calendar_sheet.dart';
+import 'recipes_screen.dart';
 import '../../../core/localization/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -102,6 +103,7 @@ class _NutritionScreenState extends ConsumerState<NutritionScreen> {
                   ..date = entry.date
                   ..mealType = entry.mealType
                   ..productName = entry.productName
+                  ..productKey = entry.productKey
                   ..weightGrams = entry.weightGrams
                   ..calories = entry.calories
                   ..proteins = entry.proteins
@@ -133,7 +135,13 @@ class _NutritionScreenState extends ConsumerState<NutritionScreen> {
     final goals = ref.watch(effectiveUserGoalsProvider);
     if (diary.hasValue) _jumpToWater();
     return Scaffold(
-      appBar: AppBar(title: const QText('Питание')),
+      appBar: AppBar(title: const QText('Питание'), actions: [
+        IconButton(
+            tooltip: context.tr('Мои рецепты'),
+            icon: const Icon(Icons.menu_book_outlined),
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (_) => RecipesScreen(date: _date))))
+      ]),
       floatingActionButton: IslandAwareFab(
           child: FloatingActionButton.extended(
               onPressed: _sheetOpen ? null : () => _add(),

@@ -63,6 +63,24 @@ class TestService extends HealthConnectService {
 }
 
 void main() {
+  test(
+      'report history uses positive aggregate and preserves unknown versus explicit zero',
+      () async {
+    final health = FakeHealth()..aggregate = 4500;
+    var result = await TestService(health)
+        .fetchReportHistory(day, day.add(const Duration(hours: 12)));
+    expect(result.steps[day], 4500);
+    health.aggregate = 0;
+    result = await TestService(health)
+        .fetchReportHistory(day, day.add(const Duration(hours: 12)));
+    expect(result.steps, isEmpty);
+    health.data[HealthDataType.STEPS] = [
+      sample(HealthDataType.STEPS, 0, 0, 10)
+    ];
+    result = await TestService(health)
+        .fetchReportHistory(day, day.add(const Duration(hours: 12)));
+    expect(result.steps[day], 0);
+  });
   test('raw fallback merges competing devices and clips midnight intervals',
       () {
     final points = [

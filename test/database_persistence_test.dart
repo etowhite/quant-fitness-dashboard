@@ -1,4 +1,5 @@
 import 'package:smart_fitness_dashboard/core/database/data_reset_service.dart';
+import 'package:smart_fitness_dashboard/features/nutrition/data/recipe.dart';
 import 'package:smart_fitness_dashboard/core/home_widgets/home_widgets.dart';
 import 'package:smart_fitness_dashboard/core/notifications/notification_service.dart';
 import 'package:smart_fitness_dashboard/features/settings/data/app_preferences_repository.dart';
@@ -58,6 +59,105 @@ void main() {
           .toFilePath()
     });
   });
+  test(
+      'favorites survive reopen; actual diary use drives frequency; recipe snapshots and backup v6',
+      () async {
+    final directory = await Directory.systemTemp.createTemp('quant_recipes_');
+    var db = await IsarDatabaseService.init(
+        directory: directory.path, name: 'recipes');
+    try {
+      final p =
+          (await db.searchProducts('Банан')).firstWhere((p) => p.carbs < 60);
+      await db.setFavorite(p, true);
+      await db.setFavorite(p, true);
+      expect(
+          (await db.isar.foodProducts
+                  .filter()
+                  .isFavoriteEqualTo(true)
+                  .findAll())
+              .length,
+          1);
+      final key = p.stableKey;
+      await db.close();
+      db = await IsarDatabaseService.init(
+          directory: directory.path, name: 'recipes');
+      final saved =
+          await db.isar.foodProducts.where().stableKeyEqualTo(key).findFirst();
+      expect(saved!.isFavorite, true);
+      FoodProduct online(String name) => FoodProduct()
+        ..name = name
+        ..barcode = '12345678'
+        ..source = 'Open Food Facts · ODbL'
+        ..calories = 100
+        ..proteins = 2
+        ..fats = 3
+        ..carbs = 15;
+      final firstOnline = await db.setFavorite(online('Online A'), true);
+      final secondOnline = await db.setFavorite(online('Online B'), true);
+      expect(secondOnline.id, firstOnline.id);
+      expect(
+          await db.isar.foodProducts.where().barcodeEqualTo('12345678').count(),
+          1);
+      expect(await db.frequentProducts(), isEmpty);
+      final day = DateTime(2026, 11, 1);
+      final entry = await db.addProductToDiary(
+          product: saved, date: day, mealType: 'Завтрак', weightGrams: 125);
+      expect((await db.frequentProducts(now: day)).single.stableKey, key);
+      await db.deleteFoodLogEntry(entry);
+      expect(await db.frequentProducts(now: day), isEmpty);
+      final recipe = Recipe(
+          ingredients: [RecipeIngredient.product(saved, 200)],
+          yieldGrams: 150,
+          servings: 2.5);
+      final v = recipe.per100!;
+      final dish = FoodProduct()
+        ..name = 'Блюдо'
+        ..calories = v[0]
+        ..proteins = v[1]
+        ..fats = v[2]
+        ..carbs = v[3]
+        ..recipeJson = recipe.encode();
+      dish.id = await db.saveCustomProduct(dish);
+      await db.setFavorite(dish, true);
+      await db.addProductToDiary(
+          product: dish, date: day, mealType: 'Обед', weightGrams: 60);
+      final before = (await db.getFoodLogEntriesForDay(day)).single;
+      dish.recipeJson =
+          Recipe(ingredients: recipe.ingredients, yieldGrams: 250, servings: 4)
+              .encode();
+      await db.saveCustomProduct(dish);
+      expect((await db.getFoodLogEntriesForDay(day)).single.calories,
+          before.calories);
+      final backup = BackupDocument(
+          goals: const UserGoals(),
+          products: await db.isar.foodProducts.where().findAll(),
+          entries: await db.getFoodLogEntriesForDay(day),
+          measurements: []);
+      final restored = BackupDocument.decode(backup.encode());
+      expect(
+          restored.products.where((p) => p.recipeJson != null).single.stableKey,
+          dish.stableKey);
+      expect(restored.entries.single.productKey, dish.stableKey);
+      await db.deleteRecipe(dish);
+      expect(
+          (await db.getFoodLogEntriesForDay(day)).single.productName, 'Блюдо');
+      await BackupService(db, UserGoalsRepository()).restore(restored);
+      expect(
+          (await db.isar.foodProducts.filter().recipeJsonIsNotNull().findAll())
+              .single
+              .isFavorite,
+          true);
+      final reset = DataResetService(db, UserGoalsRepository(),
+          AppPreferencesRepository(), ResetNotifications());
+      await reset.clear({ResetCategory.products});
+      expect(
+          await db.isar.foodProducts.filter().recipeJsonIsNotNull().count(), 0);
+      expect((await db.getFoodLogEntriesForDay(day)).length, 1);
+    } finally {
+      await db.close();
+      await directory.delete(recursive: true);
+    }
+  }, skip: !Platform.isWindows && !Platform.isLinux);
   test('widget water operations are atomic, concurrent and retry-idempotent',
       () async {
     final directory = await Directory.systemTemp.createTemp('quant_widgets_');

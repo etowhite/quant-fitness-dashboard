@@ -15,6 +15,10 @@ class FoodProduct {
   @Index()
   String? barcode;
   String? source;
+  @Index()
+  String? stableKey;
+  bool isFavorite = false;
+  String? recipeJson;
 
   // All values are per 100 g of edible product.
   late double calories;

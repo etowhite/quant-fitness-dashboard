@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:math';
+import '../../features/nutrition/data/recipe.dart';
 import 'package:isar_community/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -47,6 +49,12 @@ class IsarDatabaseService {
             names.add(product.name.toLowerCase());
           }
         }
+        for (final p in await isar.foodProducts.where().findAll()) {
+          if (p.stableKey == null) {
+            p.stableKey = productIdentity(p);
+            await isar.foodProducts.put(p);
+          }
+        }
       });
       return service;
     } catch (_) {
@@ -85,11 +93,16 @@ class IsarDatabaseService {
       required DateTime date,
       required String mealType,
       required double weightGrams}) {
+    if (product.recipeJson != null &&
+        !Recipe.decode(product.recipeJson!).complete) {
+      throw StateError('Incomplete recipe');
+    }
     final factor = weightGrams / 100;
     return addFoodLogEntry(FoodLogEntry()
       ..date = date
       ..mealType = mealType
       ..productName = product.name
+      ..productKey = product.stableKey ?? productIdentity(product)
       ..weightGrams = weightGrams
       ..calories = product.calories * factor
       ..proteins = product.proteins * factor
@@ -141,7 +154,98 @@ class IsarDatabaseService {
       throw ArgumentError('Превышен предел КБЖУ на 100 г');
     }
     product.name = product.name.trim();
-    return isar.writeTxn(() => isar.foodProducts.put(product));
+    product.stableKey ??= productIdentity(product);
+    if (product.recipeJson != null) {
+      final recipe = Recipe.decode(product.recipeJson!);
+      final values = recipe.per100;
+      if (values != null) {
+        product.calories = values[0];
+        product.proteins = values[1];
+        product.fats = values[2];
+        product.carbs = values[3];
+      }
+    }
+    return isar.writeTxn(() async {
+      final existing = await isar.foodProducts
+          .where()
+          .stableKeyEqualTo(product.stableKey)
+          .findFirst();
+      if (existing != null && existing.id != product.id) {
+        throw StateError('Duplicate product identity');
+      }
+      // Editing recipe/nutrients must not overwrite a star changed separately.
+      if (existing != null) {
+        product.isFavorite = existing.isFavorite;
+      }
+      return isar.foodProducts.put(product);
+    });
+  }
+
+  static String productIdentity(FoodProduct p) =>
+      p.stableKey ??
+      (p.barcode != null
+          ? 'off:${p.barcode}'
+          : p.catalogueKey != null
+              ? 'catalogue:${p.catalogueKey}'
+              : 'local:${DateTime.now().microsecondsSinceEpoch}:${Random.secure().nextInt(1 << 32)}');
+
+  Future<FoodProduct> setFavorite(FoodProduct product, bool favorite) async {
+    final key = productIdentity(product);
+    return isar.writeTxn(() async {
+      final existing =
+          await isar.foodProducts.where().stableKeyEqualTo(key).findFirst();
+      final saved = existing ?? product;
+      saved.stableKey = key;
+      saved.isFavorite = favorite;
+      await isar.foodProducts.put(saved);
+      return saved;
+    });
+  }
+
+  Stream<List<FoodProduct>> watchSavedProducts({bool recipes = false}) =>
+      recipes
+          ? isar.foodProducts
+              .filter()
+              .recipeJsonIsNotNull()
+              .watch(fireImmediately: true)
+          : isar.foodProducts
+              .filter()
+              .isFavoriteEqualTo(true)
+              .watch(fireImmediately: true);
+
+  Future<List<FoodProduct>> frequentProducts({DateTime? now}) async {
+    final products = await isar.foodProducts.where().findAll();
+    final byKey = {for (final p in products) p.stableKey: p};
+    final byName = <String, List<FoodProduct>>{};
+    for (final p in products) {
+      byName.putIfAbsent(p.name, () => []).add(p);
+    }
+    final scores = <String, double>{};
+    final clock = now ?? DateTime.now();
+    for (final e in await isar.foodLogEntries.where().findAll()) {
+      final candidates = byName[e.productName];
+      final p = byKey[e.productKey] ??
+          (e.productKey == null && candidates?.length == 1
+              ? candidates!.single
+              : null);
+      if (p == null || p.stableKey == null) continue;
+      final days = max(0, clock.difference(e.date).inHours / 24);
+      scores.update(p.stableKey!, (v) => v + 1 / (1 + days / 14),
+          ifAbsent: () => 1 / (1 + days / 14));
+    }
+    final keys = scores.keys.toList()
+      ..sort((a, b) {
+        final score = scores[b]!.compareTo(scores[a]!);
+        return score != 0 ? score : a.compareTo(b);
+      });
+    return keys.take(15).map((k) => byKey[k]!).toList();
+  }
+
+  Future<bool> deleteRecipe(FoodProduct recipe) {
+    if (recipe.recipeJson == null || recipe.id == null) {
+      throw ArgumentError('Not a recipe');
+    }
+    return isar.writeTxn(() => isar.foodProducts.delete(recipe.id!));
   }
 
   Future<Id> saveBodyMeasurement(BodyMeasurement measurement) async {
@@ -331,6 +435,7 @@ class IsarDatabaseService {
               .any((n) => n > InputLimits.macroPer100g)) {
         throw ArgumentError('Недопустимое КБЖУ');
       }
+      product.stableKey ??= productIdentity(product);
       await isar.foodProducts.put(product);
       return product;
     });

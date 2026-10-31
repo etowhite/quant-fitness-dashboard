@@ -11,6 +11,7 @@ Future<List<FoodProduct>> loadBaseFoodProducts() async {
         ..name = row['name'] as String
         ..category = row['category'] as String
         ..catalogueKey = row['id'] as String
+        ..stableKey = 'catalogue:${row['id']}'
         ..source = row['source'] as String
         ..calories = (row['calories'] as num).toDouble()
         ..proteins = (row['proteins'] as num).toDouble()

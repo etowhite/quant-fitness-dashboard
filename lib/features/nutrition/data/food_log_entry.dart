@@ -12,6 +12,8 @@ class FoodLogEntry {
   late String mealType;
   // Snapshot, intentionally independent of future product edits/deletions.
   late String productName;
+  @Index()
+  String? productKey;
   late double weightGrams;
   // Totals for this portion, not per 100 g.
   late double calories;

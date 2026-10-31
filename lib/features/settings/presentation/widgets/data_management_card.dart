@@ -18,7 +18,7 @@ class _DataManagementCardState extends ConsumerState<DataManagementCard> {
   bool _busy = false;
   static const labels = [
     'История дневника питания и воды',
-    'Пользовательские и кэшированные продукты',
+    'Продукты, избранное и рецепты',
     'История замеров тела',
     'Цели, тема и расписание уведомлений'
   ];

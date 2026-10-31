@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:smart_fitness_dashboard/features/nutrition/application/product_search_provider.dart';
+import 'package:smart_fitness_dashboard/features/nutrition/application/saved_products_provider.dart';
 import 'package:smart_fitness_dashboard/features/nutrition/data/food_product.dart';
 import 'package:smart_fitness_dashboard/features/nutrition/presentation/widgets/add_food_sheet.dart';
 import 'package:smart_fitness_dashboard/features/nutrition/presentation/widgets/create_product_form.dart';
@@ -20,6 +21,9 @@ void main() {
       ..carbs = 15;
     await tester.pumpWidget(ProviderScope(
         overrides: [
+          favoriteProductsProvider.overrideWith((ref) => Stream.value([])),
+          frequentProductsProvider.overrideWith((ref) => Stream.value([])),
+          recipesProvider.overrideWith((ref) => Stream.value([])),
           productSearchProvider('')
               .overrideWith((ref) => Stream.value([product])),
         ],
@@ -31,6 +35,7 @@ void main() {
         )))));
     await tester.pumpAndSettle();
     expect(find.text('Обед'), findsOneWidget);
+    await tester.ensureVisible(find.text('Тестовый продукт'));
     await tester.tap(find.text('Тестовый продукт'));
     await tester.pumpAndSettle();
     expect(find.textContaining('100 ккал\n'), findsOneWidget);

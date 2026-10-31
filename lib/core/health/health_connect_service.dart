@@ -195,6 +195,76 @@ class HealthConnectService {
     );
   }
 
+  /// Explicit report read; never opens a permission dialog. Missing days stay absent.
+  Future<
+      ({
+        List<HealthValuePoint> weights,
+        Map<DateTime, int> steps,
+        bool incomplete
+      })> fetchReportHistory(DateTime start, DateTime end) async {
+    final weights = <HealthValuePoint>[];
+    final steps = <DateTime, int>{};
+    var incomplete = false;
+    try {
+      if (await checkAccess() != HealthAccess.granted) {
+        return (weights: weights, steps: steps, incomplete: true);
+      }
+      try {
+        if (await _canRead(HealthDataType.WEIGHT)) {
+          weights.addAll(_points(
+              prioritizeHealthSources(
+                  await _read(HealthDataType.WEIGHT, start, end)),
+              HealthDataType.WEIGHT,
+              start,
+              end));
+        } else {
+          incomplete = true;
+        }
+      } catch (_) {
+        incomplete = true;
+      }
+      if (await _canRead(HealthDataType.STEPS) &&
+          await activityPermissionGranted()) {
+        for (var day = DateTime(start.year, start.month, start.day);
+            day.isBefore(end);
+            day = DateTime(day.year, day.month, day.day + 1)) {
+          final next = DateTime(day.year, day.month, day.day + 1);
+          final until = next.isAfter(end) ? end : next;
+          try {
+            final samples = await _read(HealthDataType.STEPS, day, until);
+            int? count;
+            try {
+              count = await _health.getTotalStepsInInterval(day, until);
+            } catch (_) {
+              incomplete = true;
+            }
+            if (count == null || count <= 0) {
+              if (samples.isEmpty) {
+                continue;
+              }
+              count = nonOverlappingTotal(
+                      samples
+                          .where((p) => p.unit == HealthDataUnit.COUNT)
+                          .toList(),
+                      day,
+                      until,
+                      maxValue: 1000000)
+                  .round();
+            }
+            if (count >= 0 && count <= 1000000) steps[day] = count;
+          } catch (_) {
+            incomplete = true;
+          }
+        }
+      } else {
+        incomplete = true;
+      }
+    } catch (_) {
+      incomplete = true;
+    }
+    return (weights: weights, steps: steps, incomplete: incomplete);
+  }
+
   List<HealthValuePoint> _points(List<HealthDataPoint> points,
       HealthDataType type, DateTime since, DateTime now) {
     final result = <HealthValuePoint>[];

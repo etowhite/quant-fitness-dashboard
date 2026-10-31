@@ -12,6 +12,7 @@ function dump(...args) {
   return result.stdout;
 }
 const allowed = new Set([
+  'android.permission.WRITE_EXTERNAL_STORAGE',
   'android.permission.INTERNET',
   'android.permission.USE_BIOMETRIC',
   'android.permission.USE_FINGERPRINT',
@@ -41,6 +42,10 @@ for (const permission of permissions) {
   }
 }
 const manifest = dump('xmltree', apk, 'AndroidManifest.xml');
+const storage = manifest.split(/(?=E: uses-permission)/).find((part) => part.includes('android.permission.WRITE_EXTERNAL_STORAGE'));
+if (!storage || !/android:maxSdkVersion[^\n]*0x1c\b/.test(storage)) {
+  throw new Error('Legacy storage permission must be capped at Android 9 / API 28.');
+}
 for (const attribute of ['allowBackup', 'fullBackupContent', 'usesCleartextTraffic']) {
   const line = manifest.split('\n').find((s) => s.includes(`android:${attribute}(`));
   if (!line || !line.trim().endsWith('0x0')) throw new Error(`${attribute} is not disabled.`);
