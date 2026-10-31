@@ -22,18 +22,29 @@
 
 ## Android runtime
 
-Локальный эмулятор установлен, но его процесс завершается в Windows с
-`0xC0000135` (DLL startup failure). Android runtime, системные окна Health Connect,
-реальная камера, доставка уведомлений после перезагрузки и OEM-ограничения
-**не подтверждены** локально. Отдельная задача GitHub Actions запускает Android 35
-и `integration_test/`. Результат следует смотреть в Actions; это не утверждение,
-что облачная проверка уже прошла.
+Локальный эмулятор завершается в Windows с `0xC0000135` (DLL startup failure).
+Облачный эмулятор **Android 35 успешно прошел оба integration-теста**:
+инициализация приложения и навигация по четырем вкладкам, реальный Isar
+с сохранением данных. Сборка, анализ, 44 unit/widget-теста, security regression
+checks и публикация также прошли в [CI build-4](https://github.com/etowhite/quant-smart-fitness-dashboard/actions/runs/41221927230).
+Причины прежних ошибок исправлены: устаревший SDK package tools, glibc Isar
+на Ubuntu 22.04 и недостаточный heap Gradle при debug-сборке для эмулятора.
+Системные окна Health Connect, реальная камера, доставка уведомлений после
+перезагрузки и ограничения Mi Fitness / Picooc требуют проверки на устройстве.
 
 ## APK
 
-Релизная сборка выполняется. Данные о размере, SHA-256 и проверке упакованного
-manifest будут обновлены после успешного завершения. Без приватного
+Локальная релизная сборка 1.3.0 (versionCode 4) успешно собрана. Проверка
+упакованного manifest подтвердила имя quant, minSdk 26 / targetSdk 35,
+отключенные backup, cleartext и debuggable, ожидаемый список разрешений.
+`apksigner verify` подтвердил подпись APK Signature Scheme v2. Без приватного
 `android/key.properties` используется предусмотренная debug-подпись.
+Опубликованный APK из CI: **77 693 169 байт**.
+SHA-256: `b2ef7797289d2279951b97ccb538c1c325f0d45d701da21a43b52517322f5627`.
+Файл: `build/releases/quant-release.apk`.
+[Релиз v1.3.0](https://github.com/etowhite/quant-smart-fitness-dashboard/releases/tag/v1.3.0).
+Локальный APK и APK CI подписаны разными debug-ключами; обновление между ними
+требует одинаковой подписи или переустановки с предварительным JSON-экспортом.
 
 OSV покрывает только известные advisories Pub, не нативные Maven/NDK-зависимости.
 Формальный security-audit workflow остается частичным: см. [security_audit.md](security_audit.md).
