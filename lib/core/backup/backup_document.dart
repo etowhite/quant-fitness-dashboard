@@ -21,7 +21,7 @@ class BackupDocument {
       required this.entries,
       required this.measurements,
       this.language = AppLanguage.system,
-      this.waterPresets = const [],
+      this.waterPresets = WaterPresetsRepository.defaults,
       this.theme = const ThemeSettings(),
       this.reminders = const ReminderSettings(),
       this.water = const []});
@@ -38,7 +38,7 @@ class BackupDocument {
 
   String encode() => jsonEncode({
         'format': 'smart_fitness_backup',
-        'version': 6,
+        'version': 7,
         'waterPresets': WaterPresetsRepository.validate(waterPresets),
         'language': language.name,
         'application': 'quant',
@@ -109,7 +109,8 @@ class BackupDocument {
             raw['version'] != 3 &&
             raw['version'] != 4 &&
             raw['version'] != 5 &&
-            raw['version'] != 6)) {
+            raw['version'] != 6 &&
+            raw['version'] != 7)) {
       throw const FormatException('Неподдерживаемый формат копии');
     }
     List<Map<String, dynamic>> rows(String key) {
@@ -270,9 +271,13 @@ class BackupDocument {
         entries: entries,
         measurements: measurements,
         water: water,
-        waterPresets: (raw['version'] as int) >= 5
+        waterPresets: (raw['version'] as int) >= 7
             ? WaterPresetsRepository.validate(raw['waterPresets'])
-            : [],
+            : WaterPresetsRepository.validate({
+                ...WaterPresetsRepository.defaults,
+                if ((raw['version'] as int) >= 5)
+                  ...WaterPresetsRepository.validate(raw['waterPresets'])
+              }.toList()),
         language: (raw['version'] as int) >= 4
             ? AppLanguage.parse(raw['language'])
             : AppLanguage.system,

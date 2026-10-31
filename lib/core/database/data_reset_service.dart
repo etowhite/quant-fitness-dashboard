@@ -61,7 +61,7 @@ class DataResetService {
       final prefs = await SharedPreferences.getInstance();
       if (!await prefs.clear()) throw StateError('Could not clear preferences');
     } else if (selected.contains(ResetCategory.preferences)) {
-      await WaterPresetsRepository().save([]);
+      await WaterPresetsRepository().save(WaterPresetsRepository.defaults);
       await goals.save(const UserGoals());
       await preferences.save(
           theme: const ThemeSettings(), reminders: const ReminderSettings());

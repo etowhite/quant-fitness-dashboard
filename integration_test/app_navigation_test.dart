@@ -42,6 +42,17 @@ void main() {
     await tester.pumpAndSettle(const Duration(milliseconds: 100),
         EnginePhase.sendSemanticsUpdate, const Duration(seconds: 30));
     expect(find.text('Питание сегодня'), findsOneWidget);
+    // Interrupt the selected-tab indicator repeatedly, without waiting for its
+    // previous animation. The retained page must never leave outgoing routes.
+    for (var i = 0; i < 16; i++) {
+      final tab = AppTab.values[i % 4];
+      await tester.tap(find.byKey(ValueKey('tab-${tab.name}')));
+      await tester.pump(const Duration(milliseconds: 20));
+      expect(find.byType(RetainedTabView), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    }
+    await tester.tap(find.byKey(const ValueKey('tab-dashboard')));
+    await tester.pumpAndSettle();
     const channel = MethodChannel('quant/home_widgets');
     final nativeLayouts =
         await channel.invokeListMethod<String>('testWidgetViews');

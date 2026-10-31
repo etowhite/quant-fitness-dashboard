@@ -18,7 +18,121 @@ class WaterBalanceCard extends ConsumerStatefulWidget {
 
 class _WaterBalanceCardState extends ConsumerState<WaterBalanceCard> {
   bool _busy = false;
+  bool _editing = false;
   String? _error;
+
+  void _settingsError() {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: QText('Не удалось сохранить настройки кнопок воды')));
+  }
+
+  Future<void> _manage(int volume) async {
+    if (_busy || _editing) return;
+    setState(() => _editing = true);
+    // Unsupported haptics must not prevent access to the menu.
+    HapticFeedback.selectionClick().catchError((Object _) {});
+    try {
+      final action = await showModalBottomSheet<String>(
+          context: context,
+          useSafeArea: true,
+          builder: (c) => Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                QText('+$volume мл', style: Theme.of(c).textTheme.titleMedium),
+                ListTile(
+                    leading: const Icon(Icons.edit_outlined),
+                    title: const QText('Изменить'),
+                    onTap: () => Navigator.pop(c, 'edit')),
+                const Divider(height: 1),
+                ListTile(
+                    leading: const Icon(Icons.delete_outline),
+                    title: const QText('Удалить'),
+                    onTap: () => Navigator.pop(c, 'delete')),
+              ])));
+      if (!mounted) return;
+      if (action == 'edit') {
+        await _edit(volume);
+      } else if (action == 'delete') {
+        await ref.read(waterPresetsProvider.notifier).remove(volume);
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: const QText('Кнопка воды удалена'),
+            action: SnackBarAction(
+                label: context.tr('Отменить'),
+                onPressed: () async {
+                  try {
+                    await ref
+                        .read(waterPresetsProvider.notifier)
+                        .restore(volume);
+                  } catch (_) {
+                    _settingsError();
+                  }
+                })));
+      }
+    } catch (_) {
+      _settingsError();
+    } finally {
+      if (mounted) setState(() => _editing = false);
+    }
+  }
+
+  Future<void> _edit(int volume) async {
+    final field = TextEditingController(text: '$volume');
+    final form = GlobalKey<FormState>();
+    final presets = await ref.read(waterPresetsProvider.future);
+    if (!mounted) {
+      field.dispose();
+      return;
+    }
+    final result = await showDialog<int>(
+        context: context,
+        builder: (c) => AlertDialog(
+                title: const QText('Изменить кнопку воды'),
+                content: Form(
+                    key: form,
+                    child: LabeledField(
+                        label: c.tr('Объем, мл'),
+                        child: TextFormField(
+                            controller: field,
+                            autofocus: true,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(4)
+                            ],
+                            validator: (v) => _validateVolume(c, v,
+                                presets: presets, excluding: volume)))),
+                actions: [
+                  TextButton(
+                      onPressed: () => Navigator.pop(c),
+                      child: const QText('Отмена')),
+                  FilledButton(
+                      onPressed: () {
+                        if (form.currentState!.validate()) {
+                          Navigator.pop(c, int.parse(field.text));
+                        }
+                      },
+                      child: const QText('Сохранить'))
+                ]));
+    Future<void>.delayed(const Duration(milliseconds: 400), field.dispose);
+    if (result != null) {
+      await ref.read(waterPresetsProvider.notifier).replace(volume, result);
+    }
+  }
+
+  String? _validateVolume(BuildContext context, String? value,
+      {List<int>? presets, int? excluding}) {
+    final number = int.tryParse(value ?? '');
+    if (number == null || number < 1 || number > 5000) {
+      return context.tr('Введите от 1 до 5000 мл');
+    }
+    if (number != excluding && (presets?.contains(number) ?? false)) {
+      return context.tr('Кнопка с таким объемом уже есть');
+    }
+    return null;
+  }
+
   Future<void> _custom() async {
     final field = TextEditingController();
     final form = GlobalKey<FormState>();
@@ -48,22 +162,18 @@ class _WaterBalanceCardState extends ConsumerState<WaterBalanceCard> {
                                 ],
                                 decoration:
                                     const InputDecoration(hintText: '330'),
-                                validator: (v) {
-                                  final number = int.tryParse(v ?? '');
-                                  return number == null ||
-                                          number < 1 ||
-                                          number > 5000
-                                      ? context.tr('Введите от 1 до 5000 мл')
-                                      : null;
-                                })),
+                                validator: (v) => _validateVolume(context, v,
+                                    presets: remember ? presets : null))),
                         CheckboxListTile(
                             contentPadding: EdgeInsets.zero,
                             title: const QText('Сохранить кнопку'),
-                            subtitle: presets.length >= 8
-                                ? const QText('Можно сохранить до 8 кнопок')
+                            subtitle: presets.length >=
+                                    WaterPresetsRepository.maxButtons
+                                ? const QText('Можно сохранить до 11 кнопок')
                                 : null,
                             value: remember,
-                            onChanged: presets.length >= 8
+                            onChanged: presets.length >=
+                                    WaterPresetsRepository.maxButtons
                                 ? null
                                 : (v) => update(() => remember = v ?? false)),
                       ])),
@@ -88,11 +198,8 @@ class _WaterBalanceCardState extends ConsumerState<WaterBalanceCard> {
     field.dispose();
     if (!mounted || result == null) return;
     try {
-      if (result.remember &&
-          ![150, 250, 500, ...presets].contains(result.volume)) {
-        await ref
-            .read(waterPresetsProvider.notifier)
-            .save([...presets, result.volume]);
+      if (result.remember) {
+        await ref.read(waterPresetsProvider.notifier).add(result.volume);
       }
       await _change(result.volume);
     } catch (_) {
@@ -170,22 +277,25 @@ class _WaterBalanceCardState extends ConsumerState<WaterBalanceCard> {
                               minHeight: 6),
                           const SizedBox(height: 12),
                           Wrap(spacing: 10, runSpacing: 10, children: [
-                            for (final volume in {
-                              150,
-                              250,
-                              500,
-                              ...?ref.watch(waterPresetsProvider).valueOrNull
-                            })
+                            for (final volume in ref
+                                    .watch(waterPresetsProvider)
+                                    .valueOrNull ??
+                                <int>[])
                               OutlinedButton(
+                                  key: ValueKey('water-preset-$volume'),
                                   style: OutlinedButton.styleFrom(
                                       tapTargetSize:
                                           MaterialTapTargetSize.shrinkWrap,
                                       shape: const StadiumBorder()),
-                                  onPressed:
-                                      _busy ? null : () => _change(volume),
+                                  onPressed: _busy || _editing
+                                      ? null
+                                      : () => _change(volume),
+                                  onLongPress: _busy || _editing
+                                      ? null
+                                      : () => _manage(volume),
                                   child: QText('+$volume мл')),
                             OutlinedButton.icon(
-                                onPressed: _busy ? null : _custom,
+                                onPressed: _busy || _editing ? null : _custom,
                                 style: OutlinedButton.styleFrom(
                                     tapTargetSize:
                                         MaterialTapTargetSize.shrinkWrap,

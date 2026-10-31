@@ -27,7 +27,7 @@ class WaterDatabase implements IsarDatabaseService {
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
   test(
-      'custom portions persist, reject invalid input and roundtrip through v5 backup',
+      'custom portions persist, reject invalid input and roundtrip through backup',
       () async {
     final repository = WaterPresetsRepository();
     await repository.save([330, 750, 330]);
@@ -44,7 +44,8 @@ void main() {
     final old = jsonDecode(doc.encode()) as Map<String, dynamic>;
     old['version'] = 4;
     old.remove('waterPresets');
-    expect(BackupDocument.decode(jsonEncode(old)).waterPresets, isEmpty);
+    expect(BackupDocument.decode(jsonEncode(old)).waterPresets,
+        WaterPresetsRepository.defaults);
   });
   testWidgets(
       'custom dialog validates and adds chosen day portion with persistent quick button',
@@ -80,7 +81,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
     await tester.pumpAndSettle();
     expect(db.portions, [330]);
-    expect(await WaterPresetsRepository().load(), [330]);
+    expect(await WaterPresetsRepository().load(), [150, 250, 330, 500]);
     expect(find.text('+330 мл'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });

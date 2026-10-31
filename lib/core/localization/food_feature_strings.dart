@@ -1,4 +1,10 @@
 const foodFeatureEnglish = <String, String>{
+  'Не удалось сохранить настройки кнопок воды':
+      'Could not save water button settings',
+  'Изменить кнопку воды': 'Edit water button',
+  'Кнопка с таким объемом уже есть': 'A button with this volume already exists',
+  'Кнопка воды удалена': 'Water button removed',
+  'Можно сохранить до 11 кнопок': 'You can save up to 11 buttons',
   'Часто используемые': 'Frequently used',
   'Избранные': 'Favorites',
   'Мои рецепты': 'My recipes',

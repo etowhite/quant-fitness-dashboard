@@ -383,11 +383,18 @@ class _RecipeEditorState extends ConsumerState<RecipeEditor> {
                                 onChanged: (_) => setState(() {}),
                                 decoration: InputDecoration(
                                     suffixText: context.tr('г')))),
-                        TextButton(
+                        const SizedBox(height: 12),
+                        OutlinedButton(
+                            key: const ValueKey('recipe-use-ingredient-mass'),
+                            style: OutlinedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 12)),
                             onPressed: () => setState(() => yieldWeight.text =
                                 '${ingredients.fold<double>(0, (s, i) => s + i.grams)}'),
                             child: const QText(
-                                'Использовать сумму массы ингредиентов')),
+                                'Использовать сумму массы ингредиентов',
+                                textAlign: TextAlign.center)),
+                        const SizedBox(height: 16),
                         LabeledField(
                             label:
                                 context.tr('Количество порций (необязательно)'),

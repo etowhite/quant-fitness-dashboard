@@ -49,8 +49,8 @@ const english = <String, String>{
       "Camera unavailable. Enter the barcode manually.",
   "Включая основной обмен": "Includes resting energy",
   "— ккал": "— kcal",
-  "Версия 1.4.4 · питание, движение и прогресс":
-      "Version 1.4.4 · nutrition, activity and progress",
+  "Версия 1.4.5 · питание, движение и прогресс":
+      "Version 1.4.5 · nutrition, activity and progress",
   "Дашборд": "Dashboard",
   "Питание": "Nutrition",
   "Замеры": "Measurements",

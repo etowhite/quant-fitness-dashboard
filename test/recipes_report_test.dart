@@ -1,5 +1,6 @@
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,6 +19,54 @@ import 'package:smart_fitness_dashboard/features/settings/domain/theme_settings.
 
 void main() {
   setUpAll(() => initializeDateFormatting());
+  for (final language in ['ru', 'en']) {
+    testWidgets(
+        'recipe form spacing and wrapped mass button at 320px / 1.6 ($language)',
+        (tester) async {
+      tester.view.physicalSize = const Size(320, 850);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      await tester.pumpWidget(ProviderScope(
+          child: MaterialApp(
+              locale: Locale(language),
+              localizationsDelegates: const [
+                AppStrings.delegate,
+                ...GlobalMaterialLocalizations.delegates
+              ],
+              supportedLocales: AppStrings.supportedLocales,
+              theme: AppTheme.build(const ThemeSettings(), Brightness.light),
+              home: const MediaQuery(
+                  data: MediaQueryData(textScaler: TextScaler.linear(1.6)),
+                  child: RecipeEditor()))));
+      await tester.pumpAndSettle();
+      final button = find.byKey(const ValueKey('recipe-use-ingredient-mass'));
+      await tester.ensureVisible(button);
+      await tester.pumpAndSettle();
+      final fields = find.byType(TextFormField);
+      final buttonRect = tester.getRect(button);
+      final yieldRect = tester.getRect(fields.at(1));
+      final servingsLabel = find.text(language == 'ru'
+          ? 'Количество порций (необязательно)'
+          : 'Servings (optional)');
+      expect(buttonRect.top - yieldRect.bottom, closeTo(12, .01));
+      expect(tester.getRect(servingsLabel).top - buttonRect.bottom,
+          closeTo(16, .01));
+      expect(
+          tester.getRect(fields.at(2)).top -
+              tester.getRect(servingsLabel).bottom,
+          closeTo(6, .01));
+      final text = find.descendant(of: button, matching: find.byType(Text));
+      final paragraph = tester.renderObject<RenderParagraph>(text);
+      expect(paragraph.didExceedMaxLines, isFalse);
+      expect(buttonRect.contains(tester.getRect(text).topLeft), isTrue);
+      expect(
+          buttonRect.contains(
+              tester.getRect(text).bottomRight - const Offset(.1, .1)),
+          isTrue);
+      expect(tester.takeException(), isNull);
+    });
+  }
   testWidgets(
       'recipe editor updates preview for cooked weight and fractional servings',
       (tester) async {

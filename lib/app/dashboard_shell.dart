@@ -26,12 +26,7 @@ class DashboardShell extends ConsumerStatefulWidget {
   ConsumerState<DashboardShell> createState() => _DashboardShellState();
 }
 
-class _DashboardShellState extends ConsumerState<DashboardShell>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _motion = AnimationController(
-      vsync: this, duration: const Duration(milliseconds: 420), value: 1);
-  late final Animation<double> _curve =
-      CurvedAnimation(parent: _motion, curve: Curves.easeOutExpo);
+class _DashboardShellState extends ConsumerState<DashboardShell> {
   @override
   void initState() {
     super.initState();
@@ -52,7 +47,6 @@ class _DashboardShellState extends ConsumerState<DashboardShell>
   @override
   void dispose() {
     HomeWidgets.route.removeListener(_openWidgetRoute);
-    _motion.dispose();
     super.dispose();
   }
 
@@ -62,7 +56,6 @@ class _DashboardShellState extends ConsumerState<DashboardShell>
     ref.listen(selectedTabProvider, (old, next) {
       if (old != next) {
         ref.read(navigationVisibleProvider.notifier).setVisible(true);
-        _motion.forward(from: 0);
       }
     });
     final visible = ref.watch(navigationVisibleProvider);
@@ -75,23 +68,12 @@ class _DashboardShellState extends ConsumerState<DashboardShell>
               ref.read(navigationVisibleProvider.notifier).setVisible(v),
           child: SafeArea(
               bottom: false,
-              child: FadeTransition(
-                  opacity: Tween<double>(begin: .35, end: 1).animate(_curve),
-                  child: ScaleTransition(
-                      scale: Tween<double>(begin: .98, end: 1).animate(_curve),
-                      child: SlideTransition(
-                          position: Tween<Offset>(
-                                  begin: const Offset(0, .015),
-                                  end: Offset.zero)
-                              .animate(_curve),
-                          child: IndexedStack(
-                              index: tab.index,
-                              children: const [
-                                DashboardScreen(),
-                                NutritionScreen(),
-                                MeasurementsScreen(),
-                                SettingsScreen()
-                              ]))))),
+              child: RetainedTabView(index: tab.index, children: const [
+                DashboardScreen(),
+                NutritionScreen(),
+                MeasurementsScreen(),
+                SettingsScreen()
+              ])),
         )),
         Positioned(
             left: 16,
@@ -103,18 +85,37 @@ class _DashboardShellState extends ConsumerState<DashboardShell>
                     offset: visible ? Offset.zero : const Offset(0, 1.5),
                     duration: const Duration(milliseconds: 280),
                     curve: Curves.easeInOutCubicEmphasized,
-                    child: AnimatedOpacity(
-                      opacity: visible ? 1 : 0,
-                      duration: const Duration(milliseconds: 280),
-                      child: FloatingBottomBar(
-                          selected: tab,
-                          onSelected: (tab) => ref
-                              .read(selectedTabProvider.notifier)
-                              .select(tab)),
-                    )))),
+                    // Keep the backdrop outside opacity/saveLayer composition.
+                    child: FloatingBottomBar(
+                        selected: tab,
+                        onSelected: (tab) => ref
+                            .read(selectedTabProvider.notifier)
+                            .select(tab))))),
       ]),
     );
   }
+}
+
+/// Retains every tab's State and scroll position but paints exactly one opaque
+/// page. No outgoing pages or full-screen transformed opacity layers accumulate
+/// when the user changes tabs before a previous transition finishes.
+class RetainedTabView extends StatelessWidget {
+  const RetainedTabView(
+      {required this.index, required this.children, super.key});
+  final int index;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) =>
+      IndexedStack(index: index, sizing: StackFit.expand, children: [
+        for (var i = 0; i < children.length; i++)
+          TickerMode(
+              enabled: index == i,
+              child: RepaintBoundary(
+                  child: ColoredBox(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      child: children[i])))
+      ]);
 }
 
 class FloatingBottomBar extends StatelessWidget {

@@ -242,7 +242,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                           TextStyle(fontSize: 28, fontWeight: FontWeight.w700))
                 ]),
                 const SizedBox(height: 12),
-                const QText('Версия 1.4.4 · питание, движение и прогресс'),
+                const QText('Версия 1.4.5 · питание, движение и прогресс'),
                 const SizedBox(height: 8),
                 const QText(
                     'Дневник хранится на устройстве. Health Connect доступен только для чтения. Поиск и штрихкоды отправляются в Open Food Facts; дневник и медицинские данные туда не передаются.'),

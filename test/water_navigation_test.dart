@@ -65,6 +65,13 @@ void main() {
             .widget<Scaffold>(find.byType(Scaffold).first)
             .bottomNavigationBar,
         isNull);
+    for (var i = 0; i < 12; i++) {
+      final tab = AppTab.values[i % 4];
+      await tester.tap(find.byKey(ValueKey('tab-${tab.name}')));
+      await tester.pump(const Duration(milliseconds: 20));
+      expect(container.read(selectedTabProvider), tab);
+      expect(tester.takeException(), isNull);
+    }
     HomeWidgets.route.value = 'water';
     await tester.pumpAndSettle();
     expect(container.read(selectedTabProvider), AppTab.nutrition);
