@@ -31,7 +31,21 @@
 - Тест узкого экрана обнаружил переполнение dropdown на 1,6 px;
   после `isExpanded: true` весь прогон зелёный.
 
-Результаты APK и CI будут добавлены после сборки.
+## APK
+
+- `flutter build apk --release` завершился успешно (508,4 s).
+- Версия 1.4.2, versionCode 7, label quant, minSdk 26 / targetSdk 35.
+- Файл: `build/app/outputs/flutter-apk/quant-release.apk` и `build/releases/quant-release.apk`.
+- Размер: **78 028 687 байт**.
+- SHA-256: `695127738c9b983d5fc90325a3d43cffd6af1f4e7c1ba54eb806b59fe28bce9a`.
+- `tool/check_apk.mjs`: разрешения и защитные флаги соответствуют требованиям.
+- `tool/check_signing.mjs`: APK подписан постоянным сертификатом 1.4.1.
+- [Скачать APK](https://github.com/etowhite/quant-fitness-dashboard/releases/download/v1.4.2/quant-release.apk).
+- [Дополнительный CI-прогон](https://github.com/etowhite/quant-fitness-dashboard/actions/runs/41241314199):
+  выполняется на момент локальной публикации; локальные проверки выше завершены.
+
+## Визуальная проверка
+
 Превью с локальным Inter на 390×844 — `docs/screenshots/v142-*.png`.
 Регрессии онбординга RU/EN, ручного ввода и Настроек проверяются на 320×740.
 
