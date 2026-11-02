@@ -3,7 +3,21 @@ name: quant release APK
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'ios/**'
+      - '.github/workflows/release_ios.yml'
+      - 'docs/**'
+      - '*.md'
+      - 'tool/check_ios.py'
+      - '.github/workflows/release_apk.yml'
+      - 'tool/run_android_integration.sh'
   pull_request:
+    paths-ignore:
+      - 'ios/**'
+      - '.github/workflows/release_ios.yml'
+      - 'docs/**'
+      - '*.md'
+      - 'tool/check_ios.py'
   workflow_dispatch:
 
 permissions:
@@ -15,6 +29,8 @@ concurrency:
 
 jobs:
   build:
+    # Explicit ios: commits can include iOS-only Dart branches. Manual runs still validate Android.
+    if: github.event_name != 'push' || !startsWith(github.event.head_commit.message, 'ios:')
     runs-on: ubuntu-24.04
     timeout-minutes: 40
     steps:
@@ -81,6 +97,7 @@ jobs:
           path: coverage/lcov.info
 
   android-integration:
+    if: github.event_name != 'push' || !startsWith(github.event.head_commit.message, 'ios:')
     runs-on: ubuntu-24.04
     timeout-minutes: 40
     steps:

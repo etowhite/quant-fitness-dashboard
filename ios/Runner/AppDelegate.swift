@@ -10,6 +10,7 @@ import Security
   private var exporting = false
   private var temporaryExport: URL?
   private var documentChannel: FlutterMethodChannel?
+  private var reportChannel: FlutterMethodChannel?
   private var healthChannel: FlutterMethodChannel?
   override func application(
     _ application: UIApplication,
@@ -54,6 +55,41 @@ import Security
       } else { self.documentResult = nil; result(FlutterMethodNotImplemented); return }
       picker.delegate = self
       controller.present(picker, animated: true)
+    }
+    reportChannel = FlutterMethodChannel(name: "quant/report_image", binaryMessenger: controller.binaryMessenger)
+    reportChannel?.setMethodCallHandler { [weak self] call, result in
+      guard let self = self else { return }
+      if call.method == "sdk" { result(nil); return }
+      guard let bytes = call.arguments as? FlutterStandardTypedData,
+        bytes.data.count <= 20 * 1024 * 1024,
+        UIImage(data: bytes.data) != nil else {
+        result(FlutterError(code: "image", message: "Invalid report image", details: nil)); return
+      }
+      let url = FileManager.default.temporaryDirectory.appendingPathComponent("quant-report-" + UUID().uuidString + ".png")
+      do { try bytes.data.write(to: url, options: .atomic) } catch {
+        result(FlutterError(code: "write", message: "Cannot create report", details: nil)); return
+      }
+      if call.method == "share" {
+        let sheet = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        sheet.popoverPresentationController?.sourceView = controller.view
+        sheet.popoverPresentationController?.sourceRect = CGRect(x: controller.view.bounds.midX, y: controller.view.bounds.midY, width: 1, height: 1)
+        sheet.completionWithItemsHandler = { _, _, _, _ in try? FileManager.default.removeItem(at: url) }
+        controller.present(sheet, animated: true) { result(true) }
+      } else if call.method == "save" {
+        guard self.documentResult == nil else {
+          try? FileManager.default.removeItem(at: url)
+          result(FlutterError(code: "busy", message: "Document picker already open", details: nil)); return
+        }
+        self.documentResult = result
+        self.exporting = true
+        self.temporaryExport = url
+        let picker = UIDocumentPickerViewController(forExporting: [url], asCopy: true)
+        picker.delegate = self
+        controller.present(picker, animated: true)
+      } else {
+        try? FileManager.default.removeItem(at: url)
+        result(FlutterMethodNotImplemented)
+      }
     }
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }

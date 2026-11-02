@@ -22,6 +22,7 @@ class AppStrings {
   String _text(String source) {
     if (locale.languageCode != 'en') return source;
     const manual = {
+      'Изображение сохранено в Файлы': 'Image saved to Files',
       'Health Connect недоступен. Нажмите карточку активности или + у состава тела, чтобы внести данные вручную.':
           'Health Connect is unavailable. Tap Activity or + in Body composition to enter data manually.',
       'Вес и процент жира': 'Weight and body fat',
