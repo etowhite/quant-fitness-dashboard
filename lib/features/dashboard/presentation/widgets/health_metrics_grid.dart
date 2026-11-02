@@ -13,10 +13,13 @@ class HealthMetricsGrid extends StatelessWidget {
       {required this.metrics,
       required this.loading,
       required this.stepGoal,
+      this.onEditActivity,
+      this.onEditBody,
       super.key});
   final DailyHealthMetrics? metrics;
   final bool loading;
   final int stepGoal;
+  final VoidCallback? onEditActivity, onEditBody;
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +95,7 @@ class HealthMetricsGrid extends StatelessWidget {
     ]);
     return IntrinsicHeight(
         child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Expanded(child: activity),
+      Expanded(child: GestureDetector(onTap: onEditActivity, child: activity)),
       const SizedBox(width: 12),
       Expanded(child: body)
     ]));
@@ -123,7 +126,16 @@ class HealthMetricsGrid extends StatelessWidget {
       DashboardCard(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        QText(title, style: Theme.of(context).textTheme.titleMedium),
+        Row(children: [
+          Expanded(
+              child:
+                  QText(title, style: Theme.of(context).textTheme.titleMedium)),
+          if (title == 'Состав тела' && onEditBody != null)
+            IconButton(
+                onPressed: onEditBody,
+                tooltip: context.tr('Вес и процент жира'),
+                icon: const Icon(Icons.add)),
+        ]),
         const SizedBox(height: 4),
         QText(source,
             style: Theme.of(context).textTheme.labelSmall?.copyWith(

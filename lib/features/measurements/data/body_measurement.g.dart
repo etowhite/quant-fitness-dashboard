@@ -22,29 +22,39 @@ const BodyMeasurementSchema = CollectionSchema(
       name: r'biceps',
       type: IsarType.double,
     ),
-    r'chest': PropertySchema(
+    r'bodyFat': PropertySchema(
       id: 1,
+      name: r'bodyFat',
+      type: IsarType.double,
+    ),
+    r'chest': PropertySchema(
+      id: 2,
       name: r'chest',
       type: IsarType.double,
     ),
     r'date': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'date',
       type: IsarType.dateTime,
     ),
     r'hips': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'hips',
       type: IsarType.double,
     ),
     r'note': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'note',
       type: IsarType.string,
     ),
     r'waist': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'waist',
+      type: IsarType.double,
+    ),
+    r'weight': PropertySchema(
+      id: 7,
+      name: r'weight',
       type: IsarType.double,
     )
   },
@@ -98,11 +108,13 @@ void _bodyMeasurementSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeDouble(offsets[0], object.biceps);
-  writer.writeDouble(offsets[1], object.chest);
-  writer.writeDateTime(offsets[2], object.date);
-  writer.writeDouble(offsets[3], object.hips);
-  writer.writeString(offsets[4], object.note);
-  writer.writeDouble(offsets[5], object.waist);
+  writer.writeDouble(offsets[1], object.bodyFat);
+  writer.writeDouble(offsets[2], object.chest);
+  writer.writeDateTime(offsets[3], object.date);
+  writer.writeDouble(offsets[4], object.hips);
+  writer.writeString(offsets[5], object.note);
+  writer.writeDouble(offsets[6], object.waist);
+  writer.writeDouble(offsets[7], object.weight);
 }
 
 BodyMeasurement _bodyMeasurementDeserialize(
@@ -113,12 +125,14 @@ BodyMeasurement _bodyMeasurementDeserialize(
 ) {
   final object = BodyMeasurement();
   object.biceps = reader.readDoubleOrNull(offsets[0]);
-  object.chest = reader.readDoubleOrNull(offsets[1]);
-  object.date = reader.readDateTime(offsets[2]);
-  object.hips = reader.readDoubleOrNull(offsets[3]);
+  object.bodyFat = reader.readDoubleOrNull(offsets[1]);
+  object.chest = reader.readDoubleOrNull(offsets[2]);
+  object.date = reader.readDateTime(offsets[3]);
+  object.hips = reader.readDoubleOrNull(offsets[4]);
   object.id = id;
-  object.note = reader.readStringOrNull(offsets[4]);
-  object.waist = reader.readDoubleOrNull(offsets[5]);
+  object.note = reader.readStringOrNull(offsets[5]);
+  object.waist = reader.readDoubleOrNull(offsets[6]);
+  object.weight = reader.readDoubleOrNull(offsets[7]);
   return object;
 }
 
@@ -134,12 +148,16 @@ P _bodyMeasurementDeserializeProp<P>(
     case 1:
       return (reader.readDoubleOrNull(offset)) as P;
     case 2:
-      return (reader.readDateTime(offset)) as P;
-    case 3:
       return (reader.readDoubleOrNull(offset)) as P;
+    case 3:
+      return (reader.readDateTime(offset)) as P;
     case 4:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readDoubleOrNull(offset)) as P;
     case 5:
+      return (reader.readStringOrNull(offset)) as P;
+    case 6:
+      return (reader.readDoubleOrNull(offset)) as P;
+    case 7:
       return (reader.readDoubleOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -471,6 +489,90 @@ extension BodyMeasurementQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'biceps',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<BodyMeasurement, BodyMeasurement, QAfterFilterCondition>
+      bodyFatIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'bodyFat',
+      ));
+    });
+  }
+
+  QueryBuilder<BodyMeasurement, BodyMeasurement, QAfterFilterCondition>
+      bodyFatIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'bodyFat',
+      ));
+    });
+  }
+
+  QueryBuilder<BodyMeasurement, BodyMeasurement, QAfterFilterCondition>
+      bodyFatEqualTo(
+    double? value, {
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'bodyFat',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<BodyMeasurement, BodyMeasurement, QAfterFilterCondition>
+      bodyFatGreaterThan(
+    double? value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'bodyFat',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<BodyMeasurement, BodyMeasurement, QAfterFilterCondition>
+      bodyFatLessThan(
+    double? value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'bodyFat',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<BodyMeasurement, BodyMeasurement, QAfterFilterCondition>
+      bodyFatBetween(
+    double? lower,
+    double? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'bodyFat',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1015,6 +1117,90 @@ extension BodyMeasurementQueryFilter
       ));
     });
   }
+
+  QueryBuilder<BodyMeasurement, BodyMeasurement, QAfterFilterCondition>
+      weightIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'weight',
+      ));
+    });
+  }
+
+  QueryBuilder<BodyMeasurement, BodyMeasurement, QAfterFilterCondition>
+      weightIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'weight',
+      ));
+    });
+  }
+
+  QueryBuilder<BodyMeasurement, BodyMeasurement, QAfterFilterCondition>
+      weightEqualTo(
+    double? value, {
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'weight',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<BodyMeasurement, BodyMeasurement, QAfterFilterCondition>
+      weightGreaterThan(
+    double? value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'weight',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<BodyMeasurement, BodyMeasurement, QAfterFilterCondition>
+      weightLessThan(
+    double? value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'weight',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<BodyMeasurement, BodyMeasurement, QAfterFilterCondition>
+      weightBetween(
+    double? lower,
+    double? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'weight',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        epsilon: epsilon,
+      ));
+    });
+  }
 }
 
 extension BodyMeasurementQueryObject
@@ -1035,6 +1221,19 @@ extension BodyMeasurementQuerySortBy
       sortByBicepsDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'biceps', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BodyMeasurement, BodyMeasurement, QAfterSortBy> sortByBodyFat() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'bodyFat', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BodyMeasurement, BodyMeasurement, QAfterSortBy>
+      sortByBodyFatDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'bodyFat', Sort.desc);
     });
   }
 
@@ -1102,6 +1301,19 @@ extension BodyMeasurementQuerySortBy
       return query.addSortBy(r'waist', Sort.desc);
     });
   }
+
+  QueryBuilder<BodyMeasurement, BodyMeasurement, QAfterSortBy> sortByWeight() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'weight', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BodyMeasurement, BodyMeasurement, QAfterSortBy>
+      sortByWeightDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'weight', Sort.desc);
+    });
+  }
 }
 
 extension BodyMeasurementQuerySortThenBy
@@ -1116,6 +1328,19 @@ extension BodyMeasurementQuerySortThenBy
       thenByBicepsDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'biceps', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BodyMeasurement, BodyMeasurement, QAfterSortBy> thenByBodyFat() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'bodyFat', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BodyMeasurement, BodyMeasurement, QAfterSortBy>
+      thenByBodyFatDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'bodyFat', Sort.desc);
     });
   }
 
@@ -1195,6 +1420,19 @@ extension BodyMeasurementQuerySortThenBy
       return query.addSortBy(r'waist', Sort.desc);
     });
   }
+
+  QueryBuilder<BodyMeasurement, BodyMeasurement, QAfterSortBy> thenByWeight() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'weight', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BodyMeasurement, BodyMeasurement, QAfterSortBy>
+      thenByWeightDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'weight', Sort.desc);
+    });
+  }
 }
 
 extension BodyMeasurementQueryWhereDistinct
@@ -1202,6 +1440,13 @@ extension BodyMeasurementQueryWhereDistinct
   QueryBuilder<BodyMeasurement, BodyMeasurement, QDistinct> distinctByBiceps() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'biceps');
+    });
+  }
+
+  QueryBuilder<BodyMeasurement, BodyMeasurement, QDistinct>
+      distinctByBodyFat() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'bodyFat');
     });
   }
 
@@ -1235,6 +1480,12 @@ extension BodyMeasurementQueryWhereDistinct
       return query.addDistinctBy(r'waist');
     });
   }
+
+  QueryBuilder<BodyMeasurement, BodyMeasurement, QDistinct> distinctByWeight() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'weight');
+    });
+  }
 }
 
 extension BodyMeasurementQueryProperty
@@ -1248,6 +1499,12 @@ extension BodyMeasurementQueryProperty
   QueryBuilder<BodyMeasurement, double?, QQueryOperations> bicepsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'biceps');
+    });
+  }
+
+  QueryBuilder<BodyMeasurement, double?, QQueryOperations> bodyFatProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'bodyFat');
     });
   }
 
@@ -1278,6 +1535,12 @@ extension BodyMeasurementQueryProperty
   QueryBuilder<BodyMeasurement, double?, QQueryOperations> waistProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'waist');
+    });
+  }
+
+  QueryBuilder<BodyMeasurement, double?, QQueryOperations> weightProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'weight');
     });
   }
 }

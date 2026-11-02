@@ -1,3 +1,4 @@
+import 'manual_health_dialog.dart';
 import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
 import 'package:smart_fitness_dashboard/shared/widgets/quant_layout.dart';
 import '../../../core/localization/app_strings.dart';
@@ -204,6 +205,10 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen>
           ),
           const SizedBox(height: AppSpacing.section),
           HealthMetricsGrid(
+              onEditActivity: () =>
+                  showManualHealthDialog(context, ref, body: false),
+              onEditBody: () =>
+                  showManualHealthDialog(context, ref, body: true),
               key: _activityKey,
               metrics: metrics,
               loading: health.isLoading,

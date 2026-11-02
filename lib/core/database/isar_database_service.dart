@@ -289,6 +289,18 @@ class IsarDatabaseService {
         }
       }
     }
+    if (measurement.weight != null &&
+        (!measurement.weight!.isFinite ||
+            measurement.weight! <= 0 ||
+            measurement.weight! > 1000)) {
+      throw ArgumentError('Invalid weight');
+    }
+    if (measurement.bodyFat != null &&
+        (!measurement.bodyFat!.isFinite ||
+            measurement.bodyFat! < 0 ||
+            measurement.bodyFat! > 100)) {
+      throw ArgumentError('Invalid body fat');
+    }
     if ((measurement.note?.length ?? 0) > InputLimits.note) {
       throw ArgumentError('Слишком длинная заметка');
     }
@@ -300,6 +312,8 @@ class IsarDatabaseService {
           .findFirst();
       // The day, rather than an incoming object's id, determines the record.
       measurement.id = existing?.id;
+      measurement.weight ??= existing?.weight;
+      measurement.bodyFat ??= existing?.bodyFat;
       return isar.bodyMeasurements.put(measurement);
     });
   }

@@ -25,3 +25,6 @@ android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
 
 # Kotlin compiler cache
 android/.kotlin/
+
+graphify-out/
+*.ipa

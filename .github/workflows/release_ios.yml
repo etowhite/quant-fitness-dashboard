@@ -1,0 +1,56 @@
+name: quant iOS IPA
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: macos-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.35.7'
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: dart run build_runner build --delete-conflicting-outputs
+      - run: flutter analyze --fatal-infos
+      - run: flutter test
+      - name: Build and package both variants for re-signing
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          for variant in sideload full-healthkit; do
+            if [ "$variant" = full-healthkit ]; then
+              cp ios/Runner/Runner.healthkit.entitlements ios/Runner/Runner.entitlements
+            else
+              printf '%s' '<?xml version="1.0" encoding="UTF-8"?><plist version="1.0"><dict/></plist>' > ios/Runner/Runner.entitlements
+            fi
+            flutter build ios --release --no-codesign --dart-define=QUANT_HEALTHKIT=$([ "$variant" = full-healthkit ] && echo true || echo false)
+            rm -rf build/ipa-stage
+            mkdir -p build/ipa-stage/Payload
+            cp -R build/ios/iphoneos/Runner.app build/ipa-stage/Payload/
+            codesign --force --sign - --entitlements ios/Runner/Runner.entitlements build/ipa-stage/Payload/Runner.app
+            codesign -d --entitlements :- build/ipa-stage/Payload/Runner.app > build/ipa-stage/entitlements.plist
+            python3 tool/check_ios.py "$variant" build/ipa-stage/entitlements.plist
+            (cd build/ipa-stage && zip -qry "../../dist/quant-ios-$variant.ipa" Payload)
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: quant-ios-ipa
+          path: dist/*.ipa
+          if-no-files-found: error
+      - name: Publish both IPA files
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: gh release create "ios-build-${{ github.run_number }}" dist/*.ipa --target "${{ github.sha }}" --title "quant iOS build ${{ github.run_number }}" --notes "Ad-hoc IPA packages for re-signing. Sideload has no HealthKit entitlement. Full mode requires compatible provisioning. Not Apple distribution-signed."

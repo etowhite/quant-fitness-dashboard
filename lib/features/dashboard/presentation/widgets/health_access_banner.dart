@@ -26,7 +26,7 @@ class HealthAccessBanner extends StatelessWidget {
             HealthAccess.updateRequired =>
               'Установите или обновите Health Connect, затем проверьте подключение.',
             _ =>
-              'Health Connect недоступен на этом устройстве. Дневник питания работает офлайн.',
+              'Health Connect недоступен. Нажмите карточку активности или + у состава тела, чтобы внести данные вручную.',
           }),
           const SizedBox(height: AppSpacing.actionGap),
           FilledButton.tonal(

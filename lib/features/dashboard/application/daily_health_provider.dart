@@ -1,3 +1,4 @@
+import '../../../core/health/local_health.dart';
 import '../../../core/home_widgets/home_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -36,15 +37,18 @@ class DailyHealthNotifier extends AsyncNotifier<DailyHealthState> {
         ? await service.requestPermissions()
         : await service.checkAccess();
     if (access != HealthAccess.granted) {
-      await HomeWidgets.saveActivity(null, DateTime.now());
-      return DailyHealthState(access: access);
+      final metrics = await mergeLocalHealth(ref, null);
+      await HomeWidgets.saveActivity(metrics.stepsToday, metrics.fetchedAt);
+      return DailyHealthState(access: access, metrics: metrics);
     }
     try {
-      final metrics = await service.fetchTodayMetrics();
+      final metrics =
+          await mergeLocalHealth(ref, await service.fetchTodayMetrics());
       await HomeWidgets.saveActivity(metrics.stepsToday, metrics.fetchedAt);
       return DailyHealthState(access: access, metrics: metrics);
     } on HealthAccessException catch (error) {
-      return DailyHealthState(access: error.access);
+      return DailyHealthState(
+          access: error.access, metrics: await mergeLocalHealth(ref, null));
     }
   }
 

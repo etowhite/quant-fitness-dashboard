@@ -38,7 +38,7 @@ class BackupDocument {
 
   String encode() => jsonEncode({
         'format': 'smart_fitness_backup',
-        'version': 8,
+        'version': 9,
         'waterPresets': WaterPresetsRepository.validate(waterPresets),
         'language': language.name,
         'application': 'quant',
@@ -82,6 +82,8 @@ class BackupDocument {
           for (final m in measurements)
             {
               'date': m.date.toIso8601String(),
+              'weight': m.weight,
+              'bodyFat': m.bodyFat,
               'chest': m.chest,
               'waist': m.waist,
               'hips': m.hips,
@@ -113,7 +115,8 @@ class BackupDocument {
             raw['version'] != 5 &&
             raw['version'] != 6 &&
             raw['version'] != 7 &&
-            raw['version'] != 8)) {
+            raw['version'] != 8 &&
+            raw['version'] != 9)) {
       throw const FormatException('Неподдерживаемый формат копии');
     }
     List<Map<String, dynamic>> rows(String key) {
@@ -233,6 +236,10 @@ class BackupDocument {
           : number(r, k, InputLimits.circumferenceCm, positive: true);
       measurements.add(BodyMeasurement()
         ..date = day
+        ..weight = (r['weight'] == null
+            ? null
+            : number(r, 'weight', 1000, positive: true))
+        ..bodyFat = (r['bodyFat'] == null ? null : number(r, 'bodyFat', 100))
         ..chest = optional('chest')
         ..waist = optional('waist')
         ..hips = optional('hips')

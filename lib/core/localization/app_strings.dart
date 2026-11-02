@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'translations.dart';
@@ -12,8 +13,28 @@ class AppStrings {
       Localizations.of<AppStrings>(context, AppStrings) ??
       const AppStrings(Locale('ru'));
   String text(String source) {
+    final translated = _text(source);
+    return Platform.isIOS
+        ? translated.replaceAll('Health Connect', 'Apple Health')
+        : translated;
+  }
+
+  String _text(String source) {
     if (locale.languageCode != 'en') return source;
-    final direct = foodFeatureEnglish[source] ?? english[source];
+    const manual = {
+      'Health Connect недоступен. Нажмите карточку активности или + у состава тела, чтобы внести данные вручную.':
+          'Health Connect is unavailable. Tap Activity or + in Body composition to enter data manually.',
+      'Вес и процент жира': 'Weight and body fat',
+      'Активность за сегодня': 'Daily activity',
+      'Вес, кг': 'Weight, kg',
+      'Жир, %': 'Body fat, %',
+      'Активные ккал': 'Active kcal',
+      'Введите корректное значение': 'Enter a valid value',
+      'Ручные значения хранятся только на устройстве. Пустое поле активности возвращает автоматические данные.':
+          'Manual values stay on this device. Clear an activity field to restore automatic data.',
+    };
+    final direct =
+        manual[source] ?? foodFeatureEnglish[source] ?? english[source];
     if (direct != null) return direct;
     for (final entry in templates.entries) {
       final parts = entry.key.split(RegExp(r'\{\d+\}'));

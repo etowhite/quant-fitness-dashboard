@@ -11,6 +11,8 @@ class BodyMeasurement {
   @Index(unique: true, replace: true)
   late DateTime date;
 
+  double? weight;
+  double? bodyFat;
   double? chest;
   double? waist;
   double? hips;

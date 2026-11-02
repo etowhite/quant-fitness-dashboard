@@ -1,10 +1,13 @@
 import 'dart:io';
+import 'package:flutter/services.dart';
 
 import 'package:health/health.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'interval_totals.dart';
 
 import '../../features/dashboard/domain/daily_health_metrics.dart';
+
+enum HealthSourceMode { platform, localFallback }
 
 enum HealthAccess { granted, denied, unavailable, updateRequired }
 
@@ -39,16 +42,42 @@ class HealthAccessException implements Exception {
 }
 
 class HealthConnectService {
-  HealthConnectService({Health? health, DateTime Function()? clock})
+  HealthConnectService({Health? health, DateTime Function()? clock, bool? iOS})
       : _health = health ?? Health(),
-        _clock = clock ?? DateTime.now;
+        _clock = clock ?? DateTime.now,
+        _isIOS = iOS ?? Platform.isIOS;
 
+  final bool _isIOS;
   final Health _health;
   final DateTime Function() _clock;
   Future<void>? _configuration;
-  bool get isSupportedPlatform => Platform.isAndroid;
+  HealthSourceMode sourceMode = HealthSourceMode.platform;
+  bool get isSupportedPlatform => Platform.isAndroid || _isIOS;
+  static const _capabilities = MethodChannel('quant/health_capabilities');
+  List<HealthDataType> get platformTypes => types
+      .where((t) => !_isIOS || t != HealthDataType.TOTAL_CALORIES_BURNED)
+      .toList();
+  Future<bool> _iosAvailable() async {
+    if (!_isIOS) return true;
+    if (!const bool.fromEnvironment('QUANT_HEALTHKIT', defaultValue: false)) {
+      sourceMode = HealthSourceMode.localFallback;
+      return false;
+    }
+    try {
+      final available = await _capabilities
+              .invokeMethod<bool>('healthKitAvailable')
+              .timeout(const Duration(seconds: 5)) ==
+          true;
+      if (!available) sourceMode = HealthSourceMode.localFallback;
+      return available;
+    } on Object {
+      sourceMode = HealthSourceMode.localFallback;
+      return false;
+    }
+  }
+
   Future<bool> activityPermissionGranted() =>
-      Permission.activityRecognition.isGranted;
+      _isIOS ? Future.value(true) : Permission.activityRecognition.isGranted;
 
   static const types = [
     HealthDataType.STEPS,
@@ -60,11 +89,12 @@ class HealthConnectService {
   static final _permissions = List.filled(types.length, HealthDataAccess.READ);
 
   Future<void> configure() async {
-    if (!isSupportedPlatform) {
+    if (!isSupportedPlatform || !await _iosAvailable()) {
       throw const HealthAccessException(HealthAccess.unavailable);
     }
     try {
-      await (_configuration ??= _health.configure());
+      await (_configuration ??= _health.configure())
+          .timeout(const Duration(seconds: 15));
     } catch (_) {
       _configuration = null;
       rethrow;
@@ -73,7 +103,19 @@ class HealthConnectService {
 
   Future<HealthAccess> checkAccess() async {
     if (!isSupportedPlatform) return HealthAccess.unavailable;
-    await configure();
+    if (!await _iosAvailable()) return HealthAccess.unavailable;
+    try {
+      await configure();
+      if (_isIOS) return HealthAccess.granted;
+      return await _androidAccess();
+    } on Object {
+      if (!_isIOS) rethrow;
+      sourceMode = HealthSourceMode.localFallback;
+      return HealthAccess.unavailable;
+    }
+  }
+
+  Future<HealthAccess> _androidAccess() async {
     final status = await _health.getHealthConnectSdkStatus();
     if (status == HealthConnectSdkStatus.sdkUnavailableProviderUpdateRequired) {
       return HealthAccess.updateRequired;
@@ -95,25 +137,42 @@ class HealthConnectService {
 
   Future<List<HealthDataPoint>> _read(
       HealthDataType type, DateTime start, DateTime end) async {
-    if (!await _canRead(type)) return [];
+    if (_isIOS && (!await _iosAvailable() || !platformTypes.contains(type))) {
+      return [];
+    }
+    if (!_isIOS && !await _canRead(type)) return [];
     return _health.removeDuplicates(await _health
         .getHealthDataFromTypes(types: [type], startTime: start, endTime: end));
   }
 
   Future<HealthAccess> requestPermissions() async {
+    try {
+      return await _requestPermissions();
+    } on Object {
+      if (!_isIOS) rethrow;
+      sourceMode = HealthSourceMode.localFallback;
+      return HealthAccess.unavailable;
+    }
+  }
+
+  Future<HealthAccess> _requestPermissions() async {
     final access = await checkAccess();
     if (access == HealthAccess.unavailable ||
         access == HealthAccess.updateRequired) {
       return access;
     }
-    if (!await Permission.activityRecognition.isGranted) {
+    if (Platform.isAndroid && !await Permission.activityRecognition.isGranted) {
       await Permission.activityRecognition.request();
     }
-    if (await _health.hasPermissions(types, permissions: _permissions) !=
-        true) {
-      await _health.requestAuthorization(types, permissions: _permissions);
+    if (_isIOS ||
+        await _health.hasPermissions(types, permissions: _permissions) !=
+            true) {
+      await _health.requestAuthorization(platformTypes,
+          permissions:
+              List.filled(platformTypes.length, HealthDataAccess.READ));
     }
-    if (await _health.isHealthDataHistoryAvailable() &&
+    if (Platform.isAndroid &&
+        await _health.isHealthDataHistoryAvailable() &&
         !await _health.isHealthDataHistoryAuthorized()) {
       await _health.requestHealthDataHistoryAuthorization();
     }
@@ -122,17 +181,28 @@ class HealthConnectService {
   }
 
   Future<DailyHealthMetrics> fetchTodayMetrics() async {
+    try {
+      return await _fetchTodayMetrics();
+    } on Object {
+      if (!_isIOS) rethrow;
+      sourceMode = HealthSourceMode.localFallback;
+      throw const HealthAccessException(HealthAccess.unavailable);
+    }
+  }
+
+  Future<DailyHealthMetrics> _fetchTodayMetrics() async {
     final access = await checkAccess();
     if (access != HealthAccess.granted) throw HealthAccessException(access);
     final now = _clock().toLocal();
     final midnight = DateTime(now.year, now.month, now.day);
     final since = now.subtract(const Duration(days: 30));
-    final historyAvailable = await _health.isHealthDataHistoryAvailable();
+    final historyAvailable =
+        Platform.isAndroid && await _health.isHealthDataHistoryAvailable();
     final historyAuthorized =
         historyAvailable && await _health.isHealthDataHistoryAuthorized();
     final measurementStart = historyAuthorized ? DateTime(1970) : since;
     int? steps;
-    if (await _canRead(HealthDataType.STEPS) &&
+    if ((_isIOS || await _canRead(HealthDataType.STEPS)) &&
         await activityPermissionGranted()) {
       try {
         steps = await _health.getTotalStepsInInterval(midnight, now);
@@ -161,7 +231,7 @@ class HealthConnectService {
         maxValue: 100000);
     var totalCalories = energyTotal(energy);
     var caloriesAreTotal = false;
-    if (totalCalories == 0) {
+    if (totalCalories == 0 && !_isIOS) {
       final fallback =
           await _read(HealthDataType.TOTAL_CALORIES_BURNED, midnight, now);
       if (fallback.isNotEmpty) {
@@ -210,7 +280,7 @@ class HealthConnectService {
         return (weights: weights, steps: steps, incomplete: true);
       }
       try {
-        if (await _canRead(HealthDataType.WEIGHT)) {
+        if (_isIOS || await _canRead(HealthDataType.WEIGHT)) {
           weights.addAll(_points(
               prioritizeHealthSources(
                   await _read(HealthDataType.WEIGHT, start, end)),
@@ -223,7 +293,7 @@ class HealthConnectService {
       } catch (_) {
         incomplete = true;
       }
-      if (await _canRead(HealthDataType.STEPS) &&
+      if ((_isIOS || await _canRead(HealthDataType.STEPS)) &&
           await activityPermissionGranted()) {
         for (var day = DateTime(start.year, start.month, start.day);
             day.isBefore(end);

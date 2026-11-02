@@ -22,10 +22,11 @@ class NotificationService {
           importance: Importance.defaultImportance,
           priority: Priority.defaultPriority,
           visibility: NotificationVisibility.private,
-          icon: 'ic_stat_quant'));
+          icon: 'ic_stat_quant'),
+      iOS: const DarwinNotificationDetails());
 
   Future<void> init() async {
-    if (!Platform.isAndroid) return;
+    if (!Platform.isAndroid && !Platform.isIOS) return;
     final language = (await AppPreferencesRepository().load()).language;
     _strings = AppStrings(
         language.locale ?? WidgetsBinding.instance.platformDispatcher.locale);
@@ -43,7 +44,11 @@ class NotificationService {
     tzdata.initializeTimeZones();
     await _plugin.initialize(
         const InitializationSettings(
-            android: AndroidInitializationSettings('ic_stat_quant')),
+            android: AndroidInitializationSettings('ic_stat_quant'),
+            iOS: DarwinInitializationSettings(
+                requestAlertPermission: false,
+                requestBadgePermission: false,
+                requestSoundPermission: false)),
         onDidReceiveNotificationResponse: (response) {
       HomeWidgets.route.value = null;
       HomeWidgets.route.value =
@@ -55,13 +60,15 @@ class NotificationService {
           ? 'water'
           : 'dashboard';
     }
-    await _plugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()!
-        .createNotificationChannel(AndroidNotificationChannel(
-            channelId, _strings.text('quant · напоминания'),
-            description: _strings.text('Вода, питание и замеры'),
-            importance: Importance.defaultImportance));
+    if (Platform.isAndroid) {
+      await _plugin
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()!
+          .createNotificationChannel(AndroidNotificationChannel(
+              channelId, _strings.text('quant · напоминания'),
+              description: _strings.text('Вода, питание и замеры'),
+              importance: Importance.defaultImportance));
+    }
   }
 
   Future<bool> apply(ReminderSettings settings,
@@ -75,8 +82,9 @@ class NotificationService {
   }
 
   Future<bool> _apply(ReminderSettings settings, bool requestPermission) async {
-    if (!Platform.isAndroid) return true;
+    if (!Platform.isAndroid && !Platform.isIOS) return true;
     await init();
+    if (Platform.isIOS) return _applyIOS(settings, requestPermission);
     final android = _plugin.resolvePlatformSpecificImplementation<
         AndroidFlutterLocalNotificationsPlugin>()!;
     final enabled = requestPermission && settings.anyEnabled
@@ -110,6 +118,34 @@ class NotificationService {
     return true;
   }
 
+  Future<bool> _applyIOS(
+      ReminderSettings settings, bool requestPermission) async {
+    if (requestPermission &&
+        settings.anyEnabled &&
+        !await this.requestPermission()) {
+      return false;
+    }
+    await _plugin.cancelAll();
+    final now = tz.TZDateTime.now(tz.local);
+    for (final slot in buildReminderSlots(settings)) {
+      var next = tz.TZDateTime(tz.local, now.year, now.month, now.day,
+          slot.minute ~/ 60, slot.minute % 60);
+      while (!next.isAfter(now) ||
+          slot.weekday != 0 && next.weekday != slot.weekday) {
+        next = tz.TZDateTime(tz.local, next.year, next.month, next.day + 1,
+            slot.minute ~/ 60, slot.minute % 60);
+      }
+      await _plugin.zonedSchedule(slot.id, _strings.text(slot.title),
+          _strings.text(slot.body), next, details,
+          payload: slot.id >= 100 && slot.id < 200 ? 'water' : 'dashboard',
+          androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+          matchDateTimeComponents: slot.weekday == 0
+              ? DateTimeComponents.time
+              : DateTimeComponents.dayOfWeekAndTime);
+    }
+    return true;
+  }
+
   Future<bool> requestExact() async {
     if (!Platform.isAndroid) return false;
     await init();
@@ -122,7 +158,7 @@ class NotificationService {
 
   Future<void> cancelAll() async {
     final result = _queue.catchError((Object _) => false).then((_) async {
-      if (Platform.isAndroid) {
+      if (Platform.isAndroid || Platform.isIOS) {
         await (_initializing ??= _init());
         await _plugin.cancelAll();
       }
@@ -133,8 +169,15 @@ class NotificationService {
   }
 
   Future<bool> requestPermission() async {
-    if (!Platform.isAndroid) return false;
+    if (!Platform.isAndroid && !Platform.isIOS) return false;
     await init();
+    if (Platform.isIOS) {
+      return await _plugin
+              .resolvePlatformSpecificImplementation<
+                  IOSFlutterLocalNotificationsPlugin>()
+              ?.requestPermissions(alert: true, badge: true, sound: true) ??
+          false;
+    }
     return await _plugin
             .resolvePlatformSpecificImplementation<
                 AndroidFlutterLocalNotificationsPlugin>()!
@@ -143,13 +186,9 @@ class NotificationService {
   }
 
   Future<bool> testNotification() async {
-    if (!Platform.isAndroid) return false;
+    if (!Platform.isAndroid && !Platform.isIOS) return false;
     await init();
-    final allowed = await _plugin
-            .resolvePlatformSpecificImplementation<
-                AndroidFlutterLocalNotificationsPlugin>()!
-            .requestNotificationsPermission() ??
-        false;
+    final allowed = await requestPermission();
     if (!allowed) return false;
     await _plugin.show(9001, 'quant',
         _strings.text('Напоминания работают. Хорошего дня!'), details);
