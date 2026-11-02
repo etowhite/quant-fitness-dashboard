@@ -269,7 +269,3 @@ Inter: лицензия SIL Open Font License в `assets/fonts/OFL.txt`.
 автоматически убирает её вклад. Процент можно изменить перед добавлением
 и при создании продукта. Резервные копии v8 сохраняют процент; старые записи
 дневника сохраняют прежние итоги. Подробнее: [проверки 1.4.7](docs/build_verification_1.4.7.md).
-
-## iPhone / iOS
-
-See [iOS build and sideload guide](docs/ios.md) for both IPA variants and local health fallback.
