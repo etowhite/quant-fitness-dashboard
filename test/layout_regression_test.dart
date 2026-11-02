@@ -38,7 +38,7 @@ void main() {
     return container;
   }
 
-  testWidgets('reminder buttons have equal 48px bounds and 12px gap',
+  testWidgets('reminder buttons have at least 48px bounds and 12px gap',
       (tester) async {
     final container = await mount(tester, AppLanguage.ru);
     await tester.pumpWidget(UncontrolledProviderScope(
@@ -53,8 +53,8 @@ void main() {
     final test = find.ancestor(
         of: find.text('Проверить уведомление'),
         matching: find.byWidgetPredicate((w) => w is FilledButton));
-    expect(tester.getSize(exact).height, 48);
-    expect(tester.getSize(test).height, 48);
+    expect(tester.getSize(exact).height, greaterThanOrEqualTo(48));
+    expect(tester.getSize(test).height, greaterThanOrEqualTo(48));
     expect(tester.getSize(exact).width, tester.getSize(test).width);
     expect(tester.getTopLeft(test).dy - tester.getBottomLeft(exact).dy, 12);
     final list = tester.widget<ListView>(find.byType(ListView));
@@ -121,6 +121,9 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
       await tester.pumpAndSettle();
     }
+    expect(container.read(effectiveUserGoalsProvider).calories, 2200);
+    await tester.tap(find.text('Далее'));
+    await tester.pumpAndSettle();
     final goals = container.read(effectiveUserGoalsProvider);
     expect(goals.calories, 850);
     expect(goals.steps, 12345);

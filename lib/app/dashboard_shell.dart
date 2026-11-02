@@ -194,19 +194,24 @@ class FloatingBottomBar extends StatelessWidget {
                                                           const SizedBox(
                                                               width: 6),
                                                           Flexible(
-                                                              child: QText(
-                                                                  labels[tab
-                                                                      .index],
-                                                                  maxLines: 1,
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                  style: TextStyle(
-                                                                      color: scheme
-                                                                          .onPrimaryContainer,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600)))
+                                                              child: FittedBox(
+                                                                  fit: BoxFit
+                                                                      .scaleDown,
+                                                                  child: QText(
+                                                                      labels[tab
+                                                                          .index],
+                                                                      maxLines:
+                                                                          1,
+                                                                      softWrap:
+                                                                          false,
+                                                                      overflow:
+                                                                          TextOverflow
+                                                                              .ellipsis,
+                                                                      style: TextStyle(
+                                                                          color: scheme
+                                                                              .onPrimaryContainer,
+                                                                          fontWeight:
+                                                                              FontWeight.w600))))
                                                         ],
                                                       ]))))))),
                       ])),

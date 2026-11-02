@@ -1,3 +1,6 @@
+import '../../nutrition/application/food_diary_provider.dart';
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
+import 'package:smart_fitness_dashboard/shared/widgets/quant_dialog.dart';
 import 'package:smart_fitness_dashboard/shared/widgets/labeled_field.dart';
 import '../../../core/localization/app_strings.dart';
 import 'package:flutter/material.dart';
@@ -87,7 +90,7 @@ class _WaterBalanceCardState extends ConsumerState<WaterBalanceCard> {
     }
     final result = await showDialog<int>(
         context: context,
-        builder: (c) => AlertDialog(
+        builder: (c) => QuantDialog(
                 title: const QText('Изменить кнопку воды'),
                 content: Form(
                     key: form,
@@ -145,7 +148,7 @@ class _WaterBalanceCardState extends ConsumerState<WaterBalanceCard> {
     final result = await showDialog<({int volume, bool remember})>(
         context: context,
         builder: (context) => StatefulBuilder(
-            builder: (context, update) => AlertDialog(
+            builder: (context, update) => QuantDialog(
                   title: const QText('Свой объем воды'),
                   content: Form(
                       key: form,
@@ -237,24 +240,26 @@ class _WaterBalanceCardState extends ConsumerState<WaterBalanceCard> {
   @override
   Widget build(BuildContext context) {
     final water = ref.watch(waterProvider(widget.date));
+    final hydration = ref.watch(dailyHydrationProvider(widget.date));
     final goal = ref.watch(effectiveUserGoalsProvider).waterMl;
     return Card(
         child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(AppSpacing.cardInset),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
                 Icon(Icons.water_drop_outlined,
                     color: Theme.of(context).colorScheme.secondary),
                 const SizedBox(width: 8),
-                QText('Водный баланс',
-                    style: Theme.of(context).textTheme.titleMedium)
+                Expanded(
+                    child: QText('Водный баланс',
+                        style: Theme.of(context).textTheme.titleMedium))
               ]),
-              const SizedBox(height: 12),
-              water.when(
-                  data: (rows) {
-                    final total =
-                        rows.fold<int>(0, (sum, r) => sum + r.volumeMl);
+              const SizedBox(height: AppSpacing.actionGap),
+              hydration.when(
+                  data: (balance) {
+                    final rows = water.valueOrNull ?? [];
+                    final total = balance.totalMl;
                     return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -266,6 +271,10 @@ class _WaterBalanceCardState extends ConsumerState<WaterBalanceCard> {
                                       Theme.of(context).colorScheme.secondary,
                                   fontSize: 22,
                                   fontWeight: FontWeight.w600)),
+                          const SizedBox(height: 6),
+                          QText(
+                              'в т.ч. ${balance.foodMl.round()} мл из напитков и еды',
+                              style: Theme.of(context).textTheme.bodySmall),
                           const SizedBox(height: 10),
                           AnimatedProgress(
                               value: (total / goal).clamp(0.0, 1.0),
@@ -275,53 +284,144 @@ class _WaterBalanceCardState extends ConsumerState<WaterBalanceCard> {
                                   .secondary
                                   .withAlpha(26),
                               minHeight: 6),
-                          const SizedBox(height: 12),
-                          Wrap(spacing: 10, runSpacing: 10, children: [
-                            for (final volume in ref
-                                    .watch(waterPresetsProvider)
-                                    .valueOrNull ??
-                                <int>[])
-                              OutlinedButton(
-                                  key: ValueKey('water-preset-$volume'),
-                                  style: OutlinedButton.styleFrom(
-                                      tapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                      shape: const StadiumBorder()),
-                                  onPressed: _busy || _editing
-                                      ? null
-                                      : () => _change(volume),
-                                  onLongPress: _busy || _editing
-                                      ? null
-                                      : () => _manage(volume),
-                                  child: QText('+$volume мл')),
-                            OutlinedButton.icon(
-                                onPressed: _busy || _editing ? null : _custom,
-                                style: OutlinedButton.styleFrom(
-                                    tapTargetSize:
-                                        MaterialTapTargetSize.shrinkWrap,
-                                    shape: const StadiumBorder()),
-                                icon: const Icon(Icons.add),
-                                label: const QText('Свой объем')),
-                            IconButton(
-                                style: IconButton.styleFrom(
-                                    tapTargetSize:
-                                        MaterialTapTargetSize.shrinkWrap),
-                                onPressed: _busy || rows.isEmpty
-                                    ? null
-                                    : () => _change(null),
-                                tooltip:
-                                    context.tr('Отменить последнюю порцию'),
-                                icon: Icon(Icons.remove_circle_outline,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .secondary)),
-                          ]),
+                          const SizedBox(height: AppSpacing.actionGap),
+                          Wrap(
+                              spacing: AppSpacing.chipGap,
+                              runSpacing: AppSpacing.chipGap,
+                              children: [
+                                for (final volume in ref
+                                        .watch(waterPresetsProvider)
+                                        .valueOrNull ??
+                                    <int>[])
+                                  OutlinedButton(
+                                      key: ValueKey('water-preset-$volume'),
+                                      style: OutlinedButton.styleFrom(
+                                          tapTargetSize:
+                                              MaterialTapTargetSize.shrinkWrap,
+                                          shape: const StadiumBorder()),
+                                      onPressed: _busy || _editing
+                                          ? null
+                                          : () => _change(volume),
+                                      onLongPress: _busy || _editing
+                                          ? null
+                                          : () => _manage(volume),
+                                      child: QText('+$volume мл')),
+                              ]),
+                          if ((ref.watch(waterPresetsProvider).valueOrNull ??
+                                  [])
+                              .isNotEmpty)
+                            const SizedBox(height: AppSpacing.chipGap),
+                          LayoutBuilder(builder: (context, box) {
+                            final label = context.tr('Свой объем');
+                            final style =
+                                Theme.of(context).textTheme.labelLarge!;
+                            final scaler = MediaQuery.textScalerOf(context);
+                            double heightFor(bool icon) {
+                              var height = AppSpacing.actionMinHeight;
+                              for (var n = 0; n < 8; n++) {
+                                final available = box.maxWidth -
+                                    height -
+                                    AppSpacing.chipGap -
+                                    24 -
+                                    (icon ? 32 : 0);
+                                if (available < 32) return double.infinity;
+                                final painter = TextPainter(
+                                    text: TextSpan(text: label, style: style),
+                                    textDirection: Directionality.of(context),
+                                    textScaler: scaler)
+                                  ..layout(maxWidth: available);
+                                final next = (painter.height + 24).clamp(
+                                    AppSpacing.actionMinHeight,
+                                    double.infinity);
+                                painter.dispose();
+                                if ((next - height).abs() < .5) return next;
+                                height = next;
+                              }
+                              return double.infinity;
+                            }
+
+                            var showIcon = true;
+                            var height = heightFor(true);
+                            if (!height.isFinite || height > box.maxWidth / 2) {
+                              showIcon = false;
+                              height = heightFor(false);
+                            }
+                            final compact =
+                                !height.isFinite || height > box.maxWidth / 2;
+                            if (compact) height = AppSpacing.actionMinHeight;
+                            const text = QText('Свой объем',
+                                textAlign: TextAlign.center);
+                            final customLabel = compact
+                                ? const FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: QText('Свой объем',
+                                        maxLines: 1, softWrap: false))
+                                : text;
+                            return SizedBox(
+                                height: height,
+                                child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      Expanded(
+                                          child: OutlinedButton(
+                                              key: const ValueKey(
+                                                  'water-custom'),
+                                              onPressed: _busy || _editing
+                                                  ? null
+                                                  : _custom,
+                                              style: OutlinedButton.styleFrom(
+                                                  minimumSize: Size.zero,
+                                                  padding:
+                                                      const EdgeInsets.all(12),
+                                                  tapTargetSize:
+                                                      MaterialTapTargetSize
+                                                          .shrinkWrap),
+                                              child: showIcon
+                                                  ? Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                          const Icon(Icons.add),
+                                                          const SizedBox(
+                                                              width: 8),
+                                                          Expanded(
+                                                              child:
+                                                                  customLabel)
+                                                        ])
+                                                  : customLabel)),
+                                      const SizedBox(width: AppSpacing.chipGap),
+                                      SizedBox(
+                                          width: height,
+                                          child: IconButton(
+                                              key: const ValueKey('water-undo'),
+                                              style: IconButton.styleFrom(
+                                                  minimumSize: Size.zero,
+                                                  shape: const CircleBorder(),
+                                                  tapTargetSize:
+                                                      MaterialTapTargetSize
+                                                          .shrinkWrap),
+                                              onPressed: _busy || rows.isEmpty
+                                                  ? null
+                                                  : () => _change(null),
+                                              tooltip: context.tr(
+                                                  'Отменить последнюю порцию'),
+                                              icon: Icon(
+                                                  Icons.remove_circle_outline,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .secondary))),
+                                    ]));
+                          }),
                         ]);
                   },
                   loading: () => const LinearProgressIndicator(),
                   error: (_, __) => TextButton(
-                      onPressed: () =>
-                          ref.invalidate(waterProvider(widget.date)),
+                      onPressed: () {
+                        ref.invalidate(waterProvider(widget.date));
+                        ref.invalidate(foodDiaryProvider(widget.date));
+                      },
                       child: const QText('Повторить загрузку воды'))),
               if (_error != null) QText(_error!),
             ])));

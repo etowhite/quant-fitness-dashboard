@@ -1,3 +1,4 @@
+import '../../features/nutrition/domain/hydration.dart';
 import 'dart:async';
 import 'dart:math';
 import '../../features/nutrition/data/recipe.dart';
@@ -41,6 +42,9 @@ class IsarDatabaseService {
         final keys =
             existing.map((p) => p.catalogueKey).whereType<String>().toSet();
         final names = existing.map((p) => p.name.toLowerCase()).toSet();
+        final waterByKey = {
+          for (final p in catalogue) p.catalogueKey: p.waterPercentage
+        };
         for (final product in catalogue) {
           // Additive migration: never overwrite custom or previously edited rows.
           if (!keys.contains(product.catalogueKey) &&
@@ -50,11 +54,29 @@ class IsarDatabaseService {
           }
         }
         for (final p in await isar.foodProducts.where().findAll()) {
+          // Old Isar double columns are NaN when first added. Migrate only
+          // the new field; preserve nutrients, favourites and custom products.
+          if (!p.waterPercentage.isFinite) {
+            p.waterPercentage =
+                waterByKey[p.catalogueKey] ?? Hydration.detect(p.name);
+            await isar.foodProducts.put(p);
+          }
           if (p.stableKey == null) {
             p.stableKey = productIdentity(p);
             await isar.foodProducts.put(p);
           }
         }
+      });
+      // Preserve old diary totals: missing hydration was never recorded.
+      await isar.writeTxn(() async {
+        final entries = await isar.foodLogEntries
+            .filter()
+            .waterPercentageEqualTo(double.nan)
+            .findAll();
+        for (final e in entries) {
+          e.waterPercentage = 0;
+        }
+        await isar.foodLogEntries.putAll(entries);
       });
       return service;
     } catch (_) {
@@ -69,6 +91,7 @@ class IsarDatabaseService {
     if (!mealTypes.contains(entry.mealType)) {
       throw ArgumentError.value(entry.mealType, 'mealType');
     }
+    Hydration.validate(entry.waterPercentage);
     _name(entry.productName);
     _positive(entry.weightGrams, 'weightGrams');
     if (entry.weightGrams > InputLimits.portionGrams) {
@@ -92,7 +115,8 @@ class IsarDatabaseService {
       {required FoodProduct product,
       required DateTime date,
       required String mealType,
-      required double weightGrams}) {
+      required double weightGrams,
+      double? waterPercentage}) {
     if (product.recipeJson != null &&
         !Recipe.decode(product.recipeJson!).complete) {
       throw StateError('Incomplete recipe');
@@ -104,6 +128,8 @@ class IsarDatabaseService {
       ..productName = product.name
       ..productKey = product.stableKey ?? productIdentity(product)
       ..weightGrams = weightGrams
+      ..waterPercentage =
+          Hydration.validate(waterPercentage ?? product.waterPercentage)
       ..calories = product.calories * factor
       ..proteins = product.proteins * factor
       ..fats = product.fats * factor
@@ -146,6 +172,7 @@ class IsarDatabaseService {
   }
 
   Future<Id> saveCustomProduct(FoodProduct product) {
+    Hydration.validate(product.waterPercentage);
     _name(product.name);
     _macros(product.calories, product.proteins, product.fats, product.carbs);
     if (product.calories > InputLimits.caloriesPer100g ||
@@ -420,6 +447,7 @@ class IsarDatabaseService {
       });
 
   Future<FoodProduct> cacheOnlineProduct(FoodProduct product) async {
+    Hydration.validate(product.waterPercentage);
     final code = product.barcode;
     if (code == null || !RegExp(r'^\d{8,14}$').hasMatch(code)) {
       throw ArgumentError('Некорректный штрихкод');

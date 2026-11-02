@@ -91,7 +91,8 @@ Future<Map<String, dynamic>> buildWidgetSnapshot(
   final locale = settings.language.locale ??
       WidgetsBinding.instance.platformDispatcher.locale;
   final strings = AppStrings(locale);
-  final totals = DailyFoodDiary(await db.getFoodLogEntriesForDay(now)).totals;
+  final diary = DailyFoodDiary(await db.getFoodLogEntriesForDay(now));
+  final totals = diary.totals;
   final water = await db.isar.waterLogEntries
       .where()
       .dateEqualTo(localDay(now))
@@ -117,7 +118,7 @@ Future<Map<String, dynamic>> buildWidgetSnapshot(
     'proteins': totals.proteins,
     'fats': totals.fats,
     'carbs': totals.carbs,
-    'water': sum,
+    'water': (sum + diary.waterMl).round(),
     'waterGoal': goals.waterMl,
     'steps': steps,
     'stepGoal': goals.steps,

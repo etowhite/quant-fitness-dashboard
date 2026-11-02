@@ -57,8 +57,13 @@ const FoodLogEntrySchema = CollectionSchema(
       name: r'proteins',
       type: IsarType.double,
     ),
-    r'weightGrams': PropertySchema(
+    r'waterPercentage': PropertySchema(
       id: 8,
+      name: r'waterPercentage',
+      type: IsarType.double,
+    ),
+    r'weightGrams': PropertySchema(
+      id: 9,
       name: r'weightGrams',
       type: IsarType.double,
     )
@@ -135,7 +140,8 @@ void _foodLogEntrySerialize(
   writer.writeString(offsets[5], object.productKey);
   writer.writeString(offsets[6], object.productName);
   writer.writeDouble(offsets[7], object.proteins);
-  writer.writeDouble(offsets[8], object.weightGrams);
+  writer.writeDouble(offsets[8], object.waterPercentage);
+  writer.writeDouble(offsets[9], object.weightGrams);
 }
 
 FoodLogEntry _foodLogEntryDeserialize(
@@ -154,7 +160,8 @@ FoodLogEntry _foodLogEntryDeserialize(
   object.productKey = reader.readStringOrNull(offsets[5]);
   object.productName = reader.readString(offsets[6]);
   object.proteins = reader.readDouble(offsets[7]);
-  object.weightGrams = reader.readDouble(offsets[8]);
+  object.waterPercentage = reader.readDouble(offsets[8]);
+  object.weightGrams = reader.readDouble(offsets[9]);
   return object;
 }
 
@@ -182,6 +189,8 @@ P _foodLogEntryDeserializeProp<P>(
     case 7:
       return (reader.readDouble(offset)) as P;
     case 8:
+      return (reader.readDouble(offset)) as P;
+    case 9:
       return (reader.readDouble(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -1256,6 +1265,72 @@ extension FoodLogEntryQueryFilter
   }
 
   QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterFilterCondition>
+      waterPercentageEqualTo(
+    double value, {
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'waterPercentage',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterFilterCondition>
+      waterPercentageGreaterThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'waterPercentage',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterFilterCondition>
+      waterPercentageLessThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'waterPercentage',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterFilterCondition>
+      waterPercentageBetween(
+    double lower,
+    double upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'waterPercentage',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterFilterCondition>
       weightGramsEqualTo(
     double value, {
     double epsilon = Query.epsilon,
@@ -1428,6 +1503,20 @@ extension FoodLogEntryQuerySortBy
     });
   }
 
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterSortBy>
+      sortByWaterPercentage() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'waterPercentage', Sort.asc);
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterSortBy>
+      sortByWaterPercentageDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'waterPercentage', Sort.desc);
+    });
+  }
+
   QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterSortBy> sortByWeightGrams() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'weightGrams', Sort.asc);
@@ -1554,6 +1643,20 @@ extension FoodLogEntryQuerySortThenBy
     });
   }
 
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterSortBy>
+      thenByWaterPercentage() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'waterPercentage', Sort.asc);
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterSortBy>
+      thenByWaterPercentageDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'waterPercentage', Sort.desc);
+    });
+  }
+
   QueryBuilder<FoodLogEntry, FoodLogEntry, QAfterSortBy> thenByWeightGrams() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'weightGrams', Sort.asc);
@@ -1621,6 +1724,13 @@ extension FoodLogEntryQueryWhereDistinct
     });
   }
 
+  QueryBuilder<FoodLogEntry, FoodLogEntry, QDistinct>
+      distinctByWaterPercentage() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'waterPercentage');
+    });
+  }
+
   QueryBuilder<FoodLogEntry, FoodLogEntry, QDistinct> distinctByWeightGrams() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'weightGrams');
@@ -1681,6 +1791,13 @@ extension FoodLogEntryQueryProperty
   QueryBuilder<FoodLogEntry, double, QQueryOperations> proteinsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'proteins');
+    });
+  }
+
+  QueryBuilder<FoodLogEntry, double, QQueryOperations>
+      waterPercentageProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'waterPercentage');
     });
   }
 

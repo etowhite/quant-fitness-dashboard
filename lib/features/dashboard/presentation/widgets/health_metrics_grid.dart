@@ -1,3 +1,4 @@
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
 import '../../../../shared/widgets/expressive_motion.dart';
 import '../../../../core/localization/app_strings.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +78,7 @@ class HealthMetricsGrid extends StatelessWidget {
                 .format(weight.date),
             style: TextStyle(
                 color: Theme.of(context).colorScheme.onSurfaceVariant)),
-      const SizedBox(height: 12),
+      const SizedBox(height: AppSpacing.actionGap),
       QText(deltaLabel == null
           ? 'Нет предыдущего веса'
           : '$deltaLabel кг к предыдущему'),
@@ -97,10 +98,15 @@ class HealthMetricsGrid extends StatelessWidget {
     ]));
   }
 
-  Widget _value(BuildContext context, String value) => QText(value,
-      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-          color: Theme.of(context).colorScheme.secondary,
-          fontWeight: FontWeight.w700));
+  Widget _value(BuildContext context, String value) => FittedBox(
+      fit: BoxFit.scaleDown,
+      alignment: Alignment.centerLeft,
+      child: QText(value,
+          maxLines: 1,
+          softWrap: false,
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+              color: Theme.of(context).colorScheme.secondary,
+              fontWeight: FontWeight.w700)));
 
   Widget _syncTime(BuildContext context, DateTime? date) => Padding(
       padding: const EdgeInsets.only(top: 12),

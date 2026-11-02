@@ -1,3 +1,5 @@
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
+import 'package:smart_fitness_dashboard/shared/widgets/quant_dialog.dart';
 import 'package:flutter/services.dart';
 import '../../../shared/widgets/labeled_field.dart';
 import '../../../shared/widgets/expressive_motion.dart';
@@ -28,9 +30,72 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final _pages = PageController();
   int _step = 0;
   bool _busy = false;
+  final _calories = ValueNotifier<int>(2200);
+  final _steps = ValueNotifier<int>(10000);
+  final _water = ValueNotifier<int>(2000);
+  bool _goalsEdited = false;
+  Future<void>? _savingGoals;
+
+  @override
+  void initState() {
+    super.initState();
+    // Loading saved goals never replaces a draft the user already edited.
+    ref.read(userGoalsProvider.future).then((goals) {
+      if (!mounted || _goalsEdited) return;
+      _calories.value = goals.calories.round();
+      _steps.value = goals.steps;
+      _water.value = goals.waterMl;
+    }).catchError((Object _) {});
+  }
+
+  void _editDraft(ValueNotifier<int> field, int value) {
+    _goalsEdited = true;
+    field.value = value;
+  }
+
+  Future<void> _commitGoals() async {
+    if (_savingGoals != null) return _savingGoals;
+    if (!_goalsEdited) return;
+    final calories = _calories.value;
+    final steps = _steps.value;
+    final water = _water.value;
+    final save = () async {
+      final old = await ref.read(userGoalsProvider.future);
+      await ref.read(userGoalsProvider.notifier).save(UserGoals(
+          calories: calories.toDouble(),
+          proteins: old.proteins,
+          fats: old.fats,
+          carbs: old.carbs,
+          steps: steps,
+          waterMl: water));
+      _goalsEdited = false;
+    }();
+    _savingGoals = save;
+    try {
+      await save;
+    } finally {
+      _savingGoals = null;
+    }
+  }
+
+  Future<void> _next() async {
+    if (_step == 1) await _commitGoals();
+    if (mounted) _move(_step + 1);
+  }
+
+  void _pageChanged(int next) {
+    final previous = _step;
+    setState(() => _step = next);
+    // Swiping forward follows the same persistence boundary as Next.
+    if (previous == 1 && next == 2 && _goalsEdited) _run(_commitGoals);
+  }
+
   @override
   void dispose() {
     _pages.dispose();
+    _calories.dispose();
+    _steps.dispose();
+    _water.dispose();
     super.dispose();
   }
 
@@ -49,8 +114,11 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     }
   }
 
-  Future<void> _finish() =>
-      ref.read(onboardingProvider.notifier).setCompleted(true);
+  Future<void> _finish() async {
+    await _commitGoals();
+    await ref.read(onboardingProvider.notifier).setCompleted(true);
+  }
+
   void _move(int page) => _pages.animateToPage(page,
       duration: const Duration(milliseconds: 400),
       curve: Curves.easeInOutCubicEmphasized);
@@ -75,7 +143,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     if (doc == null || !mounted) return;
     final confirmed = await showDialog<bool>(
         context: context,
-        builder: (c) => AlertDialog(
+        builder: (c) => QuantDialog(
                 title: const QText('Восстановить копию?'),
                 content: const QText(
                     'Текущие данные будут заменены резервной копией.'),
@@ -89,6 +157,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 ]));
     if (confirmed != true) return;
     await service.restore(doc);
+    _goalsEdited = false; // Imported goals take precedence over the draft.
     ref.invalidate(userGoalsProvider);
     ref.invalidate(themeSettingsProvider);
     ref.invalidate(localeProvider);
@@ -99,10 +168,31 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   Widget _panel(List<Widget> children) => Card(
       child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(AppSpacing.cardInset),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: children)));
+  Widget _heading(String title) => LayoutBuilder(builder: (context, box) {
+        final style = Theme.of(context)
+            .textTheme
+            .headlineLarge!
+            .copyWith(fontWeight: FontWeight.w700, letterSpacing: -1);
+        var widest = 0.0;
+        for (final word in context.tr(title).split(RegExp(r'\s+'))) {
+          final painter = TextPainter(
+              text: TextSpan(text: word, style: style),
+              textDirection: Directionality.of(context),
+              textScaler: MediaQuery.textScalerOf(context))
+            ..layout();
+          if (painter.width > widest) widest = painter.width;
+          painter.dispose();
+        }
+        return QText(title,
+            style: widest > box.maxWidth
+                ? style.copyWith(
+                    fontSize: style.fontSize! * box.maxWidth / widest)
+                : style);
+      });
   Widget _page(String title, String subtitle, List<Widget> children,
           {List<Widget> leading = const []}) =>
       SingleChildScrollView(
@@ -115,13 +205,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     .textTheme
                     .labelLarge
                     ?.copyWith(color: Theme.of(context).colorScheme.primary)),
-            const SizedBox(height: 12),
-            QText(title,
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineLarge
-                    ?.copyWith(fontWeight: FontWeight.w700, letterSpacing: -1)),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.actionGap),
+            _heading(title),
+            const SizedBox(height: AppSpacing.actionGap),
             QText(subtitle,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant)),
@@ -132,7 +218,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   Widget build(BuildContext context) {
     final language =
         ref.watch(localeProvider).valueOrNull ?? AppLanguage.system;
-    final goals = ref.watch(effectiveUserGoalsProvider);
     return Scaffold(
         body: SafeArea(
             child: Column(children: [
@@ -144,10 +229,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                   onPressed: _busy ? null : () => _move(_step - 1),
                   icon: const Icon(Icons.arrow_back),
                   tooltip: context.tr('Назад')),
-            TextButton(
-                onPressed: _busy ? null : () => _run(_finish),
-                child: const QText('Пропустить')),
-            const Spacer(),
+            Expanded(
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: TextButton(
+                        onPressed: _busy ? null : () => _run(_finish),
+                        child: const QText('Пропустить')))),
             for (var i = 0; i < 3; i++)
               AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
@@ -164,7 +251,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       Expanded(
           child: PageView(
               controller: _pages,
-              onPageChanged: (v) => setState(() => _step = v),
+              onPageChanged: _pageChanged,
               physics: _busy ? const NeverScrollableScrollPhysics() : null,
               children: [
             _page('Знакомство с quant',
@@ -186,31 +273,31 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                         Expanded(child: QText(feature.$2))
                       ]))
               ]),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.section),
               _panel([
                 const QText('Язык'),
-                const SizedBox(height: 12),
-                Row(children: [
+                const SizedBox(height: AppSpacing.actionGap),
+                ResponsiveChoices(labels: const [
+                  'RU',
+                  'EN',
+                  'Авто'
+                ], children: [
                   for (final option in [
                     (AppLanguage.ru, 'RU'),
                     (AppLanguage.en, 'EN'),
-                    (AppLanguage.system, 'Авто'),
-                  ]) ...[
-                    if (option.$1 != AppLanguage.ru) const SizedBox(width: 8),
-                    Expanded(
-                        child: CapsuleChoice(
-                      label: option.$2,
-                      selected: language == option.$1,
-                      onPressed: _busy
-                          ? null
-                          : () => _run(() => ref
-                              .read(localeProvider.notifier)
-                              .save(option.$1)),
-                    )),
-                  ],
+                    (AppLanguage.system, 'Авто')
+                  ])
+                    CapsuleChoice(
+                        label: option.$2,
+                        selected: language == option.$1,
+                        onPressed: _busy
+                            ? null
+                            : () => _run(() => ref
+                                .read(localeProvider.notifier)
+                                .save(option.$1)))
                 ]),
               ]),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.section),
               const AppearanceCard(),
             ],
                 leading: [
@@ -220,7 +307,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           shape: const StadiumBorder(),
                           minimumSize: const Size.fromHeight(52)),
                       icon: const Icon(Icons.file_open_outlined),
-                      label: const QText('Импорт резервной копии JSON')),
+                      label: const QText('Импорт резервной копии JSON',
+                          textAlign: TextAlign.center)),
                   const SizedBox(height: 20),
                 ]),
             _page('Твои дневные ориентиры',
@@ -240,39 +328,15 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           label: QText(preset.$1),
                           onPressed: _busy
                               ? null
-                              : () => _goals(goals, calories: preset.$2))
+                              : () => _editDraft(_calories, preset.$2.round()))
                   ]),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.section),
               _panel([
-                _stepper(
-                    'Калории',
-                    goals.calories.round(),
-                    50,
-                    () => _goals(goals, calories: goals.calories - 50),
-                    () => _goals(goals, calories: goals.calories + 50),
-                    500,
-                    20000,
-                    (v) => _goals(goals, calories: v.toDouble())),
+                _draftStepper('Калории', _calories, 50, 500, 20000),
                 const Divider(),
-                _stepper(
-                    'Шаги',
-                    goals.steps,
-                    500,
-                    () => _goals(goals, steps: goals.steps - 500),
-                    () => _goals(goals, steps: goals.steps + 500),
-                    500,
-                    100000,
-                    (v) => _goals(goals, steps: v)),
+                _draftStepper('Шаги', _steps, 500, 500, 100000),
                 const Divider(),
-                _stepper(
-                    'Вода',
-                    goals.waterMl,
-                    250,
-                    () => _goals(goals, water: goals.waterMl - 250),
-                    () => _goals(goals, water: goals.waterMl + 250),
-                    250,
-                    20000,
-                    (v) => _goals(goals, water: v))
+                _draftStepper('Вода', _water, 250, 250, 20000)
               ]),
             ]),
             _page(
@@ -295,11 +359,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             FilledButton(
                 onPressed: _busy
                     ? null
-                    : () => _step == 2 ? _run(_connect) : _move(_step + 1),
+                    : () => _step == 2 ? _run(_connect) : _run(_next),
                 style: FilledButton.styleFrom(
                     minimumSize: const Size.fromHeight(58),
                     shape: const StadiumBorder()),
-                child: QText(_step == 2 ? 'Подключить и начать' : 'Далее')),
+                child: QText(_step == 2 ? 'Подключить и начать' : 'Далее',
+                    textAlign: TextAlign.center)),
             if (_step == 2) ...[
               const SizedBox(height: 10),
               OutlinedButton(
@@ -307,27 +372,34 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                   style: OutlinedButton.styleFrom(
                       minimumSize: const Size.fromHeight(58),
                       shape: const StadiumBorder()),
-                  child: const QText('Продолжить без подключения'))
+                  child: const QText('Продолжить без подключения',
+                      textAlign: TextAlign.center))
             ],
           ])),
     ])));
   }
 
-  void _goals(UserGoals old, {double? calories, int? steps, int? water}) =>
-      _run(() => ref.read(userGoalsProvider.notifier).save(UserGoals(
-          calories: calories ?? old.calories,
-          proteins: old.proteins,
-          fats: old.fats,
-          carbs: old.carbs,
-          steps: steps ?? old.steps,
-          waterMl: water ?? old.waterMl)));
+  Widget _draftStepper(
+          String label, ValueNotifier<int> field, int step, int min, int max) =>
+      ValueListenableBuilder<int>(
+          valueListenable: field,
+          builder: (context, value, _) => _stepper(
+              label,
+              value,
+              step,
+              () => _editDraft(field, value - step),
+              () => _editDraft(field, value + step),
+              min,
+              max,
+              (v) => _editDraft(field, v)));
+
   Future<void> _editGoal(
       String label, int value, int min, int max, ValueChanged<int> save) async {
     final controller = TextEditingController(text: '$value');
     final form = GlobalKey<FormState>();
     final result = await showDialog<int>(
       context: context,
-      builder: (dialogContext) => AlertDialog(
+      builder: (dialogContext) => QuantDialog(
         title: QText(label),
         content: Form(
             key: form,
@@ -397,8 +469,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       Flexible(
                           child: QText(
                               '$value${label == 'Калории' ? ' ккал' : label == 'Вода' ? ' мл' : ''}',
-                              maxLines: 1,
-                              softWrap: false,
+                              softWrap: true,
                               style:
                                   Theme.of(context).textTheme.headlineSmall)),
                       const SizedBox(width: 6),

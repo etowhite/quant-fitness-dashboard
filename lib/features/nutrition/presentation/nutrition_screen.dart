@@ -1,3 +1,5 @@
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
+import 'package:smart_fitness_dashboard/shared/widgets/quant_layout.dart';
 import '../../../core/home_widgets/home_widgets.dart';
 import '../../../shared/widgets/scroll_island.dart';
 import 'widgets/diary_calendar_sheet.dart';
@@ -105,6 +107,7 @@ class _NutritionScreenState extends ConsumerState<NutritionScreen> {
                   ..productName = entry.productName
                   ..productKey = entry.productKey
                   ..weightGrams = entry.weightGrams
+                  ..waterPercentage = entry.waterPercentage
                   ..calories = entry.calories
                   ..proteins = entry.proteins
                   ..fats = entry.fats
@@ -135,91 +138,88 @@ class _NutritionScreenState extends ConsumerState<NutritionScreen> {
     final goals = ref.watch(effectiveUserGoalsProvider);
     if (diary.hasValue) _jumpToWater();
     return Scaffold(
-      appBar: AppBar(title: const QText('Питание'), actions: [
-        IconButton(
-            tooltip: context.tr('Мои рецепты'),
-            icon: const Icon(Icons.menu_book_outlined),
-            onPressed: () => Navigator.push(context,
-                MaterialPageRoute(builder: (_) => RecipesScreen(date: _date))))
-      ]),
+      appBar: QuantAppBar(
+          context: context,
+          title: const QText('Питание'),
+          actions: [
+            IconButton(
+                tooltip: context.tr('Мои рецепты'),
+                icon: const Icon(Icons.menu_book_outlined),
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => RecipesScreen(date: _date))))
+          ]),
       floatingActionButton: IslandAwareFab(
-          child: FloatingActionButton.extended(
+          child: QuantFab(
               onPressed: _sheetOpen ? null : () => _add(),
-              icon: const Icon(Icons.add),
-              label: const QText('Добавить еду'))),
+              label: 'Добавить еду')),
       body: diary.when(
-        data: (day) => ListView(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 120),
-            children: [
-              Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Row(children: [
-                    IconButton(
-                        onPressed: _date.isAfter(_firstDate)
-                            ? () => _moveDay(-1)
-                            : null,
-                        tooltip: context.tr('Предыдущий день'),
-                        icon: const Icon(Icons.chevron_left)),
-                    Expanded(
-                        child: TextButton.icon(
-                            onPressed: _pickDate,
-                            icon: const Icon(Icons.calendar_today_outlined,
-                                size: 18),
-                            label:
-                                Row(mainAxisSize: MainAxisSize.min, children: [
-                              Flexible(
-                                  child: QText(
-                                      DateFormat('EEE, d MMM yyyy',
-                                              context.languageCode)
-                                          .format(_date),
-                                      textAlign: TextAlign.center,
-                                      maxLines: 1,
-                                      softWrap: false,
-                                      overflow: TextOverflow.ellipsis)),
-                              if ((ref
-                                          .watch(recordedDiaryDatesProvider)
-                                          .valueOrNull ??
-                                      <DateTime>{})
-                                  .contains(_date)) ...[
-                                const SizedBox(width: 6),
-                                Container(
-                                    key: const ValueKey('selected-date-dot'),
-                                    width: 6,
-                                    height: 6,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary)),
-                              ],
-                            ]))),
-                    IconButton(
-                        onPressed: _date.isBefore(_lastDate)
-                            ? () => _moveDay(1)
-                            : null,
-                        tooltip: context.tr('Следующий день'),
-                        icon: const Icon(Icons.chevron_right)),
-                  ])),
-              const SizedBox(height: 16),
-              DailyNutritionSummary(totals: day.totals, goals: goals),
-              const SizedBox(height: 16),
-              WaterBalanceCard(key: _waterKey, date: _date),
-              for (final meal in IsarDatabaseService.mealTypes)
-                Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: MealSectionCard(
-                      mealType: meal,
-                      entries: day.entries
-                          .where((entry) => entry.mealType == meal)
-                          .toList(),
-                      onAdd: () => _add(meal),
-                      onDelete: _delete),
-                ),
-            ]),
+        data: (day) =>
+            ListView(padding: QuantInsets.page(context, fab: true), children: [
+          Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Row(children: [
+                IconButton(
+                    onPressed:
+                        _date.isAfter(_firstDate) ? () => _moveDay(-1) : null,
+                    tooltip: context.tr('Предыдущий день'),
+                    icon: const Icon(Icons.chevron_left)),
+                Expanded(
+                    child: TextButton.icon(
+                        onPressed: _pickDate,
+                        icon:
+                            const Icon(Icons.calendar_today_outlined, size: 18),
+                        label: Row(mainAxisSize: MainAxisSize.min, children: [
+                          Flexible(
+                              child: QText(
+                                  DateFormat('EEE, d MMM yyyy',
+                                          context.languageCode)
+                                      .format(_date),
+                                  textAlign: TextAlign.center)),
+                          if ((ref
+                                      .watch(recordedDiaryDatesProvider)
+                                      .valueOrNull ??
+                                  <DateTime>{})
+                              .contains(_date)) ...[
+                            const SizedBox(width: 6),
+                            Container(
+                                key: const ValueKey('selected-date-dot'),
+                                width: 6,
+                                height: 6,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color:
+                                        Theme.of(context).colorScheme.primary)),
+                          ],
+                        ]))),
+                IconButton(
+                    onPressed:
+                        _date.isBefore(_lastDate) ? () => _moveDay(1) : null,
+                    tooltip: context.tr('Следующий день'),
+                    icon: const Icon(Icons.chevron_right)),
+              ])),
+          const SizedBox(height: AppSpacing.section),
+          DailyNutritionSummary(totals: day.totals, goals: goals),
+          const SizedBox(height: AppSpacing.section),
+          WaterBalanceCard(key: _waterKey, date: _date),
+          for (final meal in IsarDatabaseService.mealTypes)
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: MealSectionCard(
+                  mealType: meal,
+                  entries: day.entries
+                      .where((entry) => entry.mealType == meal)
+                      .toList(),
+                  onAdd: () => _add(meal),
+                  onDelete: _delete),
+            ),
+        ]),
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stack) => Center(
             child: Column(mainAxisSize: MainAxisSize.min, children: [
           const QText('Не удалось прочитать дневник.'),
+          const SizedBox(height: AppSpacing.actionGap),
           TextButton(
               onPressed: () => ref.invalidate(foodDiaryProvider(_date)),
               child: const QText('Повторить')),

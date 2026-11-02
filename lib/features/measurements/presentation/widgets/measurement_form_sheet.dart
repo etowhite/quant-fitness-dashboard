@@ -1,3 +1,4 @@
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
 import 'package:smart_fitness_dashboard/shared/widgets/labeled_field.dart';
 import '../../../../core/localization/app_strings.dart';
 import 'package:flutter/material.dart';
@@ -142,13 +143,14 @@ class _MeasurementFormSheetState extends ConsumerState<MeasurementFormSheet> {
                       children: [
                         QText('Новый замер',
                             style: Theme.of(context).textTheme.titleLarge),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: AppSpacing.actionGap),
                         OutlinedButton.icon(
                             onPressed: _saving || _loading ? null : _pickDate,
                             icon: const Icon(Icons.calendar_today_outlined),
                             label: QText(
                                 DateFormat('d MMMM yyyy', context.languageCode)
                                     .format(_date))),
+                        const SizedBox(height: AppSpacing.actionGap),
                         if (_loading) const LinearProgressIndicator(),
                         if (_existing)
                           const QText(
@@ -177,7 +179,7 @@ class _MeasurementFormSheetState extends ConsumerState<MeasurementFormSheet> {
                                             positive: true,
                                             max: InputLimits.circumferenceCm))),
                           ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: AppSpacing.section),
                         LabeledField(
                             label: context.tr('Заметка'),
                             child: TextFormField(
@@ -200,6 +202,7 @@ class _MeasurementFormSheetState extends ConsumerState<MeasurementFormSheet> {
                                 : _save,
                             child: QText(
                                 _saving ? 'Сохранение…' : 'Сохранить замер')),
+                        const SizedBox(height: AppSpacing.actionGap),
                         TextButton(
                             onPressed:
                                 _saving ? null : () => Navigator.pop(context),

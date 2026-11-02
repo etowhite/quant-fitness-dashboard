@@ -1,3 +1,4 @@
+import '../domain/hydration.dart';
 import '../data/food_log_entry.dart';
 
 class NutritionTotals {
@@ -23,4 +24,8 @@ class DailyFoodDiary {
 
   final List<FoodLogEntry> entries;
   final NutritionTotals totals;
+  double get waterMl => entries.fold(
+      0.0,
+      (total, entry) =>
+          total + Hydration.volume(entry.weightGrams, entry.waterPercentage));
 }

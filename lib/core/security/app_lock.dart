@@ -1,3 +1,4 @@
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
 import '../home_widgets/home_widgets.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -152,7 +153,7 @@ class _AppLockGateState extends ConsumerState<AppLockGate>
                 child: Scaffold(
                     body: SafeArea(
                         child: Center(
-                            child: Padding(
+                            child: SingleChildScrollView(
                                 padding: const EdgeInsets.all(32),
                                 child: Column(
                                     mainAxisSize: MainAxisSize.min,
@@ -163,7 +164,8 @@ class _AppLockGateState extends ConsumerState<AppLockGate>
                                           style: Theme.of(context)
                                               .textTheme
                                               .displaySmall),
-                                      const SizedBox(height: 12),
+                                      const SizedBox(
+                                          height: AppSpacing.actionGap),
                                       const QText('Ваши данные под защитой'),
                                       if (_error != null)
                                         Padding(

@@ -1,3 +1,4 @@
+import '../../features/nutrition/domain/hydration.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import '../../features/nutrition/data/food_product.dart';
@@ -8,6 +9,9 @@ Future<List<FoodProduct>> loadBaseFoodProducts() async {
           as Map<String, dynamic>;
   return (json['foods'] as List)
       .map((row) => FoodProduct()
+        ..waterPercentage = row['waterPercentage'] is num
+            ? Hydration.validate((row['waterPercentage'] as num).toDouble())
+            : Hydration.detect(row['name'] as String)
         ..name = row['name'] as String
         ..category = row['category'] as String
         ..catalogueKey = row['id'] as String

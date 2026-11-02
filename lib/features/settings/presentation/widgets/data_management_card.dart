@@ -1,3 +1,5 @@
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
+import 'package:smart_fitness_dashboard/shared/widgets/quant_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/localization/app_strings.dart';
@@ -64,7 +66,7 @@ class _DataManagementCardState extends ConsumerState<DataManagementCard> {
         if (!mounted) return;
         final confirmed = await showDialog<bool>(
             context: context,
-            builder: (c) => AlertDialog(
+            builder: (c) => QuantDialog(
                     title: const QText('Очистить выбранные данные?'),
                     content: const QText(
                         'Это действие нельзя отменить. Остальные категории сохранятся.'),
@@ -98,7 +100,7 @@ class _DataManagementCardState extends ConsumerState<DataManagementCard> {
   @override
   Widget build(BuildContext context) => Card(
       child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(AppSpacing.cardInset),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             QText('Управление данными и сброс',
@@ -106,20 +108,25 @@ class _DataManagementCardState extends ConsumerState<DataManagementCard> {
                     .textTheme
                     .titleLarge
                     ?.copyWith(color: Theme.of(context).colorScheme.error)),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.actionGap),
             const QText(
                 'Очистка необратима. Перед удалением сохраните JSON-копию.'),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.actionGap),
             if (_busy) const LinearProgressIndicator(),
             OutlinedButton(
+                key: const ValueKey('data-clear-selective'),
                 onPressed: _busy ? null : () => _reset(false),
-                child: const QText('Выборочная очистка данных')),
+                child: const QText('Выборочная очистка данных',
+                    textAlign: TextAlign.center)),
+            const SizedBox(height: AppSpacing.actionGap),
             TextButton.icon(
+                key: const ValueKey('data-clear-factory'),
                 style: TextButton.styleFrom(
                     foregroundColor: Theme.of(context).colorScheme.error),
                 onPressed: _busy ? null : () => _reset(true),
                 icon: const Icon(Icons.delete_forever_outlined),
-                label: const QText('Полный сброс приложения')),
+                label: const QText('Полный сброс приложения',
+                    textAlign: TextAlign.center)),
           ])));
 }
 
@@ -133,7 +140,7 @@ class _SelectiveDialog extends StatefulWidget {
 class _SelectiveDialogState extends State<_SelectiveDialog> {
   final selected = <ResetCategory>{};
   @override
-  Widget build(BuildContext context) => AlertDialog(
+  Widget build(BuildContext context) => QuantDialog(
           title: const QText('Выборочная очистка данных'),
           content: SizedBox(
               width: 420,
@@ -170,12 +177,12 @@ class _FactoryDialog extends StatefulWidget {
 class _FactoryDialogState extends State<_FactoryDialog> {
   bool exporting = false;
   @override
-  Widget build(BuildContext context) => AlertDialog(
+  Widget build(BuildContext context) => QuantDialog(
           title: const QText('Сбросить все данные?'),
           content: Column(mainAxisSize: MainAxisSize.min, children: [
             const QText(
                 'Будут удалены дневник, вода, продукты, замеры и настройки. Приложение вернется к первому шагу ознакомления.'),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.section),
             OutlinedButton.icon(
                 onPressed: exporting
                     ? null
@@ -188,7 +195,8 @@ class _FactoryDialogState extends State<_FactoryDialog> {
                         }
                       },
                 icon: const Icon(Icons.save_alt),
-                label: const QText('Сначала экспортировать JSON'))
+                label: const QText('Сначала экспортировать JSON',
+                    textAlign: TextAlign.center))
           ]),
           actions: [
             TextButton(

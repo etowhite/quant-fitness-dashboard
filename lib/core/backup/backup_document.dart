@@ -38,7 +38,7 @@ class BackupDocument {
 
   String encode() => jsonEncode({
         'format': 'smart_fitness_backup',
-        'version': 7,
+        'version': 8,
         'waterPresets': WaterPresetsRepository.validate(waterPresets),
         'language': language.name,
         'application': 'quant',
@@ -49,6 +49,7 @@ class BackupDocument {
           for (final p in products)
             {
               'name': p.name,
+              'waterPercentage': p.waterPercentage,
               'calories': p.calories,
               'proteins': p.proteins,
               'fats': p.fats,
@@ -70,6 +71,7 @@ class BackupDocument {
               'productName': e.productName,
               'productKey': e.productKey,
               'weightGrams': e.weightGrams,
+              'waterPercentage': e.waterPercentage,
               'calories': e.calories,
               'proteins': e.proteins,
               'fats': e.fats,
@@ -110,7 +112,8 @@ class BackupDocument {
             raw['version'] != 4 &&
             raw['version'] != 5 &&
             raw['version'] != 6 &&
-            raw['version'] != 7)) {
+            raw['version'] != 7 &&
+            raw['version'] != 8)) {
       throw const FormatException('Неподдерживаемый формат копии');
     }
     List<Map<String, dynamic>> rows(String key) {
@@ -157,6 +160,9 @@ class BackupDocument {
       for (final r in rows('products'))
         FoodProduct()
           ..name = text(r, 'name', InputLimits.productName)
+          ..waterPercentage = r.containsKey('waterPercentage')
+              ? number(r, 'waterPercentage', 100)
+              : 0
           ..calories = number(r, 'calories', InputLimits.caloriesPer100g)
           ..proteins = number(r, 'proteins', InputLimits.macroPer100g)
           ..fats = number(r, 'fats', InputLimits.macroPer100g)
@@ -207,6 +213,9 @@ class BackupDocument {
             r['productKey'] == null ? null : text(r, 'productKey', 200)
         ..weightGrams =
             number(r, 'weightGrams', InputLimits.portionGrams, positive: true)
+        ..waterPercentage = r.containsKey('waterPercentage')
+            ? number(r, 'waterPercentage', 100)
+            : 0
         ..calories = number(r, 'calories', 100000)
         ..proteins = number(r, 'proteins', 100000)
         ..fats = number(r, 'fats', 100000)

@@ -1,3 +1,5 @@
+import 'hydration_editor.dart';
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
 import 'package:smart_fitness_dashboard/shared/widgets/labeled_field.dart';
 import '../../../../core/localization/app_strings.dart';
 import 'package:flutter/material.dart';
@@ -59,6 +61,9 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
   bool _lookingUp = false;
   bool _byServings = false;
   String? _error;
+  double? _waterPercentage;
+  List<FoodProduct> _retainedLocal = [];
+  List<FoodProduct> _retainedOnline = [];
 
   @override
   void initState() {
@@ -90,7 +95,12 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
     try {
       final db = await ref.read(databaseServiceProvider.future);
       final saved = await db.cacheOnlineProduct(product);
-      if (mounted) setState(() => _selected = saved);
+      if (mounted) {
+        setState(() {
+          _selected = saved;
+          _waterPercentage = null;
+        });
+      }
     } catch (_) {
       if (mounted) {
         setState(
@@ -157,7 +167,8 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
           product: product,
           date: widget.date,
           mealType: meal,
-          weightGrams: grams);
+          weightGrams: grams,
+          waterPercentage: _waterPercentage ?? product.waterPercentage);
       if (mounted) Navigator.of(context).pop(true);
     } catch (_) {
       if (mounted) {
@@ -231,7 +242,7 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
                                   color: Theme.of(context)
                                       .colorScheme
                                       .onSurfaceVariant)),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: AppSpacing.section),
                           LabeledField(
                               label: context.tr('Прием пищи'),
                               child: DropdownButtonFormField<String>(
@@ -246,7 +257,7 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
                                     ? null
                                     : (meal) => setState(() => _meal = meal!),
                               )),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: AppSpacing.section),
                           if (_selected == null)
                             ..._searchWidgets()
                           else
@@ -257,32 +268,73 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
         ),
       );
 
+  void _selectLocal(FoodProduct product) {
+    FocusScope.of(context).unfocus();
+    setState(() {
+      _selected = product;
+      _waterPercentage = null;
+      _byServings = false;
+      _weight.text = '100';
+    });
+  }
+
   List<Widget> _searchWidgets() {
     final products = ref.watch(productSearchProvider(_query));
     final online = _query.length >= 2
         ? ref.watch(onlineProductProvider(_query))
         : const AsyncData(<FoodProduct>[]);
+    // Keep still-relevant rows during refresh/debounce. New network responses
+    // only append to the local-first list; no full-list loading replacement.
+    if (products.hasValue) _retainedLocal = products.requireValue;
+    if (online.hasValue) _retainedOnline = online.requireValue;
+    final normalized = _query.toLowerCase();
+    bool matches(FoodProduct p) =>
+        normalized.isEmpty ||
+        normalized
+            .split(RegExp(r'\s+'))
+            .every((word) => p.name.toLowerCase().contains(word));
+    final local = (products.valueOrNull ?? _retainedLocal)
+        .where(matches)
+        .toList()
+      ..sort((a, b) {
+        final exactA = a.name.toLowerCase() == normalized;
+        final exactB = b.name.toLowerCase() == normalized;
+        return exactA == exactB ? a.name.compareTo(b.name) : (exactA ? -1 : 1);
+      });
+    final remote =
+        online.valueOrNull ?? _retainedOnline.where(matches).toList();
+    String identity(FoodProduct p) => p.barcode != null
+        ? 'barcode:${p.barcode!}'
+        : p.stableKey ?? ('name:${p.name.toLowerCase()}');
+    final seen = <String>{};
+    final items = <({FoodProduct product, bool remote})>[
+      for (final p in local)
+        if (seen.add(identity(p))) (product: p, remote: false),
+      for (final p in remote)
+        if (seen.add(identity(p))) (product: p, remote: true),
+    ];
     return [
-      SavedFoods(
-          onSelected: (p) => setState(() {
-                _selected = p;
-                _byServings = false;
-                _weight.text = '100';
-              })),
       LabeledField(
           label: context.tr('Найти продукт'),
           child: TextField(
+              key: const ValueKey('food-search-input'),
               controller: _search,
               onChanged: _searchChanged,
+              maxLength: 120,
               decoration: InputDecoration(
+                  counterText: '',
                   hintText: context.tr('Начните вводить название'),
                   prefixIcon: const Icon(Icons.search)))),
       const SizedBox(height: 8),
-      AnimatedSwitcher(
-          duration: const Duration(milliseconds: 250),
-          child: _lookingUp || online.isLoading
-              ? const LinearProgressIndicator(key: ValueKey('search-loading'))
-              : const SizedBox(height: 4)),
+      SizedBox(
+          height: 4,
+          child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 180),
+              child: _lookingUp || online.isLoading
+                  ? const LinearProgressIndicator(
+                      key: ValueKey('search-loading'))
+                  : const SizedBox.shrink())),
+      const SizedBox(height: AppSpacing.actionGap),
       if (_error != null) QText(_error!),
       Wrap(spacing: 10, runSpacing: 10, children: [
         OutlinedButton.icon(
@@ -298,78 +350,51 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
             label: const QText('Создать свой продукт')),
       ]),
       const Divider(height: 24, thickness: 1),
-      const SizedBox(height: 8),
-      products.when(
-        skipLoadingOnReload: false,
-        data: (items) => items.isEmpty
-            ? const Padding(
-                padding: EdgeInsets.all(20),
-                child: QText('Продукты не найдены. Создайте свой продукт.'))
-            : Column(children: [
-                for (final product in items) ...[
-                  if (product != items.first)
-                    const Divider(height: 1, thickness: 1),
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: Text(product.name),
-                    subtitle: QText(product.recipeJson != null &&
-                            !Recipe.decode(product.recipeJson!).complete
-                        ? 'Расчёт неполный: у ингредиента нет КБЖУ. Добавление в дневник недоступно.'
-                        : '${product.category} · ${product.calories.round()} ккал\nБ ${product.proteins.toStringAsFixed(1)} · Ж ${product.fats.toStringAsFixed(1)} · У ${product.carbs.toStringAsFixed(1)} / 100 г${product.source == null ? '' : '\n${product.source}'}'),
-                    trailing: FavoriteButton(product: product),
-                    onTap: () {
-                      FocusScope.of(context).unfocus();
-                      setState(() => _selected = product);
-                    },
-                  ),
-                ],
-                if (items.length == 30)
-                  const QText('Уточните название, чтобы сузить поиск.'),
-              ]),
-        loading: () => const Padding(
-            padding: EdgeInsets.all(24),
-            child: Center(child: CircularProgressIndicator())),
-        error: (error, stack) => Column(children: [
-          const QText('Не удалось загрузить справочник.'),
-          TextButton(
-              onPressed: () => ref.invalidate(productSearchProvider(_query)),
-              child: const QText('Повторить'))
-        ]),
-      ),
-      if (_query.length >= 2) ...[
-        const Divider(height: 32),
-        QText('Open Food Facts · ODbL',
-            style: TextStyle(color: Theme.of(context).colorScheme.secondary)),
-        QText(
-            'Название запроса отправляется в Open Food Facts. Проверьте КБЖУ по этикетке. Поиск ограничен 10 запросами в минуту.',
-            style: TextStyle(
-                fontSize: 12,
-                color: Theme.of(context).colorScheme.onSurfaceVariant)),
-        online.when(
-            skipLoadingOnReload: false,
-            data: (items) => items.isEmpty
-                ? const QText('Нет продуктов с полным КБЖУ.')
-                : Column(children: [
-                    for (final p in items.where((p) =>
-                        !(products.valueOrNull ?? <FoodProduct>[]).any(
-                            (local) =>
-                                local.barcode != null &&
-                                local.barcode == p.barcode))) ...[
-                      const Divider(height: 1, thickness: 1),
-                      ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          title: Text(p.name),
-                          subtitle: QText(
-                              '${p.calories.round()} ккал / 100 г · сохранить офлайн'),
-                          trailing: FavoriteButton(product: p),
-                          onTap: _lookingUp ? null : () => _chooseOnline(p)),
-                    ],
-                  ]),
-            loading: () => const SizedBox.shrink(),
-            error: (_, __) => TextButton(
-                onPressed: () => ref.invalidate(onlineProductProvider(_query)),
-                child: const QText('Онлайн-поиск недоступен. Повторить'))),
+      if (_query.isEmpty) SavedFoods(onSelected: _selectLocal),
+      if (_query.length >= 2)
+        Padding(
+            padding: const EdgeInsets.only(bottom: AppSpacing.small),
+            child: QText(
+                'Название запроса отправляется в Open Food Facts. Проверьте КБЖУ по этикетке. Поиск ограничен 10 запросами в минуту.',
+                style: Theme.of(context).textTheme.bodySmall)),
+      for (final (index, row) in items.indexed) ...[
+        if (index > 0) const Divider(height: 1, thickness: 1),
+        ListTile(
+            key: ValueKey('food-result-${identity(row.product)}'),
+            contentPadding: EdgeInsets.zero,
+            title: Text(row.product.name),
+            subtitle: QText(row.product.recipeJson != null &&
+                    !Recipe.decode(row.product.recipeJson!).complete
+                ? 'Расчёт неполный: у ингредиента нет КБЖУ. Добавление в дневник недоступно.'
+                : '${row.product.calories.round()} ккал / 100 г${row.remote ? ' · Open Food Facts · сохранить офлайн' : ' · ${row.product.category}'}'),
+            trailing: FavoriteButton(product: row.product),
+            onTap: _lookingUp
+                ? null
+                : () {
+                    if (row.remote) {
+                      _chooseOnline(row.product);
+                    } else {
+                      _selectLocal(row.product);
+                    }
+                  }),
       ],
+      if (items.isEmpty &&
+          !products.isLoading &&
+          !online.isLoading &&
+          !products.hasError)
+        const Padding(
+            padding: EdgeInsets.all(AppSpacing.cardInset),
+            child: QText('Продукты не найдены. Создайте свой продукт.')),
+      if (products.hasError)
+        TextButton(
+            onPressed: () => ref.invalidate(productSearchProvider(_query)),
+            child: const QText('Не удалось загрузить справочник.')),
+      if (online.hasError && online.error is! SearchCancelled)
+        TextButton(
+            onPressed: () => ref.invalidate(onlineProductProvider(_query)),
+            child: QText(online.error is FoodSearchRateLimit
+                ? 'Лимит Open Food Facts. Повторите позже.'
+                : 'Онлайн-поиск недоступен. Повторить')),
     ];
   }
 
@@ -390,22 +415,25 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
         const QText(
             'Расчёт неполный: у ингредиента нет КБЖУ. Добавление в дневник недоступно.'),
       if (recipe?.servings != null)
-        Wrap(spacing: 8, children: [
-          ChoiceChip(
-              label: const QText('Граммы'),
-              selected: !_byServings,
-              onSelected: (_) => setState(() {
-                    _byServings = false;
-                    _weight.text = '100';
-                  })),
-          ChoiceChip(
-              label: const QText('Порции'),
-              selected: _byServings,
-              onSelected: (_) => setState(() {
-                    _byServings = true;
-                    _weight.text = '1';
-                  })),
-        ]),
+        Wrap(
+            spacing: AppSpacing.small,
+            runSpacing: AppSpacing.small,
+            children: [
+              ChoiceChip(
+                  label: const QText('Граммы'),
+                  selected: !_byServings,
+                  onSelected: (_) => setState(() {
+                        _byServings = false;
+                        _weight.text = '100';
+                      })),
+              ChoiceChip(
+                  label: const QText('Порции'),
+                  selected: _byServings,
+                  onSelected: (_) => setState(() {
+                        _byServings = true;
+                        _weight.text = '1';
+                      })),
+            ]),
       if (product.source != null)
         QText(product.source!,
             style: TextStyle(
@@ -416,12 +444,13 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
               ? null
               : () => setState(() {
                     _selected = null;
+                    _waterPercentage = null;
                     _byServings = false;
                     _weight.text = '100';
                     _error = null;
                   }),
           child: const QText('Выбрать другой продукт')),
-      const SizedBox(height: 16),
+      const SizedBox(height: AppSpacing.section),
       Form(
           key: _portionForm,
           child: LabeledField(
@@ -438,7 +467,7 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
                 validator: _validatePortion,
                 onChanged: (_) => setState(() {}),
               ))),
-      const SizedBox(height: 12),
+      const SizedBox(height: AppSpacing.actionGap),
       if (!_byServings)
         Wrap(spacing: 10, runSpacing: 10, children: [
           for (final weight in [50, 100, 150, 200, 250])
@@ -450,7 +479,13 @@ class _AddFoodSheetState extends ConsumerState<AddFoodSheet> {
                     ? null
                     : (_) => setState(() => _weight.text = '$weight'))
         ]),
-      const SizedBox(height: 16),
+      const SizedBox(height: AppSpacing.section),
+      HydrationEditor(
+          percentage: _waterPercentage ?? product.waterPercentage,
+          grams: grams ?? 0,
+          enabled: !_saving,
+          onChanged: (v) => setState(() => _waterPercentage = v)),
+      const SizedBox(height: AppSpacing.section),
       if (grams != null && recipe?.complete != false)
         QText(
             '${(product.calories * factor).toStringAsFixed(0)} ккал\n'

@@ -1,3 +1,5 @@
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
+import 'package:smart_fitness_dashboard/shared/widgets/quant_dialog.dart';
 import '../../../../features/water/application/water_presets_provider.dart';
 import '../../../../core/localization/app_strings.dart';
 import '../../../../core/localization/locale_provider.dart';
@@ -31,7 +33,7 @@ class _BackupCardState extends ConsumerState<BackupCard> {
         if (document == null || !mounted) return;
         final confirmed = await showDialog<bool>(
             context: context,
-            builder: (c) => AlertDialog(
+            builder: (c) => QuantDialog(
                     title: const QText('Восстановить копию?'),
                     content: QText(
                         'Текущие продукты, дневник, вода, замеры, цели и настройки будут заменены.\n'
@@ -74,7 +76,7 @@ class _BackupCardState extends ConsumerState<BackupCard> {
   @override
   Widget build(BuildContext context) => Card(
       child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(AppSpacing.cardInset),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             QText('Резервная копия данных',
@@ -83,7 +85,7 @@ class _BackupCardState extends ConsumerState<BackupCard> {
             const QText(
                 'Продукты, дневник, вода, замеры, цели и настройки. JSON не зашифрован: храните файл в надежном месте. '
                 'В системном выборе укажите папку на устройстве. Данные Health Connect не включены.'),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.actionGap),
             if (_busy) const LinearProgressIndicator(),
             Wrap(spacing: 10, runSpacing: 10, children: [
               OutlinedButton.icon(

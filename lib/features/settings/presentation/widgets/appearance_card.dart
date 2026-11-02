@@ -1,3 +1,4 @@
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/localization/app_strings.dart';
@@ -24,7 +25,7 @@ class AppearanceCard extends ConsumerWidget {
     final settings = ref.watch(themeSettingsProvider);
     return Card(
         child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(AppSpacing.cardInset),
             child: settings.when(
               loading: () => const LinearProgressIndicator(),
               error: (_, __) => TextButton(
@@ -35,43 +36,41 @@ class AppearanceCard extends ConsumerWidget {
                   children: [
                     QText('Оформление',
                         style: Theme.of(context).textTheme.titleLarge),
-                    const SizedBox(height: 16),
-                    Row(children: [
+                    const SizedBox(height: AppSpacing.section),
+                    ResponsiveChoices(labels: const [
+                      'Авто',
+                      'Светлая',
+                      'Темная'
+                    ], children: [
                       for (final mode in [
                         (ThemeMode.system, 'Авто'),
                         (ThemeMode.light, 'Светлая'),
                         (ThemeMode.dark, 'Темная')
                       ])
-                        Expanded(
-                            child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 3),
-                                child: CapsuleChoice(
-                                    label: mode.$2,
-                                    compact:
-                                        MediaQuery.sizeOf(context).width < 380,
-                                    selected: mode.$1 == s.mode,
-                                    onPressed: () => _save(context, ref,
-                                        s.copyWith(mode: mode.$1)))))
+                        CapsuleChoice(
+                            label: mode.$2,
+                            selected: mode.$1 == s.mode,
+                            onPressed: () =>
+                                _save(context, ref, s.copyWith(mode: mode.$1)))
                     ]),
                     const Divider(height: 32),
                     QText('Цветовая палитра',
                         style: Theme.of(context).textTheme.titleMedium),
-                    const SizedBox(height: 12),
-                    LayoutBuilder(
-                        builder: (context, constraints) =>
-                            Wrap(spacing: 8, runSpacing: 8, children: [
-                              for (final p in AccentPalette.presets)
-                                SizedBox(
-                                    width: (constraints.maxWidth - 16) / 3,
-                                    child: CapsuleChoice(
-                                        label: p.label,
-                                        compact: true,
-                                        selected: s.palette == p,
-                                        color: p.primary,
-                                        onPressed: () => _save(context, ref,
-                                            s.copyWith(palette: p))))
-                            ])),
+                    const SizedBox(height: AppSpacing.actionGap),
+                    ResponsiveChoices(
+                        labels: [
+                          for (final p in AccentPalette.presets) p.label
+                        ],
+                        leadingWidth: 20,
+                        children: [
+                          for (final p in AccentPalette.presets)
+                            CapsuleChoice(
+                                label: p.label,
+                                selected: s.palette == p,
+                                color: p.primary,
+                                onPressed: () =>
+                                    _save(context, ref, s.copyWith(palette: p)))
+                        ]),
                     const SizedBox(height: 8),
                     SwitchListTile(
                         contentPadding: EdgeInsets.zero,

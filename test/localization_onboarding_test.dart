@@ -154,9 +154,12 @@ void main() {
     expect(tester.widget<Wrap>(presets).alignment, WrapAlignment.center);
     await tester.tap(find.byTooltip('Increase').first);
     await tester.pumpAndSettle();
-    expect(c.read(effectiveUserGoalsProvider).calories, 2250);
+    expect(c.read(effectiveUserGoalsProvider).calories, 2200);
+    expect(find.text('2250 kcal'), findsOneWidget);
+    expect(find.byType(LinearProgressIndicator), findsNothing);
     await tester.tap(find.text('Next'));
     await tester.pumpAndSettle();
+    expect(c.read(effectiveUserGoalsProvider).calories, 2250);
     expect(find.text('Connect & Start'), findsOneWidget);
     await tester.tap(find.text('Continue without connecting'));
     await tester.pumpAndSettle();

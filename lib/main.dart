@@ -1,3 +1,4 @@
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
 import 'core/home_widgets/home_widgets.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -95,7 +96,7 @@ class _SmartFitnessAppState extends ConsumerState<SmartFitnessApp>
                 padding: const EdgeInsets.all(24),
                 child: Column(mainAxisSize: MainAxisSize.min, children: [
                   const QText('Не удалось открыть локальную базу данных.'),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.section),
                   FilledButton(
                     onPressed: () => ref.invalidate(databaseServiceProvider),
                     child: const QText('Повторить'),

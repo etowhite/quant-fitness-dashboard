@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/theme/app_spacing.dart';
 
 /// A persistent label above an input, never intersecting its outline.
 class LabeledField extends StatelessWidget {
@@ -14,7 +15,7 @@ class LabeledField extends StatelessWidget {
           Text(label,
               style:
                   const TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
-          const SizedBox(height: 6),
+          const SizedBox(height: AppSpacing.labelGap),
           child,
         ],
       );

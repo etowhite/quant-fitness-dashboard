@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'app_spacing.dart';
 import '../../features/settings/domain/theme_settings.dart';
 
 // Brand colors are reserved for the logo; UI colors come from ColorScheme.
@@ -82,16 +83,28 @@ abstract final class AppTheme {
       chipTheme: base.chipTheme.copyWith(side: border, shape: capsule),
       outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
-              side: border, shape: capsule, minimumSize: const Size(48, 48))),
+              side: border,
+              shape: capsule,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              minimumSize: const Size(48, AppSpacing.actionMinHeight))),
       textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-              side: border, shape: capsule, minimumSize: const Size(48, 48))),
+              side: border,
+              shape: capsule,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              minimumSize: const Size(48, AppSpacing.actionMinHeight))),
       filledButtonTheme: FilledButtonThemeData(
           style: FilledButton.styleFrom(
-              side: border, shape: capsule, minimumSize: const Size(48, 48))),
+              side: border,
+              shape: capsule,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              minimumSize: const Size(48, AppSpacing.actionMinHeight))),
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-              side: border, shape: capsule, minimumSize: const Size(48, 48))),
+              side: border,
+              shape: capsule,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              minimumSize: const Size(48, AppSpacing.actionMinHeight))),
       iconButtonTheme: IconButtonThemeData(
           style: ButtonStyle(
               side: WidgetStatePropertyAll(border),
@@ -121,6 +134,8 @@ abstract final class AppTheme {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(24), side: border)),
       inputDecorationTheme: InputDecorationTheme(
+          errorMaxLines: 4,
+          helperMaxLines: 4,
           filled: true,
           fillColor: scheme.surfaceContainerHighest.withAlpha(dark ? 90 : 120),
           border: inputBorder,

@@ -1,3 +1,7 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smart_fitness_dashboard/core/database/database_provider.dart';
+import 'package:smart_fitness_dashboard/features/water/application/water_provider.dart';
+import 'package:smart_fitness_dashboard/features/nutrition/application/daily_food_diary.dart';
 import 'package:smart_fitness_dashboard/core/database/data_reset_service.dart';
 import 'package:smart_fitness_dashboard/features/nutrition/data/recipe.dart';
 import 'package:smart_fitness_dashboard/core/home_widgets/home_widgets.dart';
@@ -59,6 +63,103 @@ void main() {
           .toFilePath()
     });
   });
+  test(
+      'hydration persists, updates reactively, survives backup and deletes without water duplicates',
+      () async {
+    final directory = await Directory.systemTemp.createTemp('quant_hydration_');
+    var db = await IsarDatabaseService.init(
+        directory: directory.path, name: 'hydration');
+    final day = DateTime(2026, 11, 2);
+    try {
+      final product = FoodProduct()
+        ..name = 'Cola Zero'
+        ..waterPercentage = 98
+        ..calories = 0
+        ..proteins = 0
+        ..fats = 0
+        ..carbs = 0;
+      await db.saveCustomProduct(product);
+      await db.addWater(day, 250);
+      final c = ProviderContainer(
+          overrides: [databaseServiceProvider.overrideWith((ref) async => db)]);
+      final listener = c.listen(dailyHydrationProvider(day), (_, next) {});
+      try {
+        Future<DailyHydration> balance(int expected) async {
+          for (var i = 0; i < 100; i++) {
+            final value = c.read(dailyHydrationProvider(day)).valueOrNull;
+            if (value != null && value.totalMl.round() == expected) {
+              return value;
+            }
+            await Future<void>.delayed(const Duration(milliseconds: 10));
+          }
+          throw StateError('Hydration watcher did not update');
+        }
+
+        expect((await balance(250)).foodMl, 0);
+        final id = await db.addProductToDiary(
+            product: product, date: day, mealType: 'Обед', weightGrams: 250);
+        expect((await balance(495)).foodMl, 245);
+        expect(await db.isar.waterLogEntries.count(), 1);
+        product.waterPercentage = 50;
+        await db.saveCustomProduct(product);
+        expect(
+            DailyFoodDiary(await db.getFoodLogEntriesForDay(day)).waterMl, 245);
+        final backup = BackupDocument(
+            goals: const UserGoals(),
+            products: [product],
+            entries: await db.getFoodLogEntriesForDay(day),
+            measurements: [],
+            water: await db.isar.waterLogEntries.where().findAll());
+        final copy = BackupDocument.decode(backup.encode());
+        expect(copy.entries.single.waterPercentage, 98);
+        final snapshot = await buildWidgetSnapshot(
+            db, await SharedPreferences.getInstance(),
+            clock: day);
+        expect(snapshot['water'], 495);
+        await db.deleteFoodLogEntry(id);
+        expect((await balance(250)).foodMl, 0);
+        final e = copy.entries.single..id = null;
+        await db.addFoodLogEntry(e);
+        expect((await balance(495)).foodMl, 245);
+        await db.undoWater(day);
+        expect((await balance(245)).manualMl, 0);
+        expect(
+            () => db.addProductToDiary(
+                product: product,
+                date: day,
+                mealType: 'Обед',
+                weightGrams: 250,
+                waterPercentage: 101),
+            throwsArgumentError);
+      } finally {
+        listener.close();
+        c.dispose();
+      }
+      await db.close();
+      db = await IsarDatabaseService.init(
+          directory: directory.path, name: 'hydration');
+      expect(
+          DailyFoodDiary(await db.getFoodLogEntriesForDay(day)).waterMl, 245);
+      // Simulate old Isar rows, where newly added double columns read as NaN.
+      final oldProduct = (await db.searchProducts('Кефир')).first
+        ..waterPercentage = double.nan;
+      final oldEntry = (await db.getFoodLogEntriesForDay(day)).single
+        ..waterPercentage = double.nan;
+      await db.isar.writeTxn(() async {
+        await db.isar.foodProducts.put(oldProduct);
+        await db.isar.foodLogEntries.put(oldEntry);
+      });
+      await db.close();
+      db = await IsarDatabaseService.init(
+          directory: directory.path, name: 'hydration');
+      expect((await db.searchProducts('Кефир')).first.waterPercentage, 88);
+      expect((await db.getFoodLogEntriesForDay(day)).single.waterPercentage, 0);
+      expect((await db.searchProducts('Cola Zero')).single.waterPercentage, 50);
+    } finally {
+      if (db.isar.isOpen) await db.close();
+      await directory.delete(recursive: true);
+    }
+  }, skip: !Platform.isWindows && !Platform.isLinux);
   test(
       'favorites survive reopen; actual diary use drives frequency; recipe snapshots and backup v6',
       () async {

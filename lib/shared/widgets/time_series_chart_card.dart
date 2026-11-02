@@ -1,3 +1,4 @@
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
 import '../../core/localization/app_strings.dart';
 import 'dart:math' as math;
 
@@ -34,7 +35,7 @@ class TimeSeriesChartCard extends StatelessWidget {
       ..sort((a, b) => a.date.compareTo(b.date));
     return Card(
         child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(AppSpacing.cardInset),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               QText(title, style: Theme.of(context).textTheme.titleLarge),
@@ -42,11 +43,14 @@ class TimeSeriesChartCard extends StatelessWidget {
               QText(subtitle,
                   style: TextStyle(
                       color: Theme.of(context).colorScheme.onSurfaceVariant)),
-              if (controls != null) ...[const SizedBox(height: 12), controls!],
+              if (controls != null) ...[
+                const SizedBox(height: AppSpacing.actionGap),
+                controls!
+              ],
               const SizedBox(height: 24),
               if (points.length < 2)
-                SizedBox(
-                    height: 160,
+                ConstrainedBox(
+                    constraints: const BoxConstraints(minHeight: 160),
                     child: Center(
                       child: QText(emptyText, textAlign: TextAlign.center),
                     ))
@@ -70,7 +74,9 @@ class TimeSeriesChartCard extends StatelessWidget {
     final padding = math.max(0.5, (maxValue - minValue) * 0.2);
     final span = spots.last.x;
     final labelWidth = 90 * MediaQuery.textScalerOf(context).scale(10) / 10;
-    final axisDivisions = ((width - 42) / labelWidth).floor().clamp(1, 3);
+    final axisWidth = 42 * MediaQuery.textScalerOf(context).scale(10) / 10;
+    final axisDivisions =
+        ((width - axisWidth) / labelWidth).floor().clamp(1, 3);
     String dateAt(double x, String pattern) =>
         DateFormat(pattern, context.languageCode).format(
             DateTime.fromMillisecondsSinceEpoch(origin + (x * dayMs).round()));
@@ -103,7 +109,7 @@ class TimeSeriesChartCard extends StatelessWidget {
               leftTitles: AxisTitles(
                   sideTitles: SideTitles(
                       showTitles: true,
-                      reservedSize: 42,
+                      reservedSize: axisWidth,
                       interval: math.max(
                           0.5, (maxValue - minValue + padding * 2) / 3),
                       getTitlesWidget: (value, meta) => QText(

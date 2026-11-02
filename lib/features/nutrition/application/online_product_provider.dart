@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../data/open_food_facts_service.dart';
 import '../data/food_product.dart';
+import '../data/open_food_facts_service.dart';
 
 final openFoodFactsProvider = Provider((ref) {
   final service = OpenFoodFactsService();
@@ -10,16 +10,19 @@ final openFoodFactsProvider = Provider((ref) {
 });
 final onlineProductProvider = FutureProvider.autoDispose
     .family<List<FoodProduct>, String>((ref, query) async {
-  var active = true;
   if (query.trim().length < 2) return [];
+  final cancellation = SearchCancellation();
   final debounce = Completer<void>();
-  final timer = Timer(const Duration(milliseconds: 350), debounce.complete);
+  final timer =
+      Timer(const Duration(milliseconds: 300), () => debounce.complete());
   ref.onDispose(() {
-    active = false;
+    cancellation.cancel();
     timer.cancel();
     if (!debounce.isCompleted) debounce.complete();
   });
   await debounce.future;
-  if (!active || query.trim().length < 2) return [];
-  return ref.read(openFoodFactsProvider).search(query);
+  if (cancellation.cancelled) return [];
+  return ref
+      .read(openFoodFactsProvider)
+      .search(query, cancellation: cancellation);
 });

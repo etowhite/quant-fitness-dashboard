@@ -1,3 +1,4 @@
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
 import 'package:smart_fitness_dashboard/shared/widgets/labeled_field.dart';
 import '../../../core/localization/app_strings.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class UserGoalsCard extends ConsumerWidget {
     final goals = ref.watch(effectiveUserGoalsProvider);
     return Card(
         child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(AppSpacing.cardInset),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -49,7 +50,7 @@ class UserGoalsCard extends ConsumerWidget {
                           : () => ref.invalidate(userGoalsProvider),
                       child: const QText('Повторить')),
                 ],
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.actionGap),
                 QText(
                     '${goals.calories.toStringAsFixed(0)} ккал · ${goals.steps} шагов',
                     style: TextStyle(
@@ -186,6 +187,7 @@ class _EditUserGoalsSheetState extends ConsumerState<EditUserGoalsSheet> {
                             onPressed: _saving ? null : _save,
                             child: QText(
                                 _saving ? 'Сохранение…' : 'Сохранить цели')),
+                        const SizedBox(height: AppSpacing.actionGap),
                         TextButton(
                             onPressed:
                                 _saving ? null : () => Navigator.pop(context),

@@ -1,3 +1,6 @@
+import 'package:smart_fitness_dashboard/shared/widgets/quant_layout.dart';
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
+import 'package:smart_fitness_dashboard/shared/widgets/quant_dialog.dart';
 import '../../../../core/localization/app_strings.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -64,7 +67,7 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen>
     final form = GlobalKey<FormState>();
     final code = await showDialog<String>(
         context: context,
-        builder: (context) => AlertDialog(
+        builder: (context) => QuantDialog(
               title: const QText('Ввести штрихкод вручную'),
               content: Form(
                   key: form,
@@ -115,16 +118,19 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen>
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const QText('Штрихкод продукта'), actions: [
-          IconButton(
-              tooltip: context.tr('Фонарик'),
-              icon: const Icon(Icons.flashlight_on_outlined),
-              onPressed: () async {
-                try {
-                  await _controller.toggleTorch();
-                } catch (_) {/* Device may not have a torch. */}
-              }),
-        ]),
+        appBar: QuantAppBar(
+            context: context,
+            title: const QText('Штрихкод продукта'),
+            actions: [
+              IconButton(
+                  tooltip: context.tr('Фонарик'),
+                  icon: const Icon(Icons.flashlight_on_outlined),
+                  onPressed: () async {
+                    try {
+                      await _controller.toggleTorch();
+                    } catch (_) {/* Device may not have a torch. */}
+                  }),
+            ]),
         body: LayoutBuilder(builder: (context, constraints) {
           final window = Rect.fromCenter(
               center:
@@ -172,7 +178,7 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen>
                                   'Наведите камеру на штрихкод упаковки. Снимки не сохраняются и не отправляются.',
                               style: const TextStyle(color: Colors.white),
                               textAlign: TextAlign.center),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: AppSpacing.section),
                           FilledButton.icon(
                               style: FilledButton.styleFrom(
                                   minimumSize: const Size.fromHeight(56),

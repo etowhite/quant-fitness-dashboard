@@ -1,3 +1,4 @@
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
 import '../../../../shared/widgets/expressive_motion.dart';
 import '../../../../core/localization/app_strings.dart';
 import 'package:flutter/material.dart';
@@ -14,10 +15,10 @@ class DailyNutritionSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Card(
           child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(AppSpacing.cardInset),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           QText('Сводка дня', style: Theme.of(context).textTheme.titleLarge),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.section),
           Wrap(spacing: 24, runSpacing: 16, children: [
             _value(context, 'Калории', totals.calories, goals.calories, 'ккал'),
             _value(context, 'Белки', totals.proteins, goals.proteins, 'г'),

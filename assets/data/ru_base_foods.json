@@ -14,7 +14,8 @@
       "carbs": 4.8,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171265,
-      "sourceDescription": "Milk, whole, 3.25% milkfat, with added vitamin D"
+      "sourceDescription": "Milk, whole, 3.25% milkfat, with added vitamin D",
+      "waterPercentage": 88.0
     },
     {
       "id": "usda-sr-171267",
@@ -26,7 +27,8 @@
       "carbs": 4.8,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171267,
-      "sourceDescription": "Milk, reduced fat, fluid, 2% milkfat, with added vitamin A and vitamin D"
+      "sourceDescription": "Milk, reduced fat, fluid, 2% milkfat, with added vitamin A and vitamin D",
+      "waterPercentage": 88.0
     },
     {
       "id": "usda-sr-170872",
@@ -38,7 +40,8 @@
       "carbs": 4.99,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170872,
-      "sourceDescription": "Milk, lowfat, fluid, 1% milkfat, with added vitamin A and vitamin D"
+      "sourceDescription": "Milk, lowfat, fluid, 1% milkfat, with added vitamin A and vitamin D",
+      "waterPercentage": 88.0
     },
     {
       "id": "usda-sr-171269",
@@ -50,7 +53,8 @@
       "carbs": 4.96,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171269,
-      "sourceDescription": "Milk, nonfat, fluid, with added vitamin A and vitamin D (fat free or skim)"
+      "sourceDescription": "Milk, nonfat, fluid, with added vitamin A and vitamin D (fat free or skim)",
+      "waterPercentage": 88.0
     },
     {
       "id": "usda-sr-171278",
@@ -62,7 +66,8 @@
       "carbs": 4.45,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171278,
-      "sourceDescription": "Milk, goat, fluid, with added vitamin D"
+      "sourceDescription": "Milk, goat, fluid, with added vitamin D",
+      "waterPercentage": 88.0
     },
     {
       "id": "usda-sr-170882",
@@ -74,7 +79,8 @@
       "carbs": 5.36,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170882,
-      "sourceDescription": "Milk, sheep, fluid"
+      "sourceDescription": "Milk, sheep, fluid",
+      "waterPercentage": 88.0
     },
     {
       "id": "usda-sr-172225",
@@ -86,7 +92,8 @@
       "carbs": 4.88,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172225,
-      "sourceDescription": "Milk, buttermilk, fluid, whole"
+      "sourceDescription": "Milk, buttermilk, fluid, whole",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170874",
@@ -98,7 +105,8 @@
       "carbs": 4.79,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170874,
-      "sourceDescription": "Milk, buttermilk, fluid, cultured, lowfat"
+      "sourceDescription": "Milk, buttermilk, fluid, cultured, lowfat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170876",
@@ -110,7 +118,8 @@
       "carbs": 38.42,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170876,
-      "sourceDescription": "Milk, dry, whole, with added vitamin D"
+      "sourceDescription": "Milk, dry, whole, with added vitamin D",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171273",
@@ -122,7 +131,8 @@
       "carbs": 51.8,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171273,
-      "sourceDescription": "Milk, dry, nonfat, calcium reduced"
+      "sourceDescription": "Milk, dry, nonfat, calcium reduced",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171275",
@@ -134,7 +144,8 @@
       "carbs": 54.4,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171275,
-      "sourceDescription": "Milk, canned, condensed, sweetened"
+      "sourceDescription": "Milk, canned, condensed, sweetened",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170859",
@@ -146,7 +157,8 @@
       "carbs": 2.84,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170859,
-      "sourceDescription": "Cream, fluid, heavy whipping"
+      "sourceDescription": "Cream, fluid, heavy whipping",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170858",
@@ -158,7 +170,8 @@
       "carbs": 2.96,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170858,
-      "sourceDescription": "Cream, fluid, light whipping"
+      "sourceDescription": "Cream, fluid, light whipping",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171257",
@@ -170,7 +183,8 @@
       "carbs": 4.63,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171257,
-      "sourceDescription": "Cream, sour, cultured"
+      "sourceDescription": "Cream, sour, cultured",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171284",
@@ -182,7 +196,8 @@
       "carbs": 4.66,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171284,
-      "sourceDescription": "Yogurt, plain, whole milk"
+      "sourceDescription": "Yogurt, plain, whole milk",
+      "waterPercentage": 88.0
     },
     {
       "id": "usda-sr-170886",
@@ -194,7 +209,8 @@
       "carbs": 7.04,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170886,
-      "sourceDescription": "Yogurt, plain, low fat"
+      "sourceDescription": "Yogurt, plain, low fat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170887",
@@ -206,7 +222,8 @@
       "carbs": 7.68,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170887,
-      "sourceDescription": "Yogurt, plain, skim milk"
+      "sourceDescription": "Yogurt, plain, skim milk",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170903",
@@ -218,7 +235,8 @@
       "carbs": 3.94,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170903,
-      "sourceDescription": "Yogurt, Greek, plain, lowfat"
+      "sourceDescription": "Yogurt, Greek, plain, lowfat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171304",
@@ -230,7 +248,8 @@
       "carbs": 3.98,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171304,
-      "sourceDescription": "Yogurt, Greek, plain, whole milk"
+      "sourceDescription": "Yogurt, Greek, plain, whole milk",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170889",
@@ -242,7 +261,8 @@
       "carbs": 18.64,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170889,
-      "sourceDescription": "Yogurt, fruit, low fat,9 g protein/8 oz"
+      "sourceDescription": "Yogurt, fruit, low fat,9 g protein/8 oz",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170904",
@@ -254,7 +274,8 @@
       "carbs": 4.77,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170904,
-      "sourceDescription": "Kefir, lowfat, plain, LIFEWAY"
+      "sourceDescription": "Kefir, lowfat, plain, LIFEWAY",
+      "waterPercentage": 88.0
     },
     {
       "id": "usda-sr-170899",
@@ -266,7 +287,8 @@
       "carbs": 2.13,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170899,
-      "sourceDescription": "Cheese, cheddar, sharp, sliced"
+      "sourceDescription": "Cheese, cheddar, sharp, sliced",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171295",
@@ -278,7 +300,8 @@
       "carbs": 7.14,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171295,
-      "sourceDescription": "Cheese, cheddar, nonfat or fat free"
+      "sourceDescription": "Cheese, cheddar, nonfat or fat free",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171241",
@@ -290,7 +313,8 @@
       "carbs": 2.22,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171241,
-      "sourceDescription": "Cheese, gouda"
+      "sourceDescription": "Cheese, gouda",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173419",
@@ -302,7 +326,8 @@
       "carbs": 1.43,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173419,
-      "sourceDescription": "Cheese, edam"
+      "sourceDescription": "Cheese, edam",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171251",
@@ -314,7 +339,8 @@
       "carbs": 1.44,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171251,
-      "sourceDescription": "Cheese, swiss"
+      "sourceDescription": "Cheese, swiss",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168141",
@@ -326,7 +352,8 @@
       "carbs": 3.4,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168141,
-      "sourceDescription": "Cheese, swiss, low fat"
+      "sourceDescription": "Cheese, swiss, low fat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170848",
@@ -338,7 +365,8 @@
       "carbs": 3.22,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170848,
-      "sourceDescription": "Cheese, parmesan, hard"
+      "sourceDescription": "Cheese, parmesan, hard",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167705",
@@ -350,7 +378,8 @@
       "carbs": 3.7,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167705,
-      "sourceDescription": "Cheese, parmesan, low sodium"
+      "sourceDescription": "Cheese, parmesan, low sodium",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170845",
@@ -362,7 +391,8 @@
       "carbs": 2.4,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170845,
-      "sourceDescription": "Cheese, mozzarella, whole milk"
+      "sourceDescription": "Cheese, mozzarella, whole milk",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173420",
@@ -374,7 +404,8 @@
       "carbs": 3.88,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173420,
-      "sourceDescription": "Cheese, feta"
+      "sourceDescription": "Cheese, feta",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172178",
@@ -386,7 +417,8 @@
       "carbs": 0.46,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172178,
-      "sourceDescription": "Cheese, camembert"
+      "sourceDescription": "Cheese, camembert",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172177",
@@ -398,7 +430,8 @@
       "carbs": 0.45,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172177,
-      "sourceDescription": "Cheese, brie"
+      "sourceDescription": "Cheese, brie",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172175",
@@ -410,7 +443,8 @@
       "carbs": 2.34,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172175,
-      "sourceDescription": "Cheese, blue"
+      "sourceDescription": "Cheese, blue",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170851",
@@ -422,7 +456,8 @@
       "carbs": 7.27,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170851,
-      "sourceDescription": "Cheese, ricotta, whole milk"
+      "sourceDescription": "Cheese, ricotta, whole milk",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171248",
@@ -434,7 +469,8 @@
       "carbs": 5.14,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171248,
-      "sourceDescription": "Cheese, ricotta, part skim milk"
+      "sourceDescription": "Cheese, ricotta, part skim milk",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173418",
@@ -446,7 +482,8 @@
       "carbs": 5.52,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173418,
-      "sourceDescription": "Cheese, cream"
+      "sourceDescription": "Cheese, cream",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169079",
@@ -458,7 +495,8 @@
       "carbs": 6.73,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169079,
-      "sourceDescription": "Cheese, cream, low fat"
+      "sourceDescription": "Cheese, cream, low fat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173435",
@@ -470,7 +508,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173435,
-      "sourceDescription": "Cheese, goat, soft type"
+      "sourceDescription": "Cheese, goat, soft type",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172179",
@@ -482,7 +521,8 @@
       "carbs": 3.38,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172179,
-      "sourceDescription": "Cheese, cottage, creamed, large or small curd"
+      "sourceDescription": "Cheese, cottage, creamed, large or small curd",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172182",
@@ -494,7 +534,8 @@
       "carbs": 4.76,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172182,
-      "sourceDescription": "Cheese, cottage, lowfat, 2% milkfat"
+      "sourceDescription": "Cheese, cottage, lowfat, 2% milkfat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173417",
@@ -506,7 +547,8 @@
       "carbs": 2.72,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173417,
-      "sourceDescription": "Cheese, cottage, lowfat, 1% milkfat"
+      "sourceDescription": "Cheese, cottage, lowfat, 1% milkfat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171287",
@@ -518,7 +560,8 @@
       "carbs": 0.72,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171287,
-      "sourceDescription": "Egg, whole, raw, fresh"
+      "sourceDescription": "Egg, whole, raw, fresh",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170893",
@@ -530,7 +573,8 @@
       "carbs": 0.83,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170893,
-      "sourceDescription": "Egg, whole, raw, frozen, salted, pasteurized"
+      "sourceDescription": "Egg, whole, raw, frozen, salted, pasteurized",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172183",
@@ -542,7 +586,8 @@
       "carbs": 0.73,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172183,
-      "sourceDescription": "Egg, white, raw, fresh"
+      "sourceDescription": "Egg, white, raw, fresh",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172203",
@@ -554,7 +599,8 @@
       "carbs": 1.04,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172203,
-      "sourceDescription": "Egg, white, raw, frozen, pasteurized"
+      "sourceDescription": "Egg, white, raw, frozen, pasteurized",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172184",
@@ -566,7 +612,8 @@
       "carbs": 3.59,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172184,
-      "sourceDescription": "Egg, yolk, raw, fresh"
+      "sourceDescription": "Egg, yolk, raw, fresh",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173421",
@@ -578,7 +625,8 @@
       "carbs": 0.81,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173421,
-      "sourceDescription": "Egg, yolk, raw, frozen, pasteurized"
+      "sourceDescription": "Egg, yolk, raw, frozen, pasteurized",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172191",
@@ -590,7 +638,8 @@
       "carbs": 0.41,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172191,
-      "sourceDescription": "Egg, quail, whole, fresh, raw"
+      "sourceDescription": "Egg, quail, whole, fresh, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172189",
@@ -602,7 +651,8 @@
       "carbs": 1.45,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172189,
-      "sourceDescription": "Egg, duck, whole, fresh, raw"
+      "sourceDescription": "Egg, duck, whole, fresh, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172190",
@@ -614,7 +664,8 @@
       "carbs": 1.35,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172190,
-      "sourceDescription": "Egg, goose, whole, fresh, raw"
+      "sourceDescription": "Egg, goose, whole, fresh, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173410",
@@ -626,7 +677,8 @@
       "carbs": 0.06,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173410,
-      "sourceDescription": "Butter, salted"
+      "sourceDescription": "Butter, salted",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173430",
@@ -638,7 +690,8 @@
       "carbs": 0.06,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173430,
-      "sourceDescription": "Butter, without salt"
+      "sourceDescription": "Butter, without salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173412",
@@ -650,7 +703,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173412,
-      "sourceDescription": "Butter oil, anhydrous"
+      "sourceDescription": "Butter oil, anhydrous",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171025",
@@ -662,7 +716,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171025,
-      "sourceDescription": "Oil, sunflower, linoleic, (approx. 65%)"
+      "sourceDescription": "Oil, sunflower, linoleic, (approx. 65%)",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171413",
@@ -674,7 +729,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171413,
-      "sourceDescription": "Oil, olive, salad or cooking"
+      "sourceDescription": "Oil, olive, salad or cooking",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172336",
@@ -686,7 +742,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172336,
-      "sourceDescription": "Oil, canola"
+      "sourceDescription": "Oil, canola",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169867",
@@ -698,7 +755,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169867,
-      "sourceDescription": "Oil, corn and canola"
+      "sourceDescription": "Oil, corn and canola",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171426",
@@ -710,7 +768,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171426,
-      "sourceDescription": "Oil, soybean lecithin"
+      "sourceDescription": "Oil, soybean lecithin",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167702",
@@ -722,7 +781,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167702,
-      "sourceDescription": "Oil, flaxseed, cold pressed"
+      "sourceDescription": "Oil, flaxseed, cold pressed",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171016",
@@ -734,7 +794,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171016,
-      "sourceDescription": "Oil, sesame, salad or cooking"
+      "sourceDescription": "Oil, sesame, salad or cooking",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171412",
@@ -746,7 +807,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171412,
-      "sourceDescription": "Oil, coconut"
+      "sourceDescription": "Oil, coconut",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171410",
@@ -758,7 +820,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171410,
-      "sourceDescription": "Oil, peanut, salad or cooking"
+      "sourceDescription": "Oil, peanut, salad or cooking",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171030",
@@ -770,7 +833,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171030,
-      "sourceDescription": "Oil, walnut"
+      "sourceDescription": "Oil, walnut",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171401",
@@ -782,7 +846,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171401,
-      "sourceDescription": "Lard"
+      "sourceDescription": "Lard",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168877",
@@ -794,7 +859,8 @@
       "carbs": 79.95,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168877,
-      "sourceDescription": "Rice, white, long-grain, regular, raw, enriched"
+      "sourceDescription": "Rice, white, long-grain, regular, raw, enriched",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168878",
@@ -806,7 +872,8 @@
       "carbs": 28.17,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168878,
-      "sourceDescription": "Rice, white, long-grain, regular, enriched, cooked"
+      "sourceDescription": "Rice, white, long-grain, regular, enriched, cooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168879",
@@ -818,7 +885,8 @@
       "carbs": 79.34,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168879,
-      "sourceDescription": "Rice, white, medium-grain, raw, enriched"
+      "sourceDescription": "Rice, white, medium-grain, raw, enriched",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168880",
@@ -830,7 +898,8 @@
       "carbs": 28.59,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168880,
-      "sourceDescription": "Rice, white, medium-grain, enriched, cooked"
+      "sourceDescription": "Rice, white, medium-grain, enriched, cooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168931",
@@ -842,7 +911,8 @@
       "carbs": 79.15,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168931,
-      "sourceDescription": "Rice, white, short-grain, raw, unenriched"
+      "sourceDescription": "Rice, white, short-grain, raw, unenriched",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168882",
@@ -854,7 +924,8 @@
       "carbs": 28.73,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168882,
-      "sourceDescription": "Rice, white, short-grain, enriched, cooked"
+      "sourceDescription": "Rice, white, short-grain, enriched, cooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169703",
@@ -866,7 +937,8 @@
       "carbs": 76.25,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169703,
-      "sourceDescription": "Rice, brown, long-grain, raw (Includes foods for USDA's Food Distribution Program)"
+      "sourceDescription": "Rice, brown, long-grain, raw (Includes foods for USDA's Food Distribution Program)",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169704",
@@ -878,7 +950,8 @@
       "carbs": 25.58,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169704,
-      "sourceDescription": "Rice, brown, long-grain, cooked (Includes foods for USDA's Food Distribution Program)"
+      "sourceDescription": "Rice, brown, long-grain, cooked (Includes foods for USDA's Food Distribution Program)",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169706",
@@ -890,7 +963,8 @@
       "carbs": 76.17,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169706,
-      "sourceDescription": "Rice, brown, medium-grain, raw (Includes foods for USDA's Food Distribution Program)"
+      "sourceDescription": "Rice, brown, medium-grain, raw (Includes foods for USDA's Food Distribution Program)",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168875",
@@ -902,7 +976,8 @@
       "carbs": 23.51,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168875,
-      "sourceDescription": "Rice, brown, medium-grain, cooked (Includes foods for USDA's Food Distribution Program)"
+      "sourceDescription": "Rice, brown, medium-grain, cooked (Includes foods for USDA's Food Distribution Program)",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169726",
@@ -914,7 +989,8 @@
       "carbs": 74.9,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169726,
-      "sourceDescription": "Wild rice, raw"
+      "sourceDescription": "Wild rice, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168897",
@@ -926,7 +1002,8 @@
       "carbs": 21.34,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168897,
-      "sourceDescription": "Wild rice, cooked"
+      "sourceDescription": "Wild rice, cooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170686",
@@ -938,7 +1015,8 @@
       "carbs": 19.94,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170686,
-      "sourceDescription": "Buckwheat groats, roasted, cooked"
+      "sourceDescription": "Buckwheat groats, roasted, cooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170685",
@@ -950,7 +1028,8 @@
       "carbs": 74.95,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170685,
-      "sourceDescription": "Buckwheat groats, roasted, dry"
+      "sourceDescription": "Buckwheat groats, roasted, dry",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170286",
@@ -962,7 +1041,8 @@
       "carbs": 71.5,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170286,
-      "sourceDescription": "Buckwheat"
+      "sourceDescription": "Buckwheat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169705",
@@ -974,7 +1054,8 @@
       "carbs": 66.27,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169705,
-      "sourceDescription": "Oats (Includes foods for USDA's Food Distribution Program)"
+      "sourceDescription": "Oats (Includes foods for USDA's Food Distribution Program)",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173905",
@@ -986,7 +1067,8 @@
       "carbs": 12.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173905,
-      "sourceDescription": "Cereals, oats, regular and quick, unenriched, cooked with water (includes boiling and microwaving), without salt"
+      "sourceDescription": "Cereals, oats, regular and quick, unenriched, cooked with water (includes boiling and microwaving), without salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171675",
@@ -998,7 +1080,8 @@
       "carbs": 12.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171675,
-      "sourceDescription": "Cereals, oats, regular and quick and instant, unenriched, cooked with water (includes boiling and microwaving), with salt"
+      "sourceDescription": "Cereals, oats, regular and quick and instant, unenriched, cooked with water (includes boiling and microwaving), with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173904",
@@ -1010,7 +1093,8 @@
       "carbs": 67.7,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173904,
-      "sourceDescription": "Cereals, oats, regular and quick, not fortified, dry"
+      "sourceDescription": "Cereals, oats, regular and quick, not fortified, dry",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170284",
@@ -1022,7 +1106,8 @@
       "carbs": 77.72,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170284,
-      "sourceDescription": "Barley, pearled, raw"
+      "sourceDescription": "Barley, pearled, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170285",
@@ -1034,7 +1119,8 @@
       "carbs": 28.22,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170285,
-      "sourceDescription": "Barley, pearled, cooked"
+      "sourceDescription": "Barley, pearled, cooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170283",
@@ -1046,7 +1132,8 @@
       "carbs": 73.48,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170283,
-      "sourceDescription": "Barley, hulled"
+      "sourceDescription": "Barley, hulled",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169702",
@@ -1058,7 +1145,8 @@
       "carbs": 72.85,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169702,
-      "sourceDescription": "Millet, raw"
+      "sourceDescription": "Millet, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168871",
@@ -1070,7 +1158,8 @@
       "carbs": 23.67,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168871,
-      "sourceDescription": "Millet, cooked"
+      "sourceDescription": "Millet, cooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170287",
@@ -1082,7 +1171,8 @@
       "carbs": 18.58,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170287,
-      "sourceDescription": "Bulgur, cooked"
+      "sourceDescription": "Bulgur, cooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170688",
@@ -1094,7 +1184,8 @@
       "carbs": 75.87,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170688,
-      "sourceDescription": "Bulgur, dry"
+      "sourceDescription": "Bulgur, dry",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169700",
@@ -1106,7 +1197,8 @@
       "carbs": 23.22,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169700,
-      "sourceDescription": "Couscous, cooked"
+      "sourceDescription": "Couscous, cooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169699",
@@ -1118,7 +1210,8 @@
       "carbs": 77.43,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169699,
-      "sourceDescription": "Couscous, dry"
+      "sourceDescription": "Couscous, dry",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168874",
@@ -1130,7 +1223,8 @@
       "carbs": 64.16,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168874,
-      "sourceDescription": "Quinoa, uncooked"
+      "sourceDescription": "Quinoa, uncooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168917",
@@ -1142,7 +1236,8 @@
       "carbs": 21.3,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168917,
-      "sourceDescription": "Quinoa, cooked"
+      "sourceDescription": "Quinoa, cooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170682",
@@ -1154,7 +1249,8 @@
       "carbs": 65.25,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170682,
-      "sourceDescription": "Amaranth grain, uncooked"
+      "sourceDescription": "Amaranth grain, uncooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170683",
@@ -1166,7 +1262,8 @@
       "carbs": 18.69,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170683,
-      "sourceDescription": "Amaranth grain, cooked"
+      "sourceDescription": "Amaranth grain, cooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169715",
@@ -1178,7 +1275,8 @@
       "carbs": 72.83,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169715,
-      "sourceDescription": "Semolina, enriched"
+      "sourceDescription": "Semolina, enriched",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169761",
@@ -1190,7 +1288,8 @@
       "carbs": 76.31,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169761,
-      "sourceDescription": "Wheat flour, white, all-purpose, unenriched"
+      "sourceDescription": "Wheat flour, white, all-purpose, unenriched",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168944",
@@ -1202,7 +1301,8 @@
       "carbs": 74.48,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168944,
-      "sourceDescription": "Wheat flour, whole-grain, soft wheat"
+      "sourceDescription": "Wheat flour, whole-grain, soft wheat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168885",
@@ -1214,7 +1314,8 @@
       "carbs": 68.63,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168885,
-      "sourceDescription": "Rye flour, dark"
+      "sourceDescription": "Rye flour, dark",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168898",
@@ -1226,7 +1327,8 @@
       "carbs": 76.48,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168898,
-      "sourceDescription": "Rice flour, brown"
+      "sourceDescription": "Rice flour, brown",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170687",
@@ -1238,7 +1340,8 @@
       "carbs": 70.59,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170687,
-      "sourceDescription": "Buckwheat flour, whole-groat"
+      "sourceDescription": "Buckwheat flour, whole-groat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169748",
@@ -1250,7 +1353,8 @@
       "carbs": 76.85,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169748,
-      "sourceDescription": "Corn flour, whole-grain, white"
+      "sourceDescription": "Corn flour, whole-grain, white",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169750",
@@ -1262,7 +1366,8 @@
       "carbs": 76.89,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169750,
-      "sourceDescription": "Cornmeal, whole-grain, white"
+      "sourceDescription": "Cornmeal, whole-grain, white",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169722",
@@ -1274,7 +1379,8 @@
       "carbs": 64.51,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169722,
-      "sourceDescription": "Wheat bran, crude"
+      "sourceDescription": "Wheat bran, crude",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168872",
@@ -1286,7 +1392,8 @@
       "carbs": 66.22,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168872,
-      "sourceDescription": "Oat bran, raw"
+      "sourceDescription": "Oat bran, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168873",
@@ -1298,7 +1405,8 @@
       "carbs": 11.44,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168873,
-      "sourceDescription": "Oat bran, cooked"
+      "sourceDescription": "Oat bran, cooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168892",
@@ -1310,7 +1418,8 @@
       "carbs": 51.8,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168892,
-      "sourceDescription": "Wheat germ, crude"
+      "sourceDescription": "Wheat germ, crude",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168927",
@@ -1322,7 +1431,8 @@
       "carbs": 74.67,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168927,
-      "sourceDescription": "Pasta, dry, unenriched"
+      "sourceDescription": "Pasta, dry, unenriched",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172014",
@@ -1334,7 +1444,8 @@
       "carbs": 30.59,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172014,
-      "sourceDescription": "Pasta, cooked, unenriched, with added salt"
+      "sourceDescription": "Pasta, cooked, unenriched, with added salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168910",
@@ -1346,7 +1457,8 @@
       "carbs": 30.07,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168910,
-      "sourceDescription": "Pasta, whole-wheat, cooked (Includes foods for USDA's Food Distribution Program)"
+      "sourceDescription": "Pasta, whole-wheat, cooked (Includes foods for USDA's Food Distribution Program)",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169738",
@@ -1358,7 +1470,8 @@
       "carbs": 73.37,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169738,
-      "sourceDescription": "Pasta, whole-wheat, dry (Includes foods for USDA's Food Distribution Program)"
+      "sourceDescription": "Pasta, whole-wheat, dry (Includes foods for USDA's Food Distribution Program)",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168912",
@@ -1370,7 +1483,8 @@
       "carbs": 26.15,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168912,
-      "sourceDescription": "Spaghetti, spinach, cooked"
+      "sourceDescription": "Spaghetti, spinach, cooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168911",
@@ -1382,7 +1496,8 @@
       "carbs": 74.81,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168911,
-      "sourceDescription": "Spaghetti, spinach, dry"
+      "sourceDescription": "Spaghetti, spinach, dry",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169732",
@@ -1394,7 +1509,8 @@
       "carbs": 25.16,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169732,
-      "sourceDescription": "Noodles, egg, enriched, cooked"
+      "sourceDescription": "Noodles, egg, enriched, cooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169731",
@@ -1406,7 +1522,8 @@
       "carbs": 71.27,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169731,
-      "sourceDescription": "Noodles, egg, dry, enriched"
+      "sourceDescription": "Noodles, egg, dry, enriched",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168914",
@@ -1418,7 +1535,8 @@
       "carbs": 24.01,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168914,
-      "sourceDescription": "Rice noodles, cooked"
+      "sourceDescription": "Rice noodles, cooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169742",
@@ -1430,7 +1548,8 @@
       "carbs": 80.18,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169742,
-      "sourceDescription": "Rice noodles, dry"
+      "sourceDescription": "Rice noodles, dry",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170026",
@@ -1442,7 +1561,8 @@
       "carbs": 17.49,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170026,
-      "sourceDescription": "Potatoes, flesh and skin, raw"
+      "sourceDescription": "Potatoes, flesh and skin, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170393",
@@ -1454,7 +1574,8 @@
       "carbs": 9.58,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170393,
-      "sourceDescription": "Carrots, raw"
+      "sourceDescription": "Carrots, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169339",
@@ -1466,7 +1587,8 @@
       "carbs": 8.22,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169339,
-      "sourceDescription": "Carrots, cooked, boiled, drained, with salt"
+      "sourceDescription": "Carrots, cooked, boiled, drained, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169145",
@@ -1478,7 +1600,8 @@
       "carbs": 9.56,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169145,
-      "sourceDescription": "Beets, raw"
+      "sourceDescription": "Beets, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169146",
@@ -1490,7 +1613,8 @@
       "carbs": 9.96,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169146,
-      "sourceDescription": "Beets, cooked, boiled, drained"
+      "sourceDescription": "Beets, cooked, boiled, drained",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169975",
@@ -1502,7 +1626,8 @@
       "carbs": 5.8,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169975,
-      "sourceDescription": "Cabbage, raw"
+      "sourceDescription": "Cabbage, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168572",
@@ -1514,7 +1639,8 @@
       "carbs": 2.23,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168572,
-      "sourceDescription": "Cabbage, napa, cooked"
+      "sourceDescription": "Cabbage, napa, cooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169977",
@@ -1526,7 +1652,8 @@
       "carbs": 7.37,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169977,
-      "sourceDescription": "Cabbage, red, raw"
+      "sourceDescription": "Cabbage, red, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168515",
@@ -1538,7 +1665,8 @@
       "carbs": 6.94,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168515,
-      "sourceDescription": "Cabbage, red, cooked, boiled, drained, with salt"
+      "sourceDescription": "Cabbage, red, cooked, boiled, drained, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170388",
@@ -1550,7 +1678,8 @@
       "carbs": 6.1,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170388,
-      "sourceDescription": "Cabbage, savoy, raw"
+      "sourceDescription": "Cabbage, savoy, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168516",
@@ -1562,7 +1691,8 @@
       "carbs": 5.41,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168516,
-      "sourceDescription": "Cabbage, savoy, cooked, boiled, drained, with salt"
+      "sourceDescription": "Cabbage, savoy, cooked, boiled, drained, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169279",
@@ -1574,7 +1704,8 @@
       "carbs": 4.28,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169279,
-      "sourceDescription": "Sauerkraut, canned, solids and liquids"
+      "sourceDescription": "Sauerkraut, canned, solids and liquids",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169979",
@@ -1586,7 +1717,8 @@
       "carbs": 3.23,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169979,
-      "sourceDescription": "Cabbage, chinese (pe-tsai), raw"
+      "sourceDescription": "Cabbage, chinese (pe-tsai), raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169337",
@@ -1598,7 +1730,8 @@
       "carbs": 2.41,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169337,
-      "sourceDescription": "Cabbage, chinese (pe-tsai), cooked, boiled, drained, with salt"
+      "sourceDescription": "Cabbage, chinese (pe-tsai), cooked, boiled, drained, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169986",
@@ -1610,7 +1743,8 @@
       "carbs": 4.97,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169986,
-      "sourceDescription": "Cauliflower, raw"
+      "sourceDescription": "Cauliflower, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169391",
@@ -1622,7 +1756,8 @@
       "carbs": 6.28,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169391,
-      "sourceDescription": "Cauliflower, green, cooked, with salt"
+      "sourceDescription": "Cauliflower, green, cooked, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170379",
@@ -1634,7 +1769,8 @@
       "carbs": 6.64,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170379,
-      "sourceDescription": "Broccoli, raw"
+      "sourceDescription": "Broccoli, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170382",
@@ -1646,7 +1782,8 @@
       "carbs": 3.12,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170382,
-      "sourceDescription": "Broccoli raab, cooked"
+      "sourceDescription": "Broccoli raab, cooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170383",
@@ -1658,7 +1795,8 @@
       "carbs": 8.95,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170383,
-      "sourceDescription": "Brussels sprouts, raw"
+      "sourceDescription": "Brussels sprouts, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168513",
@@ -1670,7 +1808,8 @@
       "carbs": 7.1,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168513,
-      "sourceDescription": "Brussels sprouts, cooked, boiled, drained, with salt"
+      "sourceDescription": "Brussels sprouts, cooked, boiled, drained, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168424",
@@ -1682,7 +1821,8 @@
       "carbs": 6.2,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168424,
-      "sourceDescription": "Kohlrabi, raw"
+      "sourceDescription": "Kohlrabi, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169357",
@@ -1694,7 +1834,8 @@
       "carbs": 6.69,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169357,
-      "sourceDescription": "Kohlrabi, cooked, boiled, drained, with salt"
+      "sourceDescription": "Kohlrabi, cooked, boiled, drained, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169291",
@@ -1706,7 +1847,8 @@
       "carbs": 3.11,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169291,
-      "sourceDescription": "Squash, summer, zucchini, includes skin, raw"
+      "sourceDescription": "Squash, summer, zucchini, includes skin, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170534",
@@ -1718,7 +1860,8 @@
       "carbs": 2.69,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170534,
-      "sourceDescription": "Squash, summer, zucchini, includes skin, cooked, boiled, drained, with salt"
+      "sourceDescription": "Squash, summer, zucchini, includes skin, cooked, boiled, drained, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168448",
@@ -1730,7 +1873,8 @@
       "carbs": 6.5,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168448,
-      "sourceDescription": "Pumpkin, raw"
+      "sourceDescription": "Pumpkin, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170526",
@@ -1742,7 +1886,8 @@
       "carbs": 4.31,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170526,
-      "sourceDescription": "Pumpkin, cooked, boiled, drained, with salt"
+      "sourceDescription": "Pumpkin, cooked, boiled, drained, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169228",
@@ -1754,7 +1899,8 @@
       "carbs": 5.88,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169228,
-      "sourceDescription": "Eggplant, raw"
+      "sourceDescription": "Eggplant, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169352",
@@ -1766,7 +1912,8 @@
       "carbs": 8.14,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169352,
-      "sourceDescription": "Eggplant, cooked, boiled, drained, with salt"
+      "sourceDescription": "Eggplant, cooked, boiled, drained, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168409",
@@ -1778,7 +1925,8 @@
       "carbs": 3.63,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168409,
-      "sourceDescription": "Cucumber, with peel, raw"
+      "sourceDescription": "Cucumber, with peel, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169225",
@@ -1790,7 +1938,8 @@
       "carbs": 2.16,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169225,
-      "sourceDescription": "Cucumber, peeled, raw"
+      "sourceDescription": "Cucumber, peeled, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170457",
@@ -1802,7 +1951,8 @@
       "carbs": 3.89,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170457,
-      "sourceDescription": "Tomatoes, red, ripe, raw, year round average"
+      "sourceDescription": "Tomatoes, red, ripe, raw, year round average",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170050",
@@ -1814,7 +1964,8 @@
       "carbs": 4.01,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170050,
-      "sourceDescription": "Tomatoes, red, ripe, cooked"
+      "sourceDescription": "Tomatoes, red, ripe, cooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170456",
@@ -1826,7 +1977,8 @@
       "carbs": 5.1,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170456,
-      "sourceDescription": "Tomatoes, green, raw"
+      "sourceDescription": "Tomatoes, green, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170108",
@@ -1838,7 +1990,8 @@
       "carbs": 6.03,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170108,
-      "sourceDescription": "Peppers, sweet, red, raw"
+      "sourceDescription": "Peppers, sweet, red, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170515",
@@ -1850,7 +2003,8 @@
       "carbs": 6.11,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170515,
-      "sourceDescription": "Peppers, sweet, red, cooked, boiled, drained, with salt"
+      "sourceDescription": "Peppers, sweet, red, cooked, boiled, drained, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170427",
@@ -1862,7 +2016,8 @@
       "carbs": 4.64,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170427,
-      "sourceDescription": "Peppers, sweet, green, raw"
+      "sourceDescription": "Peppers, sweet, green, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170109",
@@ -1874,7 +2029,8 @@
       "carbs": 6.11,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170109,
-      "sourceDescription": "Peppers, sweet, green, cooked, boiled, drained, with salt"
+      "sourceDescription": "Peppers, sweet, green, cooked, boiled, drained, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169383",
@@ -1886,7 +2042,8 @@
       "carbs": 6.32,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169383,
-      "sourceDescription": "Peppers, sweet, yellow, raw"
+      "sourceDescription": "Peppers, sweet, yellow, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170106",
@@ -1898,7 +2055,8 @@
       "carbs": 8.81,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170106,
-      "sourceDescription": "Peppers, hot chili, red, raw"
+      "sourceDescription": "Peppers, hot chili, red, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170107",
@@ -1910,7 +2068,8 @@
       "carbs": 5.1,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170107,
-      "sourceDescription": "Peppers, hot chili, red, canned, excluding seeds, solids and liquids"
+      "sourceDescription": "Peppers, hot chili, red, canned, excluding seeds, solids and liquids",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170000",
@@ -1922,7 +2081,8 @@
       "carbs": 9.34,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170000,
-      "sourceDescription": "Onions, raw"
+      "sourceDescription": "Onions, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170100",
@@ -1934,7 +2094,8 @@
       "carbs": 9.56,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170100,
-      "sourceDescription": "Onions, cooked, boiled, drained, with salt"
+      "sourceDescription": "Onions, cooked, boiled, drained, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170005",
@@ -1946,7 +2107,8 @@
       "carbs": 7.34,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170005,
-      "sourceDescription": "Onions, spring or scallions (includes tops and bulb), raw"
+      "sourceDescription": "Onions, spring or scallions (includes tops and bulb), raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169246",
@@ -1958,7 +2120,8 @@
       "carbs": 14.15,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169246,
-      "sourceDescription": "Leeks, (bulb and lower leaf-portion), raw"
+      "sourceDescription": "Leeks, (bulb and lower leaf-portion), raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168535",
@@ -1970,7 +2133,8 @@
       "carbs": 7.62,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168535,
-      "sourceDescription": "Leeks, (bulb and lower leaf-portion), cooked, boiled, drained, with salt"
+      "sourceDescription": "Leeks, (bulb and lower leaf-portion), cooked, boiled, drained, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169230",
@@ -1982,7 +2146,8 @@
       "carbs": 33.06,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169230,
-      "sourceDescription": "Garlic, raw"
+      "sourceDescription": "Garlic, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167939",
@@ -1994,7 +2159,8 @@
       "carbs": 41.72,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167939,
-      "sourceDescription": "Garlic bread, frozen"
+      "sourceDescription": "Garlic bread, frozen",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169276",
@@ -2006,7 +2172,8 @@
       "carbs": 3.4,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169276,
-      "sourceDescription": "Radishes, raw"
+      "sourceDescription": "Radishes, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170122",
@@ -2018,7 +2185,8 @@
       "carbs": 3.43,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170122,
-      "sourceDescription": "Radishes, oriental, cooked, boiled, drained, with salt"
+      "sourceDescription": "Radishes, oriental, cooked, boiled, drained, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170465",
@@ -2030,7 +2198,8 @@
       "carbs": 6.43,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170465,
-      "sourceDescription": "Turnips, raw"
+      "sourceDescription": "Turnips, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170547",
@@ -2042,7 +2211,8 @@
       "carbs": 5.06,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170547,
-      "sourceDescription": "Turnips, cooked, boiled, drained, with salt"
+      "sourceDescription": "Turnips, cooked, boiled, drained, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168454",
@@ -2054,7 +2224,8 @@
       "carbs": 8.62,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168454,
-      "sourceDescription": "Rutabagas, raw"
+      "sourceDescription": "Rutabagas, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170528",
@@ -2066,7 +2237,8 @@
       "carbs": 6.84,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170528,
-      "sourceDescription": "Rutabagas, cooked, boiled, drained, with salt"
+      "sourceDescription": "Rutabagas, cooked, boiled, drained, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170400",
@@ -2078,7 +2250,8 @@
       "carbs": 9.2,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170400,
-      "sourceDescription": "Celeriac, raw"
+      "sourceDescription": "Celeriac, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169341",
@@ -2090,7 +2263,8 @@
       "carbs": 5.9,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169341,
-      "sourceDescription": "Celeriac, cooked, boiled, drained, with salt"
+      "sourceDescription": "Celeriac, cooked, boiled, drained, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169988",
@@ -2102,7 +2276,8 @@
       "carbs": 2.97,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169988,
-      "sourceDescription": "Celery, raw"
+      "sourceDescription": "Celery, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169342",
@@ -2114,7 +2289,8 @@
       "carbs": 4.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169342,
-      "sourceDescription": "Celery, cooked, boiled, drained, with salt"
+      "sourceDescription": "Celery, cooked, boiled, drained, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170417",
@@ -2126,7 +2302,8 @@
       "carbs": 17.99,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170417,
-      "sourceDescription": "Parsnips, raw"
+      "sourceDescription": "Parsnips, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170508",
@@ -2138,7 +2315,8 @@
       "carbs": 17.01,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170508,
-      "sourceDescription": "Parsnips, cooked, boiled, drained, with salt"
+      "sourceDescription": "Parsnips, cooked, boiled, drained, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168389",
@@ -2150,7 +2328,8 @@
       "carbs": 3.88,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168389,
-      "sourceDescription": "Asparagus, raw"
+      "sourceDescription": "Asparagus, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168390",
@@ -2162,7 +2341,8 @@
       "carbs": 4.11,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168390,
-      "sourceDescription": "Asparagus, cooked, boiled, drained"
+      "sourceDescription": "Asparagus, cooked, boiled, drained",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168462",
@@ -2174,7 +2354,8 @@
       "carbs": 3.63,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168462,
-      "sourceDescription": "Spinach, raw"
+      "sourceDescription": "Spinach, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170531",
@@ -2186,7 +2367,8 @@
       "carbs": 3.75,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170531,
-      "sourceDescription": "Spinach, cooked, boiled, drained, with salt"
+      "sourceDescription": "Spinach, cooked, boiled, drained, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169249",
@@ -2198,7 +2380,8 @@
       "carbs": 2.87,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169249,
-      "sourceDescription": "Lettuce, green leaf, raw"
+      "sourceDescription": "Lettuce, green leaf, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169248",
@@ -2210,7 +2393,8 @@
       "carbs": 2.97,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169248,
-      "sourceDescription": "Lettuce, iceberg (includes crisphead types), raw"
+      "sourceDescription": "Lettuce, iceberg (includes crisphead types), raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169247",
@@ -2222,7 +2406,8 @@
       "carbs": 3.29,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169247,
-      "sourceDescription": "Lettuce, cos or romaine, raw"
+      "sourceDescription": "Lettuce, cos or romaine, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169387",
@@ -2234,7 +2419,8 @@
       "carbs": 3.65,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169387,
-      "sourceDescription": "Arugula, raw"
+      "sourceDescription": "Arugula, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172233",
@@ -2246,7 +2432,8 @@
       "carbs": 7.02,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172233,
-      "sourceDescription": "Dill weed, fresh"
+      "sourceDescription": "Dill weed, fresh",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170416",
@@ -2258,7 +2445,8 @@
       "carbs": 6.33,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170416,
-      "sourceDescription": "Parsley, fresh"
+      "sourceDescription": "Parsley, fresh",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169997",
@@ -2270,7 +2458,8 @@
       "carbs": 3.67,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169997,
-      "sourceDescription": "Coriander (cilantro) leaves, raw"
+      "sourceDescription": "Coriander (cilantro) leaves, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172232",
@@ -2282,7 +2471,8 @@
       "carbs": 2.65,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172232,
-      "sourceDescription": "Basil, fresh"
+      "sourceDescription": "Basil, fresh",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168407",
@@ -2294,7 +2484,8 @@
       "carbs": 5.5,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168407,
-      "sourceDescription": "Cress, garden, raw"
+      "sourceDescription": "Cress, garden, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169350",
@@ -2306,7 +2497,8 @@
       "carbs": 3.8,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169350,
-      "sourceDescription": "Cress, garden, cooked, boiled, drained, with salt"
+      "sourceDescription": "Cress, garden, cooked, boiled, drained, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169998",
@@ -2318,7 +2510,8 @@
       "carbs": 18.7,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169998,
-      "sourceDescription": "Corn, sweet, yellow, raw"
+      "sourceDescription": "Corn, sweet, yellow, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168525",
@@ -2330,7 +2523,8 @@
       "carbs": 20.98,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168525,
-      "sourceDescription": "Corn, sweet, yellow, cooked, boiled, drained, with salt"
+      "sourceDescription": "Corn, sweet, yellow, cooked, boiled, drained, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170419",
@@ -2342,7 +2536,8 @@
       "carbs": 14.45,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170419,
-      "sourceDescription": "Peas, green, raw"
+      "sourceDescription": "Peas, green, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170102",
@@ -2354,7 +2549,8 @@
       "carbs": 15.63,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170102,
-      "sourceDescription": "Peas, green, cooked, boiled, drained, with salt"
+      "sourceDescription": "Peas, green, cooked, boiled, drained, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169961",
@@ -2366,7 +2562,8 @@
       "carbs": 6.97,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169961,
-      "sourceDescription": "Beans, snap, green, raw"
+      "sourceDescription": "Beans, snap, green, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169321",
@@ -2378,7 +2575,8 @@
       "carbs": 7.88,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169321,
-      "sourceDescription": "Beans, snap, green, cooked, boiled, drained, with salt"
+      "sourceDescription": "Beans, snap, green, cooked, boiled, drained, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169251",
@@ -2390,7 +2588,8 @@
       "carbs": 3.26,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169251,
-      "sourceDescription": "Mushrooms, white, raw"
+      "sourceDescription": "Mushrooms, white, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168537",
@@ -2402,7 +2601,8 @@
       "carbs": 5.29,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168537,
-      "sourceDescription": "Mushrooms, white, cooked, boiled, drained, with salt"
+      "sourceDescription": "Mushrooms, white, cooked, boiled, drained, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168580",
@@ -2414,7 +2614,8 @@
       "carbs": 6.09,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168580,
-      "sourceDescription": "Mushrooms, oyster, raw"
+      "sourceDescription": "Mushrooms, oyster, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169242",
@@ -2426,7 +2627,8 @@
       "carbs": 6.79,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169242,
-      "sourceDescription": "Mushrooms, shiitake, raw"
+      "sourceDescription": "Mushrooms, shiitake, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170097",
@@ -2438,7 +2640,8 @@
       "carbs": 14.39,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170097,
-      "sourceDescription": "Mushrooms, shiitake, cooked, with salt"
+      "sourceDescription": "Mushrooms, shiitake, cooked, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170459",
@@ -2450,7 +2653,8 @@
       "carbs": 18.91,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170459,
-      "sourceDescription": "Tomato products, canned, paste, without salt added (Includes foods for USDA's Food Distribution Program)"
+      "sourceDescription": "Tomato products, canned, paste, without salt added (Includes foods for USDA's Food Distribution Program)",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168558",
@@ -2462,7 +2666,8 @@
       "carbs": 2.41,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168558,
-      "sourceDescription": "Pickles, cucumber, dill or kosher dill"
+      "sourceDescription": "Pickles, cucumber, dill or kosher dill",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169096",
@@ -2474,7 +2679,8 @@
       "carbs": 3.84,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169096,
-      "sourceDescription": "Olives, pickled, canned or bottled, green"
+      "sourceDescription": "Olives, pickled, canned or bottled, green",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169094",
@@ -2486,7 +2692,8 @@
       "carbs": 6.04,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169094,
-      "sourceDescription": "Olives, ripe, canned (small-extra large)"
+      "sourceDescription": "Olives, ripe, canned (small-extra large)",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168457",
@@ -2498,7 +2705,8 @@
       "carbs": 9.57,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168457,
-      "sourceDescription": "Seaweed, kelp, raw"
+      "sourceDescription": "Seaweed, kelp, raw",
+      "waterPercentage": 90.0
     },
     {
       "id": "usda-sr-171688",
@@ -2510,7 +2718,8 @@
       "carbs": 13.81,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171688,
-      "sourceDescription": "Apples, raw, with skin (Includes foods for USDA's Food Distribution Program)"
+      "sourceDescription": "Apples, raw, with skin (Includes foods for USDA's Food Distribution Program)",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171689",
@@ -2522,7 +2731,8 @@
       "carbs": 12.76,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171689,
-      "sourceDescription": "Apples, raw, without skin"
+      "sourceDescription": "Apples, raw, without skin",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173928",
@@ -2534,7 +2744,8 @@
       "carbs": 13.64,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173928,
-      "sourceDescription": "Apples, raw, without skin, cooked, boiled"
+      "sourceDescription": "Apples, raw, without skin, cooked, boiled",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171691",
@@ -2546,7 +2757,8 @@
       "carbs": 65.89,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171691,
-      "sourceDescription": "Apples, dried, sulfured, uncooked"
+      "sourceDescription": "Apples, dried, sulfured, uncooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171693",
@@ -2558,7 +2770,8 @@
       "carbs": 20.73,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171693,
-      "sourceDescription": "Apples, dried, sulfured, stewed, with added sugar"
+      "sourceDescription": "Apples, dried, sulfured, stewed, with added sugar",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169118",
@@ -2570,7 +2783,8 @@
       "carbs": 15.23,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169118,
-      "sourceDescription": "Pears, raw"
+      "sourceDescription": "Pears, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169121",
@@ -2582,7 +2796,8 @@
       "carbs": 69.7,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169121,
-      "sourceDescription": "Pears, dried, sulfured, uncooked"
+      "sourceDescription": "Pears, dried, sulfured, uncooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173944",
@@ -2594,7 +2809,8 @@
       "carbs": 22.84,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173944,
-      "sourceDescription": "Bananas, raw"
+      "sourceDescription": "Bananas, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173945",
@@ -2606,7 +2822,8 @@
       "carbs": 88.28,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173945,
-      "sourceDescription": "Bananas, dehydrated, or banana powder"
+      "sourceDescription": "Bananas, dehydrated, or banana powder",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169918",
@@ -2618,7 +2835,8 @@
       "carbs": 11.54,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169918,
-      "sourceDescription": "Oranges, raw, Florida"
+      "sourceDescription": "Oranges, raw, Florida",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169105",
@@ -2630,7 +2848,8 @@
       "carbs": 13.34,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169105,
-      "sourceDescription": "Tangerines, (mandarin oranges), raw"
+      "sourceDescription": "Tangerines, (mandarin oranges), raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174675",
@@ -2642,7 +2861,8 @@
       "carbs": 7.5,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174675,
-      "sourceDescription": "Grapefruit, raw, pink and red, Florida"
+      "sourceDescription": "Grapefruit, raw, pink and red, Florida",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167746",
@@ -2654,7 +2874,8 @@
       "carbs": 9.32,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167746,
-      "sourceDescription": "Lemons, raw, without peel"
+      "sourceDescription": "Lemons, raw, without peel",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168155",
@@ -2666,7 +2887,8 @@
       "carbs": 10.54,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168155,
-      "sourceDescription": "Limes, raw"
+      "sourceDescription": "Limes, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168153",
@@ -2678,7 +2900,8 @@
       "carbs": 14.66,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168153,
-      "sourceDescription": "Kiwifruit, green, raw"
+      "sourceDescription": "Kiwifruit, green, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169124",
@@ -2690,7 +2913,8 @@
       "carbs": 13.12,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169124,
-      "sourceDescription": "Pineapple, raw, all varieties"
+      "sourceDescription": "Pineapple, raw, all varieties",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169946",
@@ -2702,7 +2926,8 @@
       "carbs": 22.2,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169946,
-      "sourceDescription": "Pineapple, frozen, chunks, sweetened"
+      "sourceDescription": "Pineapple, frozen, chunks, sweetened",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169910",
@@ -2714,7 +2939,8 @@
       "carbs": 14.98,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169910,
-      "sourceDescription": "Mangos, raw"
+      "sourceDescription": "Mangos, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171707",
@@ -2726,7 +2952,8 @@
       "carbs": 7.82,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171707,
-      "sourceDescription": "Avocados, raw, Florida"
+      "sourceDescription": "Avocados, raw, Florida",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169928",
@@ -2738,7 +2965,8 @@
       "carbs": 9.54,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169928,
-      "sourceDescription": "Peaches, yellow, raw"
+      "sourceDescription": "Peaches, yellow, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169934",
@@ -2750,7 +2978,8 @@
       "carbs": 61.33,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169934,
-      "sourceDescription": "Peaches, dried, sulfured, uncooked"
+      "sourceDescription": "Peaches, dried, sulfured, uncooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169914",
@@ -2762,7 +2991,8 @@
       "carbs": 10.55,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169914,
-      "sourceDescription": "Nectarines, raw"
+      "sourceDescription": "Nectarines, raw",
+      "waterPercentage": 90.0
     },
     {
       "id": "usda-sr-171697",
@@ -2774,7 +3004,8 @@
       "carbs": 11.12,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171697,
-      "sourceDescription": "Apricots, raw"
+      "sourceDescription": "Apricots, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173941",
@@ -2786,7 +3017,8 @@
       "carbs": 62.64,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173941,
-      "sourceDescription": "Apricots, dried, sulfured, uncooked"
+      "sourceDescription": "Apricots, dried, sulfured, uncooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169949",
@@ -2798,7 +3030,8 @@
       "carbs": 11.42,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169949,
-      "sourceDescription": "Plums, raw"
+      "sourceDescription": "Plums, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168162",
@@ -2810,7 +3043,8 @@
       "carbs": 63.88,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168162,
-      "sourceDescription": "Plums, dried (prunes), uncooked"
+      "sourceDescription": "Plums, dried (prunes), uncooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167752",
@@ -2822,7 +3056,8 @@
       "carbs": 32.88,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167752,
-      "sourceDescription": "Plums, dried (prunes), stewed, with added sugar"
+      "sourceDescription": "Plums, dried (prunes), stewed, with added sugar",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168191",
@@ -2834,7 +3069,8 @@
       "carbs": 74.97,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168191,
-      "sourceDescription": "Dates, medjool"
+      "sourceDescription": "Dates, medjool",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173021",
@@ -2846,7 +3082,8 @@
       "carbs": 19.18,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173021,
-      "sourceDescription": "Figs, raw"
+      "sourceDescription": "Figs, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174665",
@@ -2858,7 +3095,8 @@
       "carbs": 63.87,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174665,
-      "sourceDescription": "Figs, dried, uncooked"
+      "sourceDescription": "Figs, dried, uncooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169941",
@@ -2870,7 +3108,8 @@
       "carbs": 18.59,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169941,
-      "sourceDescription": "Persimmons, japanese, raw"
+      "sourceDescription": "Persimmons, japanese, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169942",
@@ -2882,7 +3121,8 @@
       "carbs": 73.43,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169942,
-      "sourceDescription": "Persimmons, japanese, dried"
+      "sourceDescription": "Persimmons, japanese, dried",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169134",
@@ -2894,7 +3134,8 @@
       "carbs": 18.7,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169134,
-      "sourceDescription": "Pomegranates, raw"
+      "sourceDescription": "Pomegranates, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168163",
@@ -2906,7 +3147,8 @@
       "carbs": 15.3,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168163,
-      "sourceDescription": "Quinces, raw"
+      "sourceDescription": "Quinces, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167765",
@@ -2918,7 +3160,8 @@
       "carbs": 7.55,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167765,
-      "sourceDescription": "Watermelon, raw"
+      "sourceDescription": "Watermelon, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169092",
@@ -2930,7 +3173,8 @@
       "carbs": 8.16,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169092,
-      "sourceDescription": "Melons, cantaloupe, raw"
+      "sourceDescription": "Melons, cantaloupe, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169911",
@@ -2942,7 +3186,8 @@
       "carbs": 9.09,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169911,
-      "sourceDescription": "Melons, honeydew, raw"
+      "sourceDescription": "Melons, honeydew, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174683",
@@ -2954,7 +3199,8 @@
       "carbs": 18.1,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174683,
-      "sourceDescription": "Grapes, red or green (European type, such as Thompson seedless), raw"
+      "sourceDescription": "Grapes, red or green (European type, such as Thompson seedless), raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171719",
@@ -2966,7 +3212,8 @@
       "carbs": 16.01,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171719,
-      "sourceDescription": "Cherries, sweet, raw"
+      "sourceDescription": "Cherries, sweet, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167770",
@@ -2978,7 +3225,8 @@
       "carbs": 21.07,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167770,
-      "sourceDescription": "Cherries, sweet, canned, pitted, heavy syrup, drained"
+      "sourceDescription": "Cherries, sweet, canned, pitted, heavy syrup, drained",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173954",
@@ -2990,7 +3238,8 @@
       "carbs": 12.18,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173954,
-      "sourceDescription": "Cherries, sour, red, raw"
+      "sourceDescription": "Cherries, sour, red, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173955",
@@ -3002,7 +3251,8 @@
       "carbs": 8.94,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173955,
-      "sourceDescription": "Cherries, sour, red, canned, water pack, solids and liquids"
+      "sourceDescription": "Cherries, sour, red, canned, water pack, solids and liquids",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167762",
@@ -3014,7 +3264,8 @@
       "carbs": 7.68,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167762,
-      "sourceDescription": "Strawberries, raw"
+      "sourceDescription": "Strawberries, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168174",
@@ -3026,7 +3277,8 @@
       "carbs": 25.92,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168174,
-      "sourceDescription": "Strawberries, frozen, sweetened, sliced"
+      "sourceDescription": "Strawberries, frozen, sweetened, sliced",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167755",
@@ -3038,7 +3290,8 @@
       "carbs": 11.94,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167755,
-      "sourceDescription": "Raspberries, raw"
+      "sourceDescription": "Raspberries, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167808",
@@ -3050,7 +3303,8 @@
       "carbs": 7.99,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167808,
-      "sourceDescription": "Raspberries, puree, seedless"
+      "sourceDescription": "Raspberries, puree, seedless",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173946",
@@ -3062,7 +3316,8 @@
       "carbs": 9.61,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173946,
-      "sourceDescription": "Blackberries, raw"
+      "sourceDescription": "Blackberries, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171710",
@@ -3074,7 +3329,8 @@
       "carbs": 15.67,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171710,
-      "sourceDescription": "Blackberries, frozen, unsweetened"
+      "sourceDescription": "Blackberries, frozen, unsweetened",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171711",
@@ -3086,7 +3342,8 @@
       "carbs": 14.49,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171711,
-      "sourceDescription": "Blueberries, raw"
+      "sourceDescription": "Blueberries, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168158",
@@ -3098,7 +3355,8 @@
       "carbs": 80.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168158,
-      "sourceDescription": "Blueberries, dried, sweetened"
+      "sourceDescription": "Blueberries, dried, sweetened",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173963",
@@ -3110,7 +3368,8 @@
       "carbs": 15.38,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173963,
-      "sourceDescription": "Currants, european black, raw"
+      "sourceDescription": "Currants, european black, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173964",
@@ -3122,7 +3381,8 @@
       "carbs": 13.8,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173964,
-      "sourceDescription": "Currants, red and white, raw"
+      "sourceDescription": "Currants, red and white, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173030",
@@ -3134,7 +3394,8 @@
       "carbs": 10.18,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173030,
-      "sourceDescription": "Gooseberries, raw"
+      "sourceDescription": "Gooseberries, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173031",
@@ -3146,7 +3407,8 @@
       "carbs": 18.75,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173031,
-      "sourceDescription": "Gooseberries, canned, light syrup pack, solids and liquids"
+      "sourceDescription": "Gooseberries, canned, light syrup pack, solids and liquids",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171722",
@@ -3158,7 +3420,8 @@
       "carbs": 11.97,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171722,
-      "sourceDescription": "Cranberries, raw"
+      "sourceDescription": "Cranberries, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171723",
@@ -3170,7 +3433,8 @@
       "carbs": 82.8,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171723,
-      "sourceDescription": "Cranberries, dried, sweetened (Includes foods for USDA's Food Distribution Program)"
+      "sourceDescription": "Cranberries, dried, sweetened (Includes foods for USDA's Food Distribution Program)",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167640",
@@ -3182,7 +3446,8 @@
       "carbs": 12.31,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167640,
-      "sourceDescription": "Blueberries, wild, raw (Alaska Native)"
+      "sourceDescription": "Blueberries, wild, raw (Alaska Native)",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169799",
@@ -3194,7 +3459,8 @@
       "carbs": 10.4,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169799,
-      "sourceDescription": "Blueberries, wild, frozen (Alaska Native)"
+      "sourceDescription": "Blueberries, wild, frozen (Alaska Native)",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168998",
@@ -3206,7 +3472,8 @@
       "carbs": 38.22,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168998,
-      "sourceDescription": "Rose Hips, wild (Northern Plains Indians)"
+      "sourceDescription": "Rose Hips, wild (Northern Plains Indians)",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169913",
@@ -3218,7 +3485,8 @@
       "carbs": 9.8,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169913,
-      "sourceDescription": "Mulberries, raw"
+      "sourceDescription": "Mulberries, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167771",
@@ -3230,7 +3498,8 @@
       "carbs": 11.3,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167771,
-      "sourceDescription": "Apple juice, canned or bottled, unsweetened, with added ascorbic acid"
+      "sourceDescription": "Apple juice, canned or bottled, unsweetened, with added ascorbic acid",
+      "waterPercentage": 90.0
     },
     {
       "id": "usda-sr-168188",
@@ -3242,7 +3511,8 @@
       "carbs": 41.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168188,
-      "sourceDescription": "Apple juice, frozen concentrate, unsweetened, undiluted, with added ascorbic acid"
+      "sourceDescription": "Apple juice, frozen concentrate, unsweetened, undiluted, with added ascorbic acid",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169098",
@@ -3254,7 +3524,8 @@
       "carbs": 10.4,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169098,
-      "sourceDescription": "Orange juice, raw (Includes foods for USDA's Food Distribution Program)"
+      "sourceDescription": "Orange juice, raw (Includes foods for USDA's Food Distribution Program)",
+      "waterPercentage": 90.0
     },
     {
       "id": "usda-sr-169099",
@@ -3266,7 +3537,8 @@
       "carbs": 11.01,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169099,
-      "sourceDescription": "Orange juice, canned, unsweetened"
+      "sourceDescription": "Orange juice, canned, unsweetened",
+      "waterPercentage": 90.0
     },
     {
       "id": "usda-sr-173041",
@@ -3278,7 +3550,8 @@
       "carbs": 14.77,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173041,
-      "sourceDescription": "Grape juice, canned or bottled, unsweetened, with added ascorbic acid"
+      "sourceDescription": "Grape juice, canned or bottled, unsweetened, with added ascorbic acid",
+      "waterPercentage": 90.0
     },
     {
       "id": "usda-sr-170458",
@@ -3290,7 +3563,8 @@
       "carbs": 3.53,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170458,
-      "sourceDescription": "Tomato juice, canned, with salt added"
+      "sourceDescription": "Tomato juice, canned, with salt added",
+      "waterPercentage": 90.0
     },
     {
       "id": "usda-sr-170545",
@@ -3302,7 +3576,8 @@
       "carbs": 3.53,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170545,
-      "sourceDescription": "Tomato juice, canned, without salt added"
+      "sourceDescription": "Tomato juice, canned, without salt added",
+      "waterPercentage": 90.0
     },
     {
       "id": "usda-sr-172430",
@@ -3314,7 +3589,8 @@
       "carbs": 16.13,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172430,
-      "sourceDescription": "Peanuts, all types, raw"
+      "sourceDescription": "Peanuts, all types, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174260",
@@ -3326,7 +3602,8 @@
       "carbs": 21.26,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174260,
-      "sourceDescription": "Peanuts, all types, cooked, boiled, with salt"
+      "sourceDescription": "Peanuts, all types, cooked, boiled, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170567",
@@ -3338,7 +3615,8 @@
       "carbs": 21.55,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170567,
-      "sourceDescription": "Nuts, almonds"
+      "sourceDescription": "Nuts, almonds",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168592",
@@ -3350,7 +3628,8 @@
       "carbs": 27.9,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168592,
-      "sourceDescription": "Nuts, almonds, honey roasted, unblanched"
+      "sourceDescription": "Nuts, almonds, honey roasted, unblanched",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170187",
@@ -3362,7 +3641,8 @@
       "carbs": 13.71,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170187,
-      "sourceDescription": "Nuts, walnuts, english"
+      "sourceDescription": "Nuts, walnuts, english",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170581",
@@ -3374,7 +3654,8 @@
       "carbs": 16.7,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170581,
-      "sourceDescription": "Nuts, hazelnuts or filberts"
+      "sourceDescription": "Nuts, hazelnuts or filberts",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170583",
@@ -3386,7 +3667,8 @@
       "carbs": 17.6,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170583,
-      "sourceDescription": "Nuts, hazelnuts or filberts, dry roasted, without salt added"
+      "sourceDescription": "Nuts, hazelnuts or filberts, dry roasted, without salt added",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170162",
@@ -3398,7 +3680,8 @@
       "carbs": 30.19,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170162,
-      "sourceDescription": "Nuts, cashew nuts, raw"
+      "sourceDescription": "Nuts, cashew nuts, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169421",
@@ -3410,7 +3693,8 @@
       "carbs": 32.69,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169421,
-      "sourceDescription": "Nuts, cashew nuts, dry roasted, with salt added"
+      "sourceDescription": "Nuts, cashew nuts, dry roasted, with salt added",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170184",
@@ -3422,7 +3706,8 @@
       "carbs": 27.17,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170184,
-      "sourceDescription": "Nuts, pistachio nuts, raw"
+      "sourceDescription": "Nuts, pistachio nuts, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169426",
@@ -3434,7 +3719,8 @@
       "carbs": 27.55,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169426,
-      "sourceDescription": "Nuts, pistachio nuts, dry roasted, with salt added"
+      "sourceDescription": "Nuts, pistachio nuts, dry roasted, with salt added",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170591",
@@ -3446,7 +3732,8 @@
       "carbs": 13.08,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170591,
-      "sourceDescription": "Nuts, pine nuts, dried"
+      "sourceDescription": "Nuts, pine nuts, dried",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170569",
@@ -3458,7 +3745,8 @@
       "carbs": 11.74,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170569,
-      "sourceDescription": "Nuts, brazilnuts, dried, unblanched"
+      "sourceDescription": "Nuts, brazilnuts, dried, unblanched",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170182",
@@ -3470,7 +3758,8 @@
       "carbs": 13.86,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170182,
-      "sourceDescription": "Nuts, pecans"
+      "sourceDescription": "Nuts, pecans",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169424",
@@ -3482,7 +3771,8 @@
       "carbs": 13.55,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169424,
-      "sourceDescription": "Nuts, pecans, dry roasted, with salt added"
+      "sourceDescription": "Nuts, pecans, dry roasted, with salt added",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170178",
@@ -3494,7 +3784,8 @@
       "carbs": 13.82,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170178,
-      "sourceDescription": "Nuts, macadamia nuts, raw"
+      "sourceDescription": "Nuts, macadamia nuts, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168598",
@@ -3506,7 +3797,8 @@
       "carbs": 12.83,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168598,
-      "sourceDescription": "Nuts, macadamia nuts, dry roasted, with salt added"
+      "sourceDescription": "Nuts, macadamia nuts, dry roasted, with salt added",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170169",
@@ -3518,7 +3810,8 @@
       "carbs": 15.23,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170169,
-      "sourceDescription": "Nuts, coconut meat, raw"
+      "sourceDescription": "Nuts, coconut meat, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168585",
@@ -3530,7 +3823,8 @@
       "carbs": 21.52,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168585,
-      "sourceDescription": "Nuts, coconut meat, dried (desiccated), creamed"
+      "sourceDescription": "Nuts, coconut meat, dried (desiccated), creamed",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170562",
@@ -3542,7 +3836,8 @@
       "carbs": 20.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170562,
-      "sourceDescription": "Seeds, sunflower seed kernels, dried"
+      "sourceDescription": "Seeds, sunflower seed kernels, dried",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170154",
@@ -3554,7 +3849,8 @@
       "carbs": 20.59,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170154,
-      "sourceDescription": "Seeds, sunflower seed kernels, toasted, without salt"
+      "sourceDescription": "Seeds, sunflower seed kernels, toasted, without salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170556",
@@ -3566,7 +3862,8 @@
       "carbs": 10.71,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170556,
-      "sourceDescription": "Seeds, pumpkin and squash seed kernels, dried"
+      "sourceDescription": "Seeds, pumpkin and squash seed kernels, dried",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170557",
@@ -3578,7 +3875,8 @@
       "carbs": 14.71,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170557,
-      "sourceDescription": "Seeds, pumpkin and squash seed kernels, roasted, without salt"
+      "sourceDescription": "Seeds, pumpkin and squash seed kernels, roasted, without salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170150",
@@ -3590,7 +3888,8 @@
       "carbs": 23.45,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170150,
-      "sourceDescription": "Seeds, sesame seeds, whole, dried"
+      "sourceDescription": "Seeds, sesame seeds, whole, dried",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170151",
@@ -3602,7 +3901,8 @@
       "carbs": 25.74,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170151,
-      "sourceDescription": "Seeds, sesame seeds, whole, roasted and toasted"
+      "sourceDescription": "Seeds, sesame seeds, whole, roasted and toasted",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169414",
@@ -3614,7 +3914,8 @@
       "carbs": 28.88,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169414,
-      "sourceDescription": "Seeds, flaxseed"
+      "sourceDescription": "Seeds, flaxseed",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170554",
@@ -3626,7 +3927,8 @@
       "carbs": 42.12,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170554,
-      "sourceDescription": "Seeds, chia seeds, dried"
+      "sourceDescription": "Seeds, chia seeds, dried",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171330",
@@ -3638,7 +3940,8 @@
       "carbs": 28.13,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171330,
-      "sourceDescription": "Spices, poppy seed"
+      "sourceDescription": "Spices, poppy seed",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172420",
@@ -3650,7 +3953,8 @@
       "carbs": 63.35,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172420,
-      "sourceDescription": "Lentils, raw"
+      "sourceDescription": "Lentils, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175254",
@@ -3662,7 +3966,8 @@
       "carbs": 19.54,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175254,
-      "sourceDescription": "Lentils, mature seeds, cooked, boiled, with salt"
+      "sourceDescription": "Lentils, mature seeds, cooked, boiled, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173756",
@@ -3674,7 +3979,8 @@
       "carbs": 62.95,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173756,
-      "sourceDescription": "Chickpeas (garbanzo beans, bengal gram), mature seeds, raw"
+      "sourceDescription": "Chickpeas (garbanzo beans, bengal gram), mature seeds, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173799",
@@ -3686,7 +3992,8 @@
       "carbs": 27.42,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173799,
-      "sourceDescription": "Chickpeas (garbanzo beans, bengal gram), mature seeds, cooked, boiled, with salt"
+      "sourceDescription": "Chickpeas (garbanzo beans, bengal gram), mature seeds, cooked, boiled, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173744",
@@ -3698,7 +4005,8 @@
       "carbs": 61.29,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173744,
-      "sourceDescription": "Beans, kidney, red, mature seeds, raw"
+      "sourceDescription": "Beans, kidney, red, mature seeds, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175242",
@@ -3710,7 +4018,8 @@
       "carbs": 22.8,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175242,
-      "sourceDescription": "Beans, kidney, red, mature seeds, cooked, boiled, with salt"
+      "sourceDescription": "Beans, kidney, red, mature seeds, cooked, boiled, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175202",
@@ -3722,7 +4031,8 @@
       "carbs": 60.27,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175202,
-      "sourceDescription": "Beans, white, mature seeds, raw"
+      "sourceDescription": "Beans, white, mature seeds, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175249",
@@ -3734,7 +4044,8 @@
       "carbs": 25.09,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175249,
-      "sourceDescription": "Beans, white, mature seeds, cooked, boiled, with salt"
+      "sourceDescription": "Beans, white, mature seeds, cooked, boiled, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173734",
@@ -3746,7 +4057,8 @@
       "carbs": 62.36,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173734,
-      "sourceDescription": "Beans, black, mature seeds, raw"
+      "sourceDescription": "Beans, black, mature seeds, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175237",
@@ -3758,7 +4070,8 @@
       "carbs": 23.71,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175237,
-      "sourceDescription": "Beans, black, mature seeds, cooked, boiled, with salt"
+      "sourceDescription": "Beans, black, mature seeds, cooked, boiled, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175199",
@@ -3770,7 +4083,8 @@
       "carbs": 62.55,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175199,
-      "sourceDescription": "Beans, pinto, mature seeds, raw (Includes foods for USDA's Food Distribution Program)"
+      "sourceDescription": "Beans, pinto, mature seeds, raw (Includes foods for USDA's Food Distribution Program)",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173796",
@@ -3782,7 +4096,8 @@
       "carbs": 26.22,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173796,
-      "sourceDescription": "Beans, pinto, mature seeds, cooked, boiled, with salt"
+      "sourceDescription": "Beans, pinto, mature seeds, cooked, boiled, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175257",
@@ -3794,7 +4109,8 @@
       "carbs": 20.51,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175257,
-      "sourceDescription": "Peas, split, mature seeds, cooked, boiled, with salt"
+      "sourceDescription": "Peas, split, mature seeds, cooked, boiled, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172429",
@@ -3806,7 +4122,8 @@
       "carbs": 21.1,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172429,
-      "sourceDescription": "Peas, split, mature seeds, cooked, boiled, without salt"
+      "sourceDescription": "Peas, split, mature seeds, cooked, boiled, without salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174256",
@@ -3818,7 +4135,8 @@
       "carbs": 62.62,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174256,
-      "sourceDescription": "Mung beans, mature seeds, raw"
+      "sourceDescription": "Mung beans, mature seeds, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175255",
@@ -3830,7 +4148,8 @@
       "carbs": 19.15,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175255,
-      "sourceDescription": "Mung beans, mature seeds, cooked, boiled, with salt"
+      "sourceDescription": "Mung beans, mature seeds, cooked, boiled, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174270",
@@ -3842,7 +4161,8 @@
       "carbs": 30.16,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174270,
-      "sourceDescription": "Soybeans, mature seeds, raw"
+      "sourceDescription": "Soybeans, mature seeds, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174299",
@@ -3854,7 +4174,8 @@
       "carbs": 8.36,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174299,
-      "sourceDescription": "Soybeans, mature seeds, cooked, boiled, with salt"
+      "sourceDescription": "Soybeans, mature seeds, cooked, boiled, with salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172475",
@@ -3866,7 +4187,8 @@
       "carbs": 2.78,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172475,
-      "sourceDescription": "Tofu, raw, firm, prepared with calcium sulfate"
+      "sourceDescription": "Tofu, raw, firm, prepared with calcium sulfate",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172449",
@@ -3878,7 +4200,8 @@
       "carbs": 1.18,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172449,
-      "sourceDescription": "Tofu, soft, prepared with calcium sulfate and magnesium chloride (nigari)"
+      "sourceDescription": "Tofu, soft, prepared with calcium sulfate and magnesium chloride (nigari)",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172446",
@@ -3890,7 +4213,8 @@
       "carbs": 6.28,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172446,
-      "sourceDescription": "Soymilk, original and vanilla, unfortified"
+      "sourceDescription": "Soymilk, original and vanilla, unfortified",
+      "waterPercentage": 90.0
     },
     {
       "id": "usda-sr-173768",
@@ -3902,7 +4226,8 @@
       "carbs": 3.85,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173768,
-      "sourceDescription": "Soymilk, original and vanilla, light, unsweetened, with added calcium, vitamins A and D"
+      "sourceDescription": "Soymilk, original and vanilla, light, unsweetened, with added calcium, vitamins A and D",
+      "waterPercentage": 98.0
     },
     {
       "id": "usda-sr-174289",
@@ -3914,7 +4239,8 @@
       "carbs": 15.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174289,
-      "sourceDescription": "Hummus, commercial"
+      "sourceDescription": "Hummus, commercial",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175167",
@@ -3926,7 +4252,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175167,
-      "sourceDescription": "Fish, salmon, Atlantic, farmed, raw"
+      "sourceDescription": "Fish, salmon, Atlantic, farmed, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175168",
@@ -3938,7 +4265,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175168,
-      "sourceDescription": "Fish, salmon, Atlantic, farmed, cooked, dry heat"
+      "sourceDescription": "Fish, salmon, Atlantic, farmed, cooked, dry heat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173686",
@@ -3950,7 +4278,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173686,
-      "sourceDescription": "Fish, salmon, Atlantic, wild, raw"
+      "sourceDescription": "Fish, salmon, Atlantic, wild, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171998",
@@ -3962,7 +4291,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171998,
-      "sourceDescription": "Fish, salmon, Atlantic, wild, cooked, dry heat"
+      "sourceDescription": "Fish, salmon, Atlantic, wild, cooked, dry heat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175138",
@@ -3974,7 +4304,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175138,
-      "sourceDescription": "Fish, salmon, pink, raw"
+      "sourceDescription": "Fish, salmon, pink, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172001",
@@ -3986,7 +4317,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172001,
-      "sourceDescription": "Fish, salmon, pink, cooked, dry heat"
+      "sourceDescription": "Fish, salmon, pink, cooked, dry heat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173691",
@@ -3998,7 +4330,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173691,
-      "sourceDescription": "Fish, salmon, sockeye, raw"
+      "sourceDescription": "Fish, salmon, sockeye, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173692",
@@ -4010,7 +4343,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173692,
-      "sourceDescription": "Fish, salmon, sockeye, cooked, dry heat"
+      "sourceDescription": "Fish, salmon, sockeye, cooked, dry heat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173689",
@@ -4022,7 +4356,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173689,
-      "sourceDescription": "Fish, salmon, chum, raw"
+      "sourceDescription": "Fish, salmon, chum, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172000",
@@ -4034,7 +4369,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172000,
-      "sourceDescription": "Fish, salmon, chum, cooked, dry heat"
+      "sourceDescription": "Fish, salmon, chum, cooked, dry heat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173717",
@@ -4046,7 +4382,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173717,
-      "sourceDescription": "Fish, trout, rainbow, farmed, raw"
+      "sourceDescription": "Fish, trout, rainbow, farmed, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173718",
@@ -4058,7 +4395,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173718,
-      "sourceDescription": "Fish, trout, rainbow, farmed, cooked, dry heat"
+      "sourceDescription": "Fish, trout, rainbow, farmed, cooked, dry heat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175116",
@@ -4070,7 +4408,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175116,
-      "sourceDescription": "Fish, herring, Atlantic, raw"
+      "sourceDescription": "Fish, herring, Atlantic, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175117",
@@ -4082,7 +4421,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175117,
-      "sourceDescription": "Fish, herring, Atlantic, cooked, dry heat"
+      "sourceDescription": "Fish, herring, Atlantic, cooked, dry heat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175119",
@@ -4094,7 +4434,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175119,
-      "sourceDescription": "Fish, mackerel, Atlantic, raw"
+      "sourceDescription": "Fish, mackerel, Atlantic, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175120",
@@ -4106,7 +4447,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175120,
-      "sourceDescription": "Fish, mackerel, Atlantic, cooked, dry heat"
+      "sourceDescription": "Fish, mackerel, Atlantic, cooked, dry heat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171955",
@@ -4118,7 +4460,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171955,
-      "sourceDescription": "Fish, cod, Atlantic, raw"
+      "sourceDescription": "Fish, cod, Atlantic, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171956",
@@ -4130,7 +4473,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171956,
-      "sourceDescription": "Fish, cod, Atlantic, cooked, dry heat"
+      "sourceDescription": "Fish, cod, Atlantic, cooked, dry heat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173725",
@@ -4142,7 +4486,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173725,
-      "sourceDescription": "Fish, pollock, Alaska, raw"
+      "sourceDescription": "Fish, pollock, Alaska, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173726",
@@ -4154,7 +4499,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173726,
-      "sourceDescription": "Fish, pollock, Alaska, cooked"
+      "sourceDescription": "Fish, pollock, Alaska, cooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171964",
@@ -4166,7 +4512,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171964,
-      "sourceDescription": "Fish, haddock, raw"
+      "sourceDescription": "Fish, haddock, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174198",
@@ -4178,7 +4525,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174198,
-      "sourceDescription": "Fish, haddock, cooked, dry heat"
+      "sourceDescription": "Fish, haddock, cooked, dry heat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173680",
@@ -4190,7 +4538,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173680,
-      "sourceDescription": "Fish, pike, northern, raw"
+      "sourceDescription": "Fish, pike, northern, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175127",
@@ -4202,7 +4551,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175127,
-      "sourceDescription": "Fish, pike, northern, cooked, dry heat"
+      "sourceDescription": "Fish, pike, northern, cooked, dry heat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173678",
@@ -4214,7 +4564,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173678,
-      "sourceDescription": "Fish, perch, mixed species, raw"
+      "sourceDescription": "Fish, perch, mixed species, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173679",
@@ -4226,7 +4577,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173679,
-      "sourceDescription": "Fish, perch, mixed species, cooked, dry heat"
+      "sourceDescription": "Fish, perch, mixed species, cooked, dry heat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171952",
@@ -4238,7 +4590,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171952,
-      "sourceDescription": "Fish, carp, raw"
+      "sourceDescription": "Fish, carp, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174185",
@@ -4250,7 +4603,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174185,
-      "sourceDescription": "Fish, carp, cooked, dry heat"
+      "sourceDescription": "Fish, carp, cooked, dry heat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174196",
@@ -4262,7 +4616,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174196,
-      "sourceDescription": "Fish, flatfish (flounder and sole species), raw"
+      "sourceDescription": "Fish, flatfish (flounder and sole species), raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174197",
@@ -4274,7 +4629,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174197,
-      "sourceDescription": "Fish, flatfish (flounder and sole species), cooked, dry heat"
+      "sourceDescription": "Fish, flatfish (flounder and sole species), cooked, dry heat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171986",
@@ -4286,7 +4642,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171986,
-      "sourceDescription": "Fish, tuna, light, canned in water, without salt, drained solids"
+      "sourceDescription": "Fish, tuna, light, canned in water, without salt, drained solids",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173709",
@@ -4298,7 +4655,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173709,
-      "sourceDescription": "Fish, tuna, light, canned in water, drained solids (Includes foods for USDA's Food Distribution Program)"
+      "sourceDescription": "Fish, tuna, light, canned in water, drained solids (Includes foods for USDA's Food Distribution Program)",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175159",
@@ -4310,7 +4668,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175159,
-      "sourceDescription": "Fish, tuna, fresh, yellowfin, raw"
+      "sourceDescription": "Fish, tuna, fresh, yellowfin, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175139",
@@ -4322,7 +4681,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175139,
-      "sourceDescription": "Fish, sardine, Atlantic, canned in oil, drained solids with bone"
+      "sourceDescription": "Fish, sardine, Atlantic, canned in oil, drained solids with bone",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175132",
@@ -4334,7 +4694,8 @@
       "carbs": 1.5,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175132,
-      "sourceDescription": "Fish, roe, mixed species, raw"
+      "sourceDescription": "Fish, roe, mixed species, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174239",
@@ -4346,7 +4707,8 @@
       "carbs": 1.92,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174239,
-      "sourceDescription": "Fish, roe, mixed species, cooked, dry heat"
+      "sourceDescription": "Fish, roe, mixed species, cooked, dry heat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174210",
@@ -4358,7 +4720,8 @@
       "carbs": 0.91,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174210,
-      "sourceDescription": "Crustaceans, shrimp, mixed species, raw (may contain additives to retain moisture)"
+      "sourceDescription": "Crustaceans, shrimp, mixed species, raw (may contain additives to retain moisture)",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171970",
@@ -4370,7 +4733,8 @@
       "carbs": 11.47,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171970,
-      "sourceDescription": "Crustaceans, shrimp, mixed species, cooked, breaded and fried"
+      "sourceDescription": "Crustaceans, shrimp, mixed species, cooked, breaded and fried",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175164",
@@ -4382,7 +4746,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175164,
-      "sourceDescription": "Crustaceans, crab, alaska king, raw"
+      "sourceDescription": "Crustaceans, crab, alaska king, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174202",
@@ -4394,7 +4759,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174202,
-      "sourceDescription": "Crustaceans, crab, alaska king, cooked, moist heat"
+      "sourceDescription": "Crustaceans, crab, alaska king, cooked, moist heat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174216",
@@ -4406,7 +4772,8 @@
       "carbs": 3.69,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174216,
-      "sourceDescription": "Mollusks, mussel, blue, raw"
+      "sourceDescription": "Mollusks, mussel, blue, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174217",
@@ -4418,7 +4785,8 @@
       "carbs": 7.39,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174217,
-      "sourceDescription": "Mollusks, mussel, blue, cooked, moist heat"
+      "sourceDescription": "Mollusks, mussel, blue, cooked, moist heat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174223",
@@ -4430,7 +4798,8 @@
       "carbs": 3.08,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174223,
-      "sourceDescription": "Mollusks, squid, mixed species, raw"
+      "sourceDescription": "Mollusks, squid, mixed species, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171982",
@@ -4442,7 +4811,8 @@
       "carbs": 7.79,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171982,
-      "sourceDescription": "Mollusks, squid, mixed species, cooked, fried"
+      "sourceDescription": "Mollusks, squid, mixed species, cooked, fried",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174218",
@@ -4454,7 +4824,8 @@
       "carbs": 2.2,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174218,
-      "sourceDescription": "Mollusks, octopus, common, raw"
+      "sourceDescription": "Mollusks, octopus, common, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174249",
@@ -4466,7 +4837,8 @@
       "carbs": 4.4,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174249,
-      "sourceDescription": "Mollusks, octopus, common, cooked, moist heat"
+      "sourceDescription": "Mollusks, octopus, common, cooked, moist heat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171978",
@@ -4478,7 +4850,8 @@
       "carbs": 2.72,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171978,
-      "sourceDescription": "Mollusks, oyster, eastern, wild, raw"
+      "sourceDescription": "Mollusks, oyster, eastern, wild, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175171",
@@ -4490,7 +4863,8 @@
       "carbs": 4.23,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175171,
-      "sourceDescription": "Mollusks, oyster, eastern, wild, cooked, dry heat"
+      "sourceDescription": "Mollusks, oyster, eastern, wild, cooked, dry heat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171077",
@@ -4502,7 +4876,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171077,
-      "sourceDescription": "Chicken, broiler or fryers, breast, skinless, boneless, meat only, raw"
+      "sourceDescription": "Chicken, broiler or fryers, breast, skinless, boneless, meat only, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171140",
@@ -4514,7 +4889,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171140,
-      "sourceDescription": "Chicken, broiler or fryers, breast, skinless, boneless, meat only, cooked, braised"
+      "sourceDescription": "Chicken, broiler or fryers, breast, skinless, boneless, meat only, cooked, braised",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171078",
@@ -4526,7 +4902,8 @@
       "carbs": 0.51,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171078,
-      "sourceDescription": "Chicken, broilers or fryers, breast, meat only, cooked, fried"
+      "sourceDescription": "Chicken, broilers or fryers, breast, meat only, cooked, fried",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171478",
@@ -4538,7 +4915,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171478,
-      "sourceDescription": "Chicken, broilers or fryers, breast, meat only, cooked, stewed"
+      "sourceDescription": "Chicken, broilers or fryers, breast, meat only, cooked, stewed",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172387",
@@ -4550,7 +4928,8 @@
       "carbs": 1.18,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172387,
-      "sourceDescription": "Chicken, broilers or fryers, thigh, meat only, cooked, fried"
+      "sourceDescription": "Chicken, broilers or fryers, thigh, meat only, cooked, fried",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172389",
@@ -4562,7 +4941,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172389,
-      "sourceDescription": "Chicken, broilers or fryers, thigh, meat only, cooked, stewed"
+      "sourceDescription": "Chicken, broilers or fryers, thigh, meat only, cooked, stewed",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172375",
@@ -4574,7 +4954,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172375,
-      "sourceDescription": "Chicken, broilers or fryers, drumstick, meat only, cooked, fried"
+      "sourceDescription": "Chicken, broilers or fryers, drumstick, meat only, cooked, fried",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172377",
@@ -4586,7 +4967,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172377,
-      "sourceDescription": "Chicken, broilers or fryers, drumstick, meat only, cooked, stewed"
+      "sourceDescription": "Chicken, broilers or fryers, drumstick, meat only, cooked, stewed",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172390",
@@ -4598,7 +4980,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172390,
-      "sourceDescription": "Chicken, broilers or fryers, wing, meat and skin, raw"
+      "sourceDescription": "Chicken, broilers or fryers, wing, meat and skin, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173631",
@@ -4610,7 +4993,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173631,
-      "sourceDescription": "Chicken, broilers or fryers, wing, meat and skin, cooked, stewed"
+      "sourceDescription": "Chicken, broilers or fryers, wing, meat and skin, cooked, stewed",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171447",
@@ -4622,7 +5006,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171447,
-      "sourceDescription": "Chicken, broilers or fryers, meat and skin, raw"
+      "sourceDescription": "Chicken, broilers or fryers, meat and skin, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171051",
@@ -4634,7 +5019,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171051,
-      "sourceDescription": "Chicken, broilers or fryers, meat and skin, cooked, stewed"
+      "sourceDescription": "Chicken, broilers or fryers, meat and skin, cooked, stewed",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171060",
@@ -4646,7 +5032,8 @@
       "carbs": 0.73,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171060,
-      "sourceDescription": "Chicken, liver, all classes, raw"
+      "sourceDescription": "Chicken, liver, all classes, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171061",
@@ -4658,7 +5045,8 @@
       "carbs": 0.87,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171061,
-      "sourceDescription": "Chicken, liver, all classes, cooked, simmered"
+      "sourceDescription": "Chicken, liver, all classes, cooked, simmered",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171458",
@@ -4670,7 +5058,8 @@
       "carbs": 0.71,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171458,
-      "sourceDescription": "Chicken, heart, all classes, raw"
+      "sourceDescription": "Chicken, heart, all classes, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171059",
@@ -4682,7 +5071,8 @@
       "carbs": 0.1,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171059,
-      "sourceDescription": "Chicken, heart, all classes, cooked, simmered"
+      "sourceDescription": "Chicken, heart, all classes, cooked, simmered",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171456",
@@ -4694,7 +5084,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171456,
-      "sourceDescription": "Chicken, gizzard, all classes, raw"
+      "sourceDescription": "Chicken, gizzard, all classes, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171457",
@@ -4706,7 +5097,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171457,
-      "sourceDescription": "Chicken, gizzard, all classes, cooked, simmered"
+      "sourceDescription": "Chicken, gizzard, all classes, cooked, simmered",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172876",
@@ -4718,7 +5110,8 @@
       "carbs": 0.14,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172876,
-      "sourceDescription": "Turkey, breast, from whole bird, meat only, with added solution, raw"
+      "sourceDescription": "Turkey, breast, from whole bird, meat only, with added solution, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174519",
@@ -4730,7 +5123,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174519,
-      "sourceDescription": "Turkey, breast, from whole bird, meat only, with added solution, roasted"
+      "sourceDescription": "Turkey, breast, from whole bird, meat only, with added solution, roasted",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171505",
@@ -4742,7 +5136,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171505,
-      "sourceDescription": "Turkey, Ground, raw"
+      "sourceDescription": "Turkey, Ground, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171506",
@@ -4754,7 +5149,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171506,
-      "sourceDescription": "Turkey, Ground, cooked"
+      "sourceDescription": "Turkey, Ground, cooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172408",
@@ -4766,7 +5162,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172408,
-      "sourceDescription": "Duck, domesticated, meat and skin, raw"
+      "sourceDescription": "Duck, domesticated, meat and skin, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172409",
@@ -4778,7 +5175,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172409,
-      "sourceDescription": "Duck, domesticated, meat and skin, cooked, roasted"
+      "sourceDescription": "Duck, domesticated, meat and skin, cooked, roasted",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172410",
@@ -4790,7 +5188,8 @@
       "carbs": 0.94,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172410,
-      "sourceDescription": "Duck, domesticated, meat only, raw"
+      "sourceDescription": "Duck, domesticated, meat only, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172411",
@@ -4802,7 +5201,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172411,
-      "sourceDescription": "Duck, domesticated, meat only, cooked, roasted"
+      "sourceDescription": "Duck, domesticated, meat only, cooked, roasted",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174470",
@@ -4814,7 +5214,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174470,
-      "sourceDescription": "Goose, domesticated, meat and skin, raw"
+      "sourceDescription": "Goose, domesticated, meat and skin, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172412",
@@ -4826,7 +5227,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172412,
-      "sourceDescription": "Goose, domesticated, meat and skin, cooked, roasted"
+      "sourceDescription": "Goose, domesticated, meat and skin, cooked, roasted",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174030",
@@ -4838,7 +5240,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174030,
-      "sourceDescription": "Beef, ground, 90% lean meat / 10% fat, raw"
+      "sourceDescription": "Beef, ground, 90% lean meat / 10% fat, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171795",
@@ -4850,7 +5253,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171795,
-      "sourceDescription": "Beef, ground, 90% lean meat / 10% fat, loaf, cooked, baked"
+      "sourceDescription": "Beef, ground, 90% lean meat / 10% fat, loaf, cooked, baked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171796",
@@ -4862,7 +5266,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171796,
-      "sourceDescription": "Beef, ground, 85% lean meat / 15% fat, raw (Includes foods for USDA's Food Distribution Program)"
+      "sourceDescription": "Beef, ground, 85% lean meat / 15% fat, raw (Includes foods for USDA's Food Distribution Program)",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174035",
@@ -4874,7 +5279,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174035,
-      "sourceDescription": "Beef, ground, 85% lean meat / 15% fat, loaf, cooked, baked"
+      "sourceDescription": "Beef, ground, 85% lean meat / 15% fat, loaf, cooked, baked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174036",
@@ -4886,7 +5292,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174036,
-      "sourceDescription": "Beef, ground, 80% lean meat / 20% fat, raw"
+      "sourceDescription": "Beef, ground, 80% lean meat / 20% fat, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171800",
@@ -4898,7 +5305,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171800,
-      "sourceDescription": "Beef, ground, 80% lean meat / 20% fat, loaf, cooked, baked"
+      "sourceDescription": "Beef, ground, 80% lean meat / 20% fat, loaf, cooked, baked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169451",
@@ -4910,7 +5318,8 @@
       "carbs": 3.89,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169451,
-      "sourceDescription": "Beef, variety meats and by-products, liver, raw"
+      "sourceDescription": "Beef, variety meats and by-products, liver, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168626",
@@ -4922,7 +5331,8 @@
       "carbs": 5.13,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168626,
-      "sourceDescription": "Beef, variety meats and by-products, liver, cooked, braised"
+      "sourceDescription": "Beef, variety meats and by-products, liver, cooked, braised",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170196",
@@ -4934,7 +5344,8 @@
       "carbs": 3.68,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170196,
-      "sourceDescription": "Beef, variety meats and by-products, tongue, raw"
+      "sourceDescription": "Beef, variety meats and by-products, tongue, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170598",
@@ -4946,7 +5357,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170598,
-      "sourceDescription": "Beef, variety meats and by-products, tongue, cooked, simmered"
+      "sourceDescription": "Beef, variety meats and by-products, tongue, cooked, simmered",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168625",
@@ -4958,7 +5370,8 @@
       "carbs": 0.14,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168625,
-      "sourceDescription": "Beef, variety meats and by-products, heart, raw"
+      "sourceDescription": "Beef, variety meats and by-products, heart, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169448",
@@ -4970,7 +5383,8 @@
       "carbs": 0.15,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169448,
-      "sourceDescription": "Beef, variety meats and by-products, heart, cooked, simmered"
+      "sourceDescription": "Beef, variety meats and by-products, heart, cooked, simmered",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169449",
@@ -4982,7 +5396,8 @@
       "carbs": 0.29,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169449,
-      "sourceDescription": "Beef, variety meats and by-products, kidneys, raw"
+      "sourceDescription": "Beef, variety meats and by-products, kidneys, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169450",
@@ -4994,7 +5409,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169450,
-      "sourceDescription": "Beef, variety meats and by-products, kidneys, cooked, simmered"
+      "sourceDescription": "Beef, variety meats and by-products, kidneys, cooked, simmered",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168249",
@@ -5006,7 +5422,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168249,
-      "sourceDescription": "Pork, fresh, loin, tenderloin, separable lean only, raw"
+      "sourceDescription": "Pork, fresh, loin, tenderloin, separable lean only, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168313",
@@ -5018,7 +5435,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168313,
-      "sourceDescription": "Pork, fresh, loin, tenderloin, separable lean only, cooked, broiled"
+      "sourceDescription": "Pork, fresh, loin, tenderloin, separable lean only, cooked, broiled",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167845",
@@ -5030,7 +5448,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167845,
-      "sourceDescription": "Pork, fresh, shoulder, whole, separable lean only, raw"
+      "sourceDescription": "Pork, fresh, shoulder, whole, separable lean only, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168363",
@@ -5042,7 +5461,8 @@
       "carbs": 0.18,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168363,
-      "sourceDescription": "Pork, fresh, shoulder, (Boston butt), blade (steaks), separable lean only, with added solution, raw"
+      "sourceDescription": "Pork, fresh, shoulder, (Boston butt), blade (steaks), separable lean only, with added solution, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167853",
@@ -5054,7 +5474,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167853,
-      "sourceDescription": "Pork, fresh, spareribs, separable lean and fat, raw"
+      "sourceDescription": "Pork, fresh, spareribs, separable lean and fat, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167854",
@@ -5066,7 +5487,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167854,
-      "sourceDescription": "Pork, fresh, spareribs, separable lean and fat, cooked, braised"
+      "sourceDescription": "Pork, fresh, spareribs, separable lean and fat, cooked, braised",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167862",
@@ -5078,7 +5500,8 @@
       "carbs": 2.47,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167862,
-      "sourceDescription": "Pork, fresh, variety meats and by-products, liver, raw"
+      "sourceDescription": "Pork, fresh, variety meats and by-products, liver, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167863",
@@ -5090,7 +5513,8 @@
       "carbs": 3.76,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167863,
-      "sourceDescription": "Pork, fresh, variety meats and by-products, liver, cooked, braised"
+      "sourceDescription": "Pork, fresh, variety meats and by-products, liver, cooked, braised",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169190",
@@ -5102,7 +5526,8 @@
       "carbs": 0.21,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169190,
-      "sourceDescription": "Pork, ground, 96% lean / 4% fat, raw"
+      "sourceDescription": "Pork, ground, 96% lean / 4% fat, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169193",
@@ -5114,7 +5539,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169193,
-      "sourceDescription": "Pork, ground, 96% lean / 4% fat, cooked, crumbles"
+      "sourceDescription": "Pork, ground, 96% lean / 4% fat, cooked, crumbles",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174370",
@@ -5126,7 +5552,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174370,
-      "sourceDescription": "Lamb, ground, raw"
+      "sourceDescription": "Lamb, ground, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172544",
@@ -5138,7 +5565,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172544,
-      "sourceDescription": "Lamb, ground, cooked, broiled"
+      "sourceDescription": "Lamb, ground, cooked, broiled",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175290",
@@ -5150,7 +5578,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175290,
-      "sourceDescription": "Veal, ground, raw"
+      "sourceDescription": "Veal, ground, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175291",
@@ -5162,7 +5591,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175291,
-      "sourceDescription": "Veal, ground, cooked, broiled"
+      "sourceDescription": "Veal, ground, cooked, broiled",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172521",
@@ -5174,7 +5604,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172521,
-      "sourceDescription": "Game meat, rabbit, domesticated, composite of cuts, raw"
+      "sourceDescription": "Game meat, rabbit, domesticated, composite of cuts, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174346",
@@ -5186,7 +5617,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174346,
-      "sourceDescription": "Game meat, rabbit, domesticated, composite of cuts, cooked, stewed"
+      "sourceDescription": "Game meat, rabbit, domesticated, composite of cuts, cooked, stewed",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175086",
@@ -5198,7 +5630,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175086,
-      "sourceDescription": "Game meat, horse, raw"
+      "sourceDescription": "Game meat, horse, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175087",
@@ -5210,7 +5643,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175087,
-      "sourceDescription": "Game meat, horse, cooked, roasted"
+      "sourceDescription": "Game meat, horse, cooked, roasted",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172602",
@@ -5222,7 +5656,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172602,
-      "sourceDescription": "Game meat, deer, ground, raw"
+      "sourceDescription": "Game meat, deer, ground, raw",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172603",
@@ -5234,7 +5669,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172603,
-      "sourceDescription": "Game meat, deer, ground, cooked, pan-broiled"
+      "sourceDescription": "Game meat, deer, ground, cooked, pan-broiled",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173864",
@@ -5246,7 +5682,8 @@
       "carbs": 3.63,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173864,
-      "sourceDescription": "Ham, sliced, regular (approximately 11% fat)"
+      "sourceDescription": "Ham, sliced, regular (approximately 11% fat)",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172938",
@@ -5258,7 +5695,8 @@
       "carbs": 1.6,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172938,
-      "sourceDescription": "Salami, dry or hard, pork"
+      "sourceDescription": "Salami, dry or hard, pork",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174614",
@@ -5270,7 +5708,8 @@
       "carbs": 2.66,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174614,
-      "sourceDescription": "Frankfurter, beef, heated"
+      "sourceDescription": "Frankfurter, beef, heated",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167696",
@@ -5282,7 +5721,8 @@
       "carbs": 1.6,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167696,
-      "sourceDescription": "Frankfurter, beef, low fat"
+      "sourceDescription": "Frankfurter, beef, low fat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171633",
@@ -5294,7 +5734,8 @@
       "carbs": 4.96,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171633,
-      "sourceDescription": "Frankfurter, meat and poultry, cooked, boiled"
+      "sourceDescription": "Frankfurter, meat and poultry, cooked, boiled",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171634",
@@ -5306,7 +5747,8 @@
       "carbs": 5.24,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171634,
-      "sourceDescription": "Frankfurter, meat and poultry, cooked, grilled"
+      "sourceDescription": "Frankfurter, meat and poultry, cooked, grilled",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172013",
@@ -5318,7 +5760,8 @@
       "carbs": 5.49,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172013,
-      "sourceDescription": "Bologna, beef and pork"
+      "sourceDescription": "Bologna, beef and pork",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167685",
@@ -5330,7 +5773,8 @@
       "carbs": 2.6,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167685,
-      "sourceDescription": "Bologna, beef and pork, low fat"
+      "sourceDescription": "Bologna, beef and pork, low fat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167914",
@@ -5342,7 +5786,8 @@
       "carbs": 1.35,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167914,
-      "sourceDescription": "Pork, cured, bacon, cooked, baked"
+      "sourceDescription": "Pork, cured, bacon, cooked, baked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168322",
@@ -5354,7 +5799,8 @@
       "carbs": 1.7,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168322,
-      "sourceDescription": "Pork, cured, bacon, pre-sliced, cooked, pan-fried"
+      "sourceDescription": "Pork, cured, bacon, pre-sliced, cooked, pan-fried",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174925",
@@ -5366,7 +5812,8 @@
       "carbs": 54.5,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174925,
-      "sourceDescription": "Bread, white, commercially prepared, toasted"
+      "sourceDescription": "Bread, white, commercially prepared, toasted",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172818",
@@ -5378,7 +5825,8 @@
       "carbs": 49.6,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172818,
-      "sourceDescription": "Bread, white, commercially prepared, low sodium, no salt"
+      "sourceDescription": "Bread, white, commercially prepared, low sodium, no salt",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172688",
@@ -5390,7 +5838,8 @@
       "carbs": 42.71,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172688,
-      "sourceDescription": "Bread, whole-wheat, commercially prepared"
+      "sourceDescription": "Bread, whole-wheat, commercially prepared",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172689",
@@ -5402,7 +5851,8 @@
       "carbs": 51.16,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172689,
-      "sourceDescription": "Bread, whole-wheat, commercially prepared, toasted"
+      "sourceDescription": "Bread, whole-wheat, commercially prepared, toasted",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172684",
@@ -5414,7 +5864,8 @@
       "carbs": 48.3,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172684,
-      "sourceDescription": "Bread, rye"
+      "sourceDescription": "Bread, rye",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172685",
@@ -5426,7 +5877,8 @@
       "carbs": 53.1,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172685,
-      "sourceDescription": "Bread, rye, toasted"
+      "sourceDescription": "Bread, rye, toasted",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172686",
@@ -5438,7 +5890,8 @@
       "carbs": 47.54,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172686,
-      "sourceDescription": "Bread, wheat"
+      "sourceDescription": "Bread, wheat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172687",
@@ -5450,7 +5903,8 @@
       "carbs": 55.77,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172687,
-      "sourceDescription": "Bread, wheat, toasted"
+      "sourceDescription": "Bread, wheat, toasted",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172678",
@@ -5462,7 +5916,8 @@
       "carbs": 48.5,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172678,
-      "sourceDescription": "Bread, oatmeal"
+      "sourceDescription": "Bread, oatmeal",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172679",
@@ -5474,7 +5929,8 @@
       "carbs": 52.7,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172679,
-      "sourceDescription": "Bread, oatmeal, toasted"
+      "sourceDescription": "Bread, oatmeal, toasted",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174921",
@@ -5486,7 +5942,8 @@
       "carbs": 42.47,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174921,
-      "sourceDescription": "Bread, reduced-calorie, wheat"
+      "sourceDescription": "Bread, reduced-calorie, wheat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174091",
@@ -5498,7 +5955,8 @@
       "carbs": 49.1,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174091,
-      "sourceDescription": "Bread, french or vienna, whole wheat"
+      "sourceDescription": "Bread, french or vienna, whole wheat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174911",
@@ -5510,7 +5968,8 @@
       "carbs": 61.93,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174911,
-      "sourceDescription": "Bread, french or vienna, toasted (includes sourdough)"
+      "sourceDescription": "Bread, french or vienna, toasted (includes sourdough)",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174915",
@@ -5522,7 +5981,8 @@
       "carbs": 55.7,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174915,
-      "sourceDescription": "Bread, pita, white, enriched"
+      "sourceDescription": "Bread, pita, white, enriched",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174916",
@@ -5534,7 +5994,8 @@
       "carbs": 55.89,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174916,
-      "sourceDescription": "Bread, pita, whole-wheat"
+      "sourceDescription": "Bread, pita, whole-wheat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175037",
@@ -5546,7 +6007,8 @@
       "carbs": 49.38,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175037,
-      "sourceDescription": "Tortillas, ready-to-bake or -fry, flour, refrigerated"
+      "sourceDescription": "Tortillas, ready-to-bake or -fry, flour, refrigerated",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175036",
@@ -5558,7 +6020,8 @@
       "carbs": 44.64,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175036,
-      "sourceDescription": "Tortillas, ready-to-bake or -fry, corn"
+      "sourceDescription": "Tortillas, ready-to-bake or -fry, corn",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175027",
@@ -5570,7 +6033,8 @@
       "carbs": 52.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175027,
-      "sourceDescription": "Rolls, dinner, egg"
+      "sourceDescription": "Rolls, dinner, egg",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172810",
@@ -5582,7 +6046,8 @@
       "carbs": 53.4,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172810,
-      "sourceDescription": "Rolls, dinner, plain, prepared from recipe, made with low fat (2%) milk"
+      "sourceDescription": "Rolls, dinner, plain, prepared from recipe, made with low fat (2%) milk",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174987",
@@ -5594,7 +6059,8 @@
       "carbs": 45.8,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174987,
-      "sourceDescription": "Croissants, butter"
+      "sourceDescription": "Croissants, butter",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174899",
@@ -5606,7 +6072,8 @@
       "carbs": 52.38,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174899,
-      "sourceDescription": "Bagels, plain, enriched, with calcium propionate (includes onion, poppy, sesame)"
+      "sourceDescription": "Bagels, plain, enriched, with calcium propionate (includes onion, poppy, sesame)",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174900",
@@ -5618,7 +6085,8 @@
       "carbs": 57.39,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174900,
-      "sourceDescription": "Bagels, plain, enriched, with calcium propionate (includes onion, poppy, sesame), toasted"
+      "sourceDescription": "Bagels, plain, enriched, with calcium propionate (includes onion, poppy, sesame), toasted",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175068",
@@ -5630,7 +6098,8 @@
       "carbs": 82.3,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175068,
-      "sourceDescription": "Crackers, saltines, fat-free, low-sodium"
+      "sourceDescription": "Crackers, saltines, fat-free, low-sodium",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174086",
@@ -5642,7 +6111,8 @@
       "carbs": 57.32,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174086,
-      "sourceDescription": "Pancakes, plain, reduced fat"
+      "sourceDescription": "Pancakes, plain, reduced fat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175009",
@@ -5654,7 +6124,8 @@
       "carbs": 28.3,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175009,
-      "sourceDescription": "Pancakes, plain, prepared from recipe"
+      "sourceDescription": "Pancakes, plain, prepared from recipe",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175039",
@@ -5666,7 +6137,8 @@
       "carbs": 32.9,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175039,
-      "sourceDescription": "Waffles, plain, prepared from recipe"
+      "sourceDescription": "Waffles, plain, prepared from recipe",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-175038",
@@ -5678,7 +6150,8 @@
       "carbs": 42.98,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 175038,
-      "sourceDescription": "Waffles, plain, frozen, ready-to-heat"
+      "sourceDescription": "Waffles, plain, frozen, ready-to-heat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169655",
@@ -5690,7 +6163,8 @@
       "carbs": 99.98,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169655,
-      "sourceDescription": "Sugars, granulated"
+      "sourceDescription": "Sugars, granulated",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168833",
@@ -5702,7 +6176,8 @@
       "carbs": 98.09,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168833,
-      "sourceDescription": "Sugars, brown"
+      "sourceDescription": "Sugars, brown",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169640",
@@ -5714,7 +6189,8 @@
       "carbs": 82.4,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169640,
-      "sourceDescription": "Honey"
+      "sourceDescription": "Honey",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167587",
@@ -5726,7 +6202,8 @@
       "carbs": 59.4,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167587,
-      "sourceDescription": "Candies, milk chocolate"
+      "sourceDescription": "Candies, milk chocolate",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170273",
@@ -5738,7 +6215,8 @@
       "carbs": 45.9,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170273,
-      "sourceDescription": "Chocolate, dark, 70-85% cacao solids"
+      "sourceDescription": "Chocolate, dark, 70-85% cacao solids",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170272",
@@ -5750,7 +6228,8 @@
       "carbs": 52.42,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170272,
-      "sourceDescription": "Chocolate, dark, 60-69% cacao solids"
+      "sourceDescription": "Chocolate, dark, 60-69% cacao solids",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167571",
@@ -5762,7 +6241,8 @@
       "carbs": 59.24,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167571,
-      "sourceDescription": "Candies, white chocolate"
+      "sourceDescription": "Candies, white chocolate",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167991",
@@ -5774,7 +6254,8 @@
       "carbs": 93.55,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167991,
-      "sourceDescription": "Candies, jellybeans"
+      "sourceDescription": "Candies, jellybeans",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167995",
@@ -5786,7 +6267,8 @@
       "carbs": 81.3,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167995,
-      "sourceDescription": "Candies, marshmallows"
+      "sourceDescription": "Candies, marshmallows",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167974",
@@ -5798,7 +6280,8 @@
       "carbs": 77.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167974,
-      "sourceDescription": "Candies, caramels"
+      "sourceDescription": "Candies, caramels",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167996",
@@ -5810,7 +6293,8 @@
       "carbs": 60.49,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167996,
-      "sourceDescription": "Candies, halavah, plain"
+      "sourceDescription": "Candies, halavah, plain",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169641",
@@ -5822,7 +6306,8 @@
       "carbs": 68.86,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169641,
-      "sourceDescription": "Jams and preserves"
+      "sourceDescription": "Jams and preserves",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-167575",
@@ -5834,7 +6319,8 @@
       "carbs": 23.6,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 167575,
-      "sourceDescription": "Ice creams, vanilla"
+      "sourceDescription": "Ice creams, vanilla",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168809",
@@ -5846,7 +6332,8 @@
       "carbs": 28.2,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168809,
-      "sourceDescription": "Ice creams, chocolate"
+      "sourceDescription": "Ice creams, chocolate",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169593",
@@ -5858,7 +6345,8 @@
       "carbs": 57.9,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169593,
-      "sourceDescription": "Cocoa, dry powder, unsweetened"
+      "sourceDescription": "Cocoa, dry powder, unsweetened",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171865",
@@ -5870,7 +6358,8 @@
       "carbs": 64.62,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171865,
-      "sourceDescription": "Cookies, oatmeal, reduced fat"
+      "sourceDescription": "Cookies, oatmeal, reduced fat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174963",
@@ -5882,7 +6371,8 @@
       "carbs": 68.95,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174963,
-      "sourceDescription": "Cookies, oatmeal, with raisins"
+      "sourceDescription": "Cookies, oatmeal, with raisins",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174088",
@@ -5894,7 +6384,8 @@
       "carbs": 65.99,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174088,
-      "sourceDescription": "Cookies, sugar wafer, chocolate-covered"
+      "sourceDescription": "Cookies, sugar wafer, chocolate-covered",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171543",
@@ -5906,7 +6397,8 @@
       "carbs": 6.07,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171543,
-      "sourceDescription": "Soup, chicken noodle, canned, condensed"
+      "sourceDescription": "Soup, chicken noodle, canned, condensed",
+      "waterPercentage": 80.0
     },
     {
       "id": "usda-sr-174064",
@@ -5918,7 +6410,8 @@
       "carbs": 3.84,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174064,
-      "sourceDescription": "Soup, chicken noodle, reduced sodium, canned, ready-to-serve"
+      "sourceDescription": "Soup, chicken noodle, reduced sodium, canned, ready-to-serve",
+      "waterPercentage": 80.0
     },
     {
       "id": "usda-sr-172882",
@@ -5930,7 +6423,8 @@
       "carbs": 15.22,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172882,
-      "sourceDescription": "Soup, tomato, canned, condensed"
+      "sourceDescription": "Soup, tomato, canned, condensed",
+      "waterPercentage": 80.0
     },
     {
       "id": "usda-sr-171591",
@@ -5942,7 +6436,8 @@
       "carbs": 6.57,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171591,
-      "sourceDescription": "Soup, tomato, low sodium, with water"
+      "sourceDescription": "Soup, tomato, low sodium, with water",
+      "waterPercentage": 80.0
     },
     {
       "id": "usda-sr-171155",
@@ -5954,7 +6449,8 @@
       "carbs": 6.8,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171155,
-      "sourceDescription": "Soup, cream of mushroom, canned, condensed"
+      "sourceDescription": "Soup, cream of mushroom, canned, condensed",
+      "waterPercentage": 80.0
     },
     {
       "id": "usda-sr-171607",
@@ -5966,7 +6462,8 @@
       "carbs": 4.53,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171607,
-      "sourceDescription": "Soup, cream of mushroom, low sodium, ready-to-serve, canned"
+      "sourceDescription": "Soup, cream of mushroom, low sodium, ready-to-serve, canned",
+      "waterPercentage": 80.0
     },
     {
       "id": "usda-sr-171554",
@@ -5978,7 +6475,8 @@
       "carbs": 20.18,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171554,
-      "sourceDescription": "Soup, pea, green, canned, condensed"
+      "sourceDescription": "Soup, pea, green, canned, condensed",
+      "waterPercentage": 80.0
     },
     {
       "id": "usda-sr-172896",
@@ -5990,7 +6488,8 @@
       "carbs": 12.69,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172896,
-      "sourceDescription": "Soup, pea, green, canned, prepared with equal volume milk"
+      "sourceDescription": "Soup, pea, green, canned, prepared with equal volume milk",
+      "waterPercentage": 80.0
     },
     {
       "id": "usda-sr-171549",
@@ -6002,7 +6501,8 @@
       "carbs": 8.16,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171549,
-      "sourceDescription": "Soup, lentil with ham, canned, ready-to-serve"
+      "sourceDescription": "Soup, lentil with ham, canned, ready-to-serve",
+      "waterPercentage": 80.0
     },
     {
       "id": "usda-sr-171583",
@@ -6014,7 +6514,8 @@
       "carbs": 0.93,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171583,
-      "sourceDescription": "Soup, vegetable broth, ready to serve"
+      "sourceDescription": "Soup, vegetable broth, ready to serve",
+      "waterPercentage": 80.0
     },
     {
       "id": "usda-sr-171163",
@@ -6026,7 +6527,8 @@
       "carbs": 8.11,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171163,
-      "sourceDescription": "Soup, vegetable beef, canned, condensed"
+      "sourceDescription": "Soup, vegetable beef, canned, condensed",
+      "waterPercentage": 80.0
     },
     {
       "id": "usda-sr-173343",
@@ -6038,7 +6540,8 @@
       "carbs": 16.18,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173343,
-      "sourceDescription": "Potato salad with egg"
+      "sourceDescription": "Potato salad with egg",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172185",
@@ -6050,7 +6553,8 @@
       "carbs": 0.64,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172185,
-      "sourceDescription": "Egg, whole, cooked, omelet"
+      "sourceDescription": "Egg, whole, cooked, omelet",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169768",
@@ -6062,7 +6566,8 @@
       "carbs": 13.29,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169768,
-      "sourceDescription": "Potatoes, mashed, ready-to-eat"
+      "sourceDescription": "Potatoes, mashed, ready-to-eat",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170493",
@@ -6074,7 +6579,8 @@
       "carbs": 17.57,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170493,
-      "sourceDescription": "Potatoes, mashed, home-prepared, whole milk added"
+      "sourceDescription": "Potatoes, mashed, home-prepared, whole milk added",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172114",
@@ -6086,7 +6592,8 @@
       "carbs": 15.36,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172114,
-      "sourceDescription": "Lasagna with meat sauce, frozen, prepared"
+      "sourceDescription": "Lasagna with meat sauce, frozen, prepared",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173340",
@@ -6098,7 +6605,8 @@
       "carbs": 70.12,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173340,
-      "sourceDescription": "Macaroni and cheese dinner with dry sauce mix, boxed, uncooked"
+      "sourceDescription": "Macaroni and cheese dinner with dry sauce mix, boxed, uncooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-173325",
@@ -6110,7 +6618,8 @@
       "carbs": 11.52,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173325,
-      "sourceDescription": "Macaroni and Cheese, canned entree"
+      "sourceDescription": "Macaroni and Cheese, canned entree",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170373",
@@ -6122,7 +6631,8 @@
       "carbs": 28.8,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170373,
-      "sourceDescription": "Pizza, cheese topping, thin crust, frozen, cooked"
+      "sourceDescription": "Pizza, cheese topping, thin crust, frozen, cooked",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171009",
@@ -6134,7 +6644,8 @@
       "carbs": 0.57,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171009,
-      "sourceDescription": "Salad dressing, mayonnaise, regular"
+      "sourceDescription": "Salad dressing, mayonnaise, regular",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172234",
@@ -6146,7 +6657,8 @@
       "carbs": 5.83,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172234,
-      "sourceDescription": "Mustard, prepared, yellow"
+      "sourceDescription": "Mustard, prepared, yellow",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-168556",
@@ -6158,7 +6670,8 @@
       "carbs": 27.4,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 168556,
-      "sourceDescription": "Catsup"
+      "sourceDescription": "Catsup",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-169381",
@@ -6170,7 +6683,8 @@
       "carbs": 27.4,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 169381,
-      "sourceDescription": "Catsup, low sodium"
+      "sourceDescription": "Catsup, low sodium",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-174277",
@@ -6182,7 +6696,8 @@
       "carbs": 4.93,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 174277,
-      "sourceDescription": "Soy sauce made from soy and wheat (shoyu)"
+      "sourceDescription": "Soy sauce made from soy and wheat (shoyu)",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172473",
@@ -6194,7 +6709,8 @@
       "carbs": 5.59,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172473,
-      "sourceDescription": "Soy sauce made from soy and wheat (shoyu), low sodium"
+      "sourceDescription": "Soy sauce made from soy and wheat (shoyu), low sodium",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170054",
@@ -6206,7 +6722,8 @@
       "carbs": 5.31,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170054,
-      "sourceDescription": "Tomato products, canned, sauce"
+      "sourceDescription": "Tomato products, canned, sauce",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170931",
@@ -6218,7 +6735,8 @@
       "carbs": 63.95,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170931,
-      "sourceDescription": "Spices, pepper, black"
+      "sourceDescription": "Spices, pepper, black",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171320",
@@ -6230,7 +6748,8 @@
       "carbs": 80.59,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171320,
-      "sourceDescription": "Spices, cinnamon, ground"
+      "sourceDescription": "Spices, cinnamon, ground",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-170926",
@@ -6242,7 +6761,8 @@
       "carbs": 71.62,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 170926,
-      "sourceDescription": "Spices, ginger, ground"
+      "sourceDescription": "Spices, ginger, ground",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-172231",
@@ -6254,7 +6774,8 @@
       "carbs": 67.14,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 172231,
-      "sourceDescription": "Spices, turmeric, ground"
+      "sourceDescription": "Spices, turmeric, ground",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171329",
@@ -6266,7 +6787,8 @@
       "carbs": 53.99,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171329,
-      "sourceDescription": "Spices, paprika"
+      "sourceDescription": "Spices, paprika",
+      "waterPercentage": 0.0
     },
     {
       "id": "usda-sr-171881",
@@ -6278,7 +6800,8 @@
       "carbs": 0.17,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171881,
-      "sourceDescription": "Beverages, coffee, brewed, breakfast blend"
+      "sourceDescription": "Beverages, coffee, brewed, breakfast blend",
+      "waterPercentage": 98.0
     },
     {
       "id": "usda-sr-173227",
@@ -6290,7 +6813,8 @@
       "carbs": 0.3,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 173227,
-      "sourceDescription": "Beverages, tea, black, brewed, prepared with tap water"
+      "sourceDescription": "Beverages, tea, black, brewed, prepared with tap water",
+      "waterPercentage": 98.0
     },
     {
       "id": "usda-sr-171917",
@@ -6302,7 +6826,8 @@
       "carbs": 0.0,
       "source": "USDA FoodData Central SR Legacy (2018)",
       "sourceId": 171917,
-      "sourceDescription": "Beverages, tea, green, brewed, regular"
+      "sourceDescription": "Beverages, tea, green, brewed, regular",
+      "waterPercentage": 98.0
     },
     {
       "id": "recipe-ru-v1-001",
@@ -6356,7 +6881,8 @@
       "calories": 57.84,
       "proteins": 3.59,
       "fats": 2.2,
-      "carbs": 6.26
+      "carbs": 6.26,
+      "waterPercentage": 80.0
     },
     {
       "id": "recipe-ru-v1-002",
@@ -6405,7 +6931,8 @@
       "calories": 54.24,
       "proteins": 3.5,
       "fats": 2.18,
-      "carbs": 5.5
+      "carbs": 5.5,
+      "waterPercentage": 80.0
     },
     {
       "id": "recipe-ru-v1-003",
@@ -6444,7 +6971,8 @@
       "calories": 49.75,
       "proteins": 2.24,
       "fats": 2.0,
-      "carbs": 6.14
+      "carbs": 6.14,
+      "waterPercentage": 0.0
     },
     {
       "id": "recipe-ru-v1-004",
@@ -6483,7 +7011,8 @@
       "calories": 65.3,
       "proteins": 6.76,
       "fats": 1.81,
-      "carbs": 5.62
+      "carbs": 5.62,
+      "waterPercentage": 80.0
     },
     {
       "id": "recipe-ru-v1-005",
@@ -6517,7 +7046,8 @@
       "calories": 91.04,
       "proteins": 2.91,
       "fats": 2.54,
-      "carbs": 15.78
+      "carbs": 15.78,
+      "waterPercentage": 0.0
     },
     {
       "id": "recipe-ru-v1-006",
@@ -6556,7 +7086,8 @@
       "calories": 137.61,
       "proteins": 8.1,
       "fats": 3.84,
-      "carbs": 17.4
+      "carbs": 17.4,
+      "waterPercentage": 0.0
     },
     {
       "id": "recipe-ru-v1-007",
@@ -6595,7 +7126,8 @@
       "calories": 149.01,
       "proteins": 7.01,
       "fats": 5.41,
-      "carbs": 17.4
+      "carbs": 17.4,
+      "waterPercentage": 0.0
     },
     {
       "id": "recipe-ru-v1-008",
@@ -6634,7 +7166,8 @@
       "calories": 91.5,
       "proteins": 1.38,
       "fats": 5.13,
-      "carbs": 10.81
+      "carbs": 10.81,
+      "waterPercentage": 0.0
     },
     {
       "id": "recipe-ru-v1-009",
@@ -6668,7 +7201,8 @@
       "calories": 35.88,
       "proteins": 0.79,
       "fats": 2.15,
-      "carbs": 4.14
+      "carbs": 4.14,
+      "waterPercentage": 0.0
     },
     {
       "id": "recipe-ru-v1-010",
@@ -6717,7 +7251,8 @@
       "calories": 125.04,
       "proteins": 7.48,
       "fats": 6.58,
-      "carbs": 9.28
+      "carbs": 9.28,
+      "waterPercentage": 0.0
     },
     {
       "id": "recipe-ru-v1-011",
@@ -6761,7 +7296,8 @@
       "calories": 82.73,
       "proteins": 2.82,
       "fats": 6.57,
-      "carbs": 4.0
+      "carbs": 4.0,
+      "waterPercentage": 0.0
     },
     {
       "id": "recipe-ru-v1-012",
@@ -6795,7 +7331,8 @@
       "calories": 107.62,
       "proteins": 3.9,
       "fats": 3.84,
-      "carbs": 14.6
+      "carbs": 14.6,
+      "waterPercentage": 0.0
     },
     {
       "id": "recipe-ru-v1-013",
@@ -6829,7 +7366,8 @@
       "calories": 111.5,
       "proteins": 2.83,
       "fats": 3.52,
-      "carbs": 16.91
+      "carbs": 16.91,
+      "waterPercentage": 0.0
     },
     {
       "id": "recipe-ru-v1-014",
@@ -6863,7 +7401,8 @@
       "calories": 113.8,
       "proteins": 3.96,
       "fats": 4.49,
-      "carbs": 14.36
+      "carbs": 14.36,
+      "waterPercentage": 0.0
     },
     {
       "id": "recipe-ru-v1-015",
@@ -6902,7 +7441,8 @@
       "calories": 178.32,
       "proteins": 11.2,
       "fats": 7.04,
-      "carbs": 17.16
+      "carbs": 17.16,
+      "waterPercentage": 0.0
     },
     {
       "id": "recipe-ru-v1-016",
@@ -6941,7 +7481,8 @@
       "calories": 191.52,
       "proteins": 6.29,
       "fats": 6.12,
-      "carbs": 27.29
+      "carbs": 27.29,
+      "waterPercentage": 0.0
     },
     {
       "id": "recipe-ru-v1-017",
@@ -6975,7 +7516,8 @@
       "calories": 141.43,
       "proteins": 21.46,
       "fats": 4.75,
-      "carbs": 1.84
+      "carbs": 1.84,
+      "waterPercentage": 0.0
     },
     {
       "id": "recipe-ru-v1-018",
@@ -7019,7 +7561,8 @@
       "calories": 102.68,
       "proteins": 6.23,
       "fats": 4.62,
-      "carbs": 9.09
+      "carbs": 9.09,
+      "waterPercentage": 0.0
     },
     {
       "id": "recipe-ru-v1-019",
@@ -7063,7 +7606,8 @@
       "calories": 112.18,
       "proteins": 6.35,
       "fats": 4.74,
-      "carbs": 11.17
+      "carbs": 11.17,
+      "waterPercentage": 0.0
     },
     {
       "id": "recipe-ru-v1-020",
@@ -7107,7 +7651,8 @@
       "calories": 128.83,
       "proteins": 9.45,
       "fats": 6.58,
-      "carbs": 7.38
+      "carbs": 7.38,
+      "waterPercentage": 0.0
     },
     {
       "id": "recipe-ru-v1-021",
@@ -7151,7 +7696,8 @@
       "calories": 92.1,
       "proteins": 8.22,
       "fats": 1.67,
-      "carbs": 11.6
+      "carbs": 11.6,
+      "waterPercentage": 80.0
     },
     {
       "id": "recipe-ru-v1-022",
@@ -7180,7 +7726,8 @@
       "calories": 95.31,
       "proteins": 2.3,
       "fats": 3.16,
-      "carbs": 14.95
+      "carbs": 14.95,
+      "waterPercentage": 0.0
     }
   ]
 }

@@ -65,14 +65,25 @@ class _SavedFoodsState extends ConsumerState<SavedFoods> {
             ? favoriteProductsProvider
             : recipesProvider);
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Wrap(spacing: 8, runSpacing: 8, children: [
-        for (final (i, label)
-            in ['Часто используемые', 'Избранные', 'Мои рецепты'].indexed)
-          ChoiceChip(
-              label: QText(label),
-              selected: tab == i,
-              onSelected: (_) => setState(() => tab = i))
-      ]),
+      LayoutBuilder(
+          builder: (context, box) => Wrap(spacing: 8, runSpacing: 8, children: [
+                for (final (i, label) in [
+                  'Часто используемые',
+                  'Избранные',
+                  'Мои рецепты'
+                ].indexed)
+                  ChoiceChip(
+                      label: ConstrainedBox(
+                          constraints:
+                              BoxConstraints(maxWidth: box.maxWidth - 56),
+                          child: QText(label,
+                              textAlign: TextAlign.center,
+                              softWrap: true,
+                              maxLines: 4,
+                              overflow: TextOverflow.visible)),
+                      selected: tab == i,
+                      onSelected: (_) => setState(() => tab = i))
+              ])),
       const SizedBox(height: 8),
       data.when(
           data: (items) => items.isEmpty

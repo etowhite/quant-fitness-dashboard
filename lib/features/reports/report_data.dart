@@ -1,3 +1,4 @@
+import '../nutrition/domain/hydration.dart';
 import '../../core/database/local_day.dart';
 import '../nutrition/data/food_log_entry.dart';
 import '../water/data/water_log_entry.dart';
@@ -25,6 +26,10 @@ class ReportData {
     final calories = <DateTime, double>{};
     final volumes = <DateTime, double>{};
     for (final e in food.where((e) => inRange(e.date))) {
+      final ml = Hydration.volume(e.weightGrams, e.waterPercentage);
+      if (ml > 0) {
+        volumes.update(localDay(e.date), (v) => v + ml, ifAbsent: () => ml);
+      }
       calories.update(localDay(e.date), (v) => v + e.calories,
           ifAbsent: () => e.calories);
     }

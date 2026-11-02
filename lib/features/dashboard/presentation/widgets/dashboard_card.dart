@@ -1,3 +1,4 @@
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 
 class DashboardCard extends StatelessWidget {
@@ -6,6 +7,7 @@ class DashboardCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Card(
-        child: Padding(padding: const EdgeInsets.all(20), child: child),
+        child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.cardInset), child: child),
       );
 }

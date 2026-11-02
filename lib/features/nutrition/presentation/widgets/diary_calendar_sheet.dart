@@ -1,3 +1,4 @@
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -38,7 +39,7 @@ class _DiaryCalendarSheetState extends ConsumerState<DiaryCalendarSheet> {
                     tooltip: context.tr('Закрыть'),
                     icon: const Icon(Icons.close)),
               ]),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.actionGap),
               Row(children: [
                 IconButton(
                     key: const ValueKey('calendar-previous'),
@@ -59,7 +60,7 @@ class _DiaryCalendarSheetState extends ConsumerState<DiaryCalendarSheet> {
                     tooltip: context.tr('Следующий месяц'),
                     icon: const Icon(Icons.chevron_right)),
               ]),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.actionGap),
               Row(children: [
                 for (var i = 0; i < 7; i++)
                   Expanded(
@@ -79,9 +80,11 @@ class _DiaryCalendarSheetState extends ConsumerState<DiaryCalendarSheet> {
               GridView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 7,
-                      mainAxisExtent: 52,
+                      mainAxisExtent:
+                          (24 + MediaQuery.textScalerOf(context).scale(20))
+                              .clamp(52, 96),
                       crossAxisSpacing: 4,
                       mainAxisSpacing: 4),
                   itemCount: cells,
@@ -112,11 +115,16 @@ class _DiaryCalendarSheetState extends ConsumerState<DiaryCalendarSheet> {
                                 child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text('$number',
-                                          style: TextStyle(
-                                              color: selected
-                                                  ? scheme.onPrimaryContainer
-                                                  : scheme.onSurface)),
+                                      FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: Text('$number',
+                                              maxLines: 1,
+                                              softWrap: false,
+                                              style: TextStyle(
+                                                  color: selected
+                                                      ? scheme
+                                                          .onPrimaryContainer
+                                                      : scheme.onSurface))),
                                       const SizedBox(height: 4),
                                       if (recorded)
                                         Container(

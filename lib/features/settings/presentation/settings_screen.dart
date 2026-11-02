@@ -1,3 +1,5 @@
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
+import 'package:smart_fitness_dashboard/shared/widgets/quant_layout.dart';
 import '../../../core/home_widgets/home_widgets.dart';
 import '../../reports/report_screen.dart';
 import 'widgets/appearance_card.dart';
@@ -50,11 +52,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
   Widget _card(String title, List<Widget> children) => Card(
       child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(AppSpacing.cardInset),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             QText(title, style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.section),
             ...children
           ])));
   @override
@@ -62,49 +64,51 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     final reminders = ref.watch(reminderSettingsProvider);
     final status = ref.watch(notificationStatusProvider);
     return Scaffold(
-        appBar: AppBar(title: const QText('Настройки')),
-        body: ListView(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 120),
-            children: [
-              const LanguageCard(),
-              const SizedBox(height: 16),
-              const AppearanceCard(),
-              const SizedBox(height: 16),
-              const AppLockCard(),
-              const SizedBox(height: 16),
-              const WidgetPrivacyCard(),
-              const SizedBox(height: 16),
-              const UserGoalsCard(),
-              const SizedBox(height: 16),
-              Card(
-                  child: ListTile(
-                      leading: const Icon(Icons.image_outlined),
-                      title: const QText('Экспорт отчёта'),
-                      subtitle: const QText('Изображение за 7 или 30 дней'),
-                      trailing: const Icon(Icons.chevron_right),
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => const ReportScreen())))),
-              const SizedBox(height: 16),
-              reminders.when(
-                  loading: () => const LinearProgressIndicator(),
-                  error: (_, __) => _retry('Не удалось загрузить напоминания',
-                      () => ref.invalidate(reminderSettingsProvider)),
-                  data: (s) => _card('Уведомления и напоминания', [
-                        if (_busy) const LinearProgressIndicator(),
-                        if (status != null)
-                          Padding(
-                              padding: const EdgeInsets.only(bottom: 12),
-                              child: QText(status)),
-                        SwitchListTile(
-                            contentPadding: EdgeInsets.zero,
-                            title: const QText('Пить воду'),
-                            value: s.water,
-                            onChanged: _busy
-                                ? null
-                                : (v) => _reminders(s.copyWith(water: v))),
-                        Wrap(spacing: 8, children: [
+        appBar: QuantAppBar(context: context, title: const QText('Настройки')),
+        body:
+            ListView(padding: QuantInsets.page(context, fab: false), children: [
+          const LanguageCard(),
+          const SizedBox(height: AppSpacing.section),
+          const AppearanceCard(),
+          const SizedBox(height: AppSpacing.section),
+          const AppLockCard(),
+          const SizedBox(height: AppSpacing.section),
+          const WidgetPrivacyCard(),
+          const SizedBox(height: AppSpacing.section),
+          const UserGoalsCard(),
+          const SizedBox(height: AppSpacing.section),
+          Card(
+              child: ListTile(
+                  leading: const Icon(Icons.image_outlined),
+                  title: const QText('Экспорт отчёта'),
+                  subtitle: const QText('Изображение за 7 или 30 дней'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const ReportScreen())))),
+          const SizedBox(height: AppSpacing.section),
+          reminders.when(
+              loading: () => const LinearProgressIndicator(),
+              error: (_, __) => _retry('Не удалось загрузить напоминания',
+                  () => ref.invalidate(reminderSettingsProvider)),
+              data: (s) => _card('Уведомления и напоминания', [
+                    if (_busy) const LinearProgressIndicator(),
+                    if (status != null)
+                      Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: QText(status)),
+                    SwitchListTile(
+                        contentPadding: EdgeInsets.zero,
+                        title: const QText('Пить воду'),
+                        value: s.water,
+                        onChanged: _busy
+                            ? null
+                            : (v) => _reminders(s.copyWith(water: v))),
+                    Wrap(
+                        spacing: AppSpacing.small,
+                        runSpacing: AppSpacing.small,
+                        children: [
                           for (final interval in [90, 120, 180])
                             ChoiceChip(
                                 label: QText(interval == 90
@@ -116,7 +120,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                     : (_) => _reminders(
                                         s.copyWith(waterInterval: interval)))
                         ]),
-                        Wrap(spacing: 8, children: [
+                    const SizedBox(height: AppSpacing.actionGap),
+                    Wrap(
+                        spacing: AppSpacing.small,
+                        runSpacing: AppSpacing.small,
+                        children: [
                           TextButton(
                               onPressed: _busy
                                   ? null
@@ -134,129 +142,127 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                           _reminders(s.copyWith(waterEnd: v))),
                               child: QText('До ${_time(s.waterEnd)}')),
                         ]),
-                        const Divider(),
-                        _meal('Завтрак', s.breakfast,
-                            (v) => _reminders(s.copyWith(breakfast: v))),
-                        const Divider(height: 1, thickness: 1),
-                        _meal('Обед', s.lunch,
-                            (v) => _reminders(s.copyWith(lunch: v))),
-                        const Divider(height: 1, thickness: 1),
-                        _meal('Ужин', s.dinner,
-                            (v) => _reminders(s.copyWith(dinner: v))),
-                        const Divider(),
-                        _meal('Взвешивание и замеры', s.measurements,
-                            (v) => _reminders(s.copyWith(measurements: v))),
-                        const SizedBox(height: 16),
-                        const QText('Периодичность замеров'),
-                        const SizedBox(height: 8),
-                        DropdownButtonFormField<int>(
-                            isExpanded: true,
-                            key: ValueKey(s.weekday),
-                            initialValue: s.weekday,
-                            decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 14),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(32))),
-                            items: [
-                              for (var i = 0; i < 8; i++)
-                                DropdownMenuItem(
-                                    value: i,
-                                    child: QText([
-                                      'Ежедневно',
-                                      'Понедельник',
-                                      'Вторник',
-                                      'Среда',
-                                      'Четверг',
-                                      'Пятница',
-                                      'Суббота',
-                                      'Воскресенье'
-                                    ][i]))
-                            ],
-                            onChanged: _busy
+                    const Divider(),
+                    _meal('Завтрак', s.breakfast,
+                        (v) => _reminders(s.copyWith(breakfast: v))),
+                    const Divider(height: 1, thickness: 1),
+                    _meal('Обед', s.lunch,
+                        (v) => _reminders(s.copyWith(lunch: v))),
+                    const Divider(height: 1, thickness: 1),
+                    _meal('Ужин', s.dinner,
+                        (v) => _reminders(s.copyWith(dinner: v))),
+                    const Divider(),
+                    _meal('Взвешивание и замеры', s.measurements,
+                        (v) => _reminders(s.copyWith(measurements: v))),
+                    const SizedBox(height: AppSpacing.section),
+                    const QText('Периодичность замеров'),
+                    const SizedBox(height: 8),
+                    DropdownButtonFormField<int>(
+                        isExpanded: true,
+                        key: ValueKey(s.weekday),
+                        initialValue: s.weekday,
+                        decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 14),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(32))),
+                        items: [
+                          for (var i = 0; i < 8; i++)
+                            DropdownMenuItem(
+                                value: i,
+                                child: QText([
+                                  'Ежедневно',
+                                  'Понедельник',
+                                  'Вторник',
+                                  'Среда',
+                                  'Четверг',
+                                  'Пятница',
+                                  'Суббота',
+                                  'Воскресенье'
+                                ][i]))
+                        ],
+                        onChanged: _busy
+                            ? null
+                            : (v) {
+                                if (v != null) {
+                                  _reminders(s.copyWith(weekday: v));
+                                }
+                              }),
+                    const SizedBox(height: AppSpacing.actionGap),
+                    const QText(
+                        'Напоминания локальные. Android может задерживать их для экономии батареи. Точный режим требует отдельного разрешения.'),
+                    const SizedBox(height: 8),
+                    SizedBox(
+                        width: double.infinity,
+                        child: OutlinedButton.icon(
+                            onPressed: _busy
                                 ? null
-                                : (v) {
-                                    if (v != null) {
-                                      _reminders(s.copyWith(weekday: v));
-                                    }
-                                  }),
-                        const SizedBox(height: 12),
-                        const QText(
-                            'Напоминания локальные. Android может задерживать их для экономии батареи. Точный режим требует отдельного разрешения.'),
-                        const SizedBox(height: 8),
-                        SizedBox(
-                            width: double.infinity,
-                            height: 48,
-                            child: OutlinedButton.icon(
-                                onPressed: _busy
-                                    ? null
-                                    : () => _run(() async {
-                                          await ref
-                                              .read(notificationServiceProvider)
-                                              .requestExact();
-                                          await ref
-                                              .read(reminderSettingsProvider
-                                                  .notifier)
-                                              .refreshSchedule();
-                                        }),
-                                icon: const Icon(Icons.alarm),
-                                label: const QText(
-                                    'Разрешить точные напоминания',
-                                    maxLines: 1,
-                                    softWrap: false,
-                                    overflow: TextOverflow.ellipsis))),
-                        const SizedBox(height: 12),
-                        SizedBox(
-                            width: double.infinity,
-                            height: 48,
-                            child: FilledButton.tonalIcon(
-                                onPressed: _busy
-                                    ? null
-                                    : () => _run(() async {
-                                          final sent = await ref
-                                              .read(notificationServiceProvider)
-                                              .testNotification();
-                                          if (context.mounted) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(SnackBar(
-                                                    content: QText(sent
-                                                        ? 'Тестовое уведомление отправлено'
-                                                        : 'Разрешите уведомления в настройках Android')));
-                                          }
-                                        }),
-                                icon: const Icon(Icons.notifications_outlined),
-                                label: const QText('Проверить уведомление',
-                                    maxLines: 1,
-                                    softWrap: false,
-                                    overflow: TextOverflow.ellipsis))),
-                      ])),
-              const SizedBox(height: 16),
-              const BackupCard(),
-              const SizedBox(height: 16),
-              _card('О приложении', [
-                const Row(children: [
-                  QuantLogo(size: 56),
-                  SizedBox(width: 16),
-                  QText('quant',
-                      style:
-                          TextStyle(fontSize: 28, fontWeight: FontWeight.w700))
-                ]),
-                const SizedBox(height: 12),
-                const QText('Версия 1.4.5 · питание, движение и прогресс'),
-                const SizedBox(height: 8),
-                const QText(
-                    'Дневник хранится на устройстве. Health Connect доступен только для чтения. Поиск и штрихкоды отправляются в Open Food Facts; дневник и медицинские данные туда не передаются.'),
-                const SizedBox(height: 8),
-                const QText(
-                    'Продукты: USDA FoodData Central (Public Domain) и Open Food Facts (ODbL). КБЖУ справочные, для готовых блюд зависят от рецепта.'),
-              ]),
-              const SizedBox(height: 16),
-              const DataManagementCard(),
-            ]));
+                                : () => _run(() async {
+                                      await ref
+                                          .read(notificationServiceProvider)
+                                          .requestExact();
+                                      await ref
+                                          .read(
+                                              reminderSettingsProvider.notifier)
+                                          .refreshSchedule();
+                                    }),
+                            icon: const Icon(Icons.alarm),
+                            label: const QText('Разрешить точные напоминания',
+                                textAlign: TextAlign.center))),
+                    const SizedBox(height: AppSpacing.actionGap),
+                    SizedBox(
+                        width: double.infinity,
+                        child: FilledButton.tonalIcon(
+                            onPressed: _busy
+                                ? null
+                                : () => _run(() async {
+                                      final sent = await ref
+                                          .read(notificationServiceProvider)
+                                          .testNotification();
+                                      if (context.mounted) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                                content: QText(sent
+                                                    ? 'Тестовое уведомление отправлено'
+                                                    : 'Разрешите уведомления в настройках Android')));
+                                      }
+                                    }),
+                            icon: const Icon(Icons.notifications_outlined),
+                            label: const QText('Проверить уведомление',
+                                textAlign: TextAlign.center))),
+                  ])),
+          const SizedBox(height: AppSpacing.section),
+          const BackupCard(),
+          const SizedBox(height: AppSpacing.section),
+          _card('О приложении', [
+            const Row(children: [
+              QuantLogo(size: 56),
+              SizedBox(width: 16),
+              Expanded(
+                  child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: QText('quant',
+                          style: TextStyle(
+                              fontSize: 28, fontWeight: FontWeight.w700))))
+            ]),
+            const SizedBox(height: AppSpacing.actionGap),
+            const QText('Версия 1.4.7 · питание, движение и прогресс'),
+            const SizedBox(height: 8),
+            const QText(
+                'Дневник хранится на устройстве. Health Connect доступен только для чтения. Поиск и штрихкоды отправляются в Open Food Facts; дневник и медицинские данные туда не передаются.'),
+            const SizedBox(height: 8),
+            const QText(
+                'Продукты: USDA FoodData Central (Public Domain) и Open Food Facts (ODbL). КБЖУ справочные, для готовых блюд зависят от рецепта.'),
+          ]),
+          const SizedBox(height: AppSpacing.section),
+          const DataManagementCard(),
+        ]));
   }
 
   Widget _retry(String message, VoidCallback retry) => Column(children: [
         QText(message),
+        const SizedBox(height: AppSpacing.actionGap),
         TextButton(onPressed: retry, child: const QText('Повторить'))
       ]);
   Widget _meal(String title, MealReminder meal,
@@ -269,6 +275,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 value: meal.enabled,
                 onChanged:
                     _busy ? null : (v) => changed(meal.copyWith(enabled: v)))),
+        const SizedBox(width: AppSpacing.small),
         ActionChip(
             label: Text(_time(meal.minute)),
             onPressed: _busy

@@ -1,3 +1,4 @@
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
 import '../../../../core/localization/app_strings.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +28,7 @@ class HealthAccessBanner extends StatelessWidget {
             _ =>
               'Health Connect недоступен на этом устройстве. Дневник питания работает офлайн.',
           }),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.actionGap),
           FilledButton.tonal(
             onPressed: busy ? null : onConnect,
             child: QText(access == HealthAccess.denied

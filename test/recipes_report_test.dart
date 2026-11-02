@@ -163,9 +163,11 @@ void main() {
           ],
           food: [
             FoodLogEntry()
+              ..weightGrams = 100
               ..date = start
               ..calories = 0,
             FoodLogEntry()
+              ..weightGrams = 100
               ..date = end
               ..calories = 2000
           ],

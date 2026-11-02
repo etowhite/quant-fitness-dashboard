@@ -1,3 +1,4 @@
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
 import '../../../../shared/widgets/expressive_motion.dart';
 import '../../../../core/localization/app_strings.dart';
 import 'package:flutter/material.dart';
@@ -48,9 +49,9 @@ class NutritionSummaryCard extends StatelessWidget {
     );
     final macros = Column(children: [
       _macro(context, 'Белки', totals.proteins, goals.proteins),
-      const SizedBox(height: 16),
+      const SizedBox(height: AppSpacing.section),
       _macro(context, 'Жиры', totals.fats, goals.fats),
-      const SizedBox(height: 16),
+      const SizedBox(height: AppSpacing.section),
       _macro(context, 'Углеводы', totals.carbs, goals.carbs),
     ]);
     return DashboardCard(

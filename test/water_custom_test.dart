@@ -1,3 +1,4 @@
+import 'package:smart_fitness_dashboard/features/nutrition/data/food_log_entry.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,6 +15,9 @@ import 'package:smart_fitness_dashboard/features/water/data/water_log_entry.dart
 
 class WaterDatabase implements IsarDatabaseService {
   final portions = <int>[];
+  @override
+  Stream<List<FoodLogEntry>> watchFoodLogEntriesForDay(DateTime date) =>
+      Stream.value([]);
   @override
   Future<int> addWater(DateTime date, int volumeMl) async {
     portions.add(volumeMl);

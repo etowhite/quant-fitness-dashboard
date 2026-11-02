@@ -1,3 +1,7 @@
+import '../domain/hydration.dart';
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
+import 'package:smart_fitness_dashboard/shared/widgets/quant_layout.dart';
+import 'package:smart_fitness_dashboard/shared/widgets/quant_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -17,10 +21,9 @@ class RecipesScreen extends ConsumerWidget {
   final DateTime date;
   @override
   Widget build(BuildContext context, WidgetRef ref) => Scaffold(
-      appBar: AppBar(title: const QText('Мои рецепты')),
-      floatingActionButton: FloatingActionButton.extended(
-          icon: const Icon(Icons.add),
-          label: const QText('Создать рецепт'),
+      appBar: QuantAppBar(context: context, title: const QText('Мои рецепты')),
+      floatingActionButton: QuantFab(
+          label: 'Создать рецепт',
           onPressed: () => Navigator.push(context,
               MaterialPageRoute(builder: (_) => const RecipeEditor()))),
       body: ref.watch(recipesProvider).when(
@@ -36,104 +39,117 @@ class RecipesScreen extends ConsumerWidget {
                       child: QText(
                           'Создайте рецепт из ингредиентов и укажите итоговый вес блюда.')))
               : ListView(
-                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 120),
+                  padding: QuantInsets.page(context, fab: false),
                   children: [
                       for (final p in items)
-                        Card(
-                            child: Padding(
-                                padding: const EdgeInsets.all(16),
-                                child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      Row(children: [
-                                        Expanded(
-                                            child: Text(p.name,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleLarge)),
-                                        FavoriteButton(product: p)
-                                      ]),
-                                      RecipePreview(
-                                          recipe: Recipe.decode(p.recipeJson!)),
-                                      Wrap(
-                                          spacing: 8,
-                                          runSpacing: 8,
-                                          children: [
-                                            OutlinedButton.icon(
-                                                icon: const Icon(
-                                                    Icons.edit_outlined),
-                                                label: const QText('Изменить'),
-                                                onPressed: () => Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (_) =>
-                                                            RecipeEditor(
-                                                                product: p)))),
-                                            OutlinedButton.icon(
-                                                icon: const Icon(Icons.add),
-                                                label: const QText(
-                                                    'Добавить в дневник'),
-                                                onPressed: !Recipe.decode(
-                                                            p.recipeJson!)
-                                                        .complete
-                                                    ? null
-                                                    : () => showAddFoodSheet(
-                                                        context,
-                                                        date: date,
-                                                        product: p)),
-                                            IconButton(
-                                                tooltip: context.tr('Удалить'),
-                                                icon: const Icon(
-                                                    Icons.delete_outline),
-                                                onPressed: () async {
-                                                  final yes = await showDialog<
-                                                          bool>(
-                                                      context: context,
-                                                      builder: (c) =>
-                                                          AlertDialog(
-                                                              title: const QText(
-                                                                  'Удалить рецепт?'),
-                                                              content: const QText(
-                                                                  'Записи дневника останутся без изменений.'),
-                                                              actions: [
-                                                                TextButton(
-                                                                    onPressed: () =>
-                                                                        Navigator.pop(
+                        Padding(
+                            padding: const EdgeInsets.only(
+                                bottom: AppSpacing.section),
+                            child: Card(
+                                child: Padding(
+                                    padding: const EdgeInsets.all(
+                                        AppSpacing.cardInset),
+                                    child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        children: [
+                                          Row(children: [
+                                            Expanded(
+                                                child: Text(p.name,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleLarge)),
+                                            FavoriteButton(product: p)
+                                          ]),
+                                          const SizedBox(
+                                              height: AppSpacing.actionGap),
+                                          RecipePreview(
+                                              recipe:
+                                                  Recipe.decode(p.recipeJson!)),
+                                          const SizedBox(
+                                              height: AppSpacing.actionGap),
+                                          Wrap(
+                                              spacing: 8,
+                                              runSpacing: 8,
+                                              children: [
+                                                OutlinedButton.icon(
+                                                    icon: const Icon(
+                                                        Icons.edit_outlined),
+                                                    label:
+                                                        const QText('Изменить'),
+                                                    onPressed: () =>
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (_) =>
+                                                                    RecipeEditor(
+                                                                        product:
+                                                                            p)))),
+                                                OutlinedButton.icon(
+                                                    icon: const Icon(Icons.add),
+                                                    label: const QText(
+                                                        'Добавить в дневник'),
+                                                    onPressed: !Recipe.decode(
+                                                                p.recipeJson!)
+                                                            .complete
+                                                        ? null
+                                                        : () =>
+                                                            showAddFoodSheet(
+                                                                context,
+                                                                date: date,
+                                                                product: p)),
+                                                IconButton(
+                                                    tooltip:
+                                                        context.tr('Удалить'),
+                                                    icon: const Icon(
+                                                        Icons.delete_outline),
+                                                    onPressed: () async {
+                                                      final yes = await showDialog<
+                                                              bool>(
+                                                          context: context,
+                                                          builder: (c) =>
+                                                              QuantDialog(
+                                                                  title: const QText(
+                                                                      'Удалить рецепт?'),
+                                                                  content:
+                                                                      const QText(
+                                                                          'Записи дневника останутся без изменений.'),
+                                                                  actions: [
+                                                                    TextButton(
+                                                                        onPressed: () => Navigator.pop(
                                                                             c,
                                                                             false),
-                                                                    child: const QText(
-                                                                        'Отмена')),
-                                                                FilledButton(
-                                                                    onPressed: () =>
-                                                                        Navigator.pop(
+                                                                        child: const QText(
+                                                                            'Отмена')),
+                                                                    FilledButton(
+                                                                        onPressed: () => Navigator.pop(
                                                                             c,
                                                                             true),
-                                                                    child: const QText(
-                                                                        'Удалить'))
-                                                              ]));
-                                                  if (yes == true) {
-                                                    try {
-                                                      await (await ref.read(
-                                                              databaseServiceProvider
-                                                                  .future))
-                                                          .deleteRecipe(p);
-                                                      ref.invalidate(
-                                                          frequentProductsProvider);
-                                                    } catch (_) {
-                                                      if (context.mounted) {
-                                                        ScaffoldMessenger.of(
-                                                                context)
-                                                            .showSnackBar(
-                                                                const SnackBar(
-                                                                    content: QText(
-                                                                        'Не удалось сохранить')));
+                                                                        child: const QText(
+                                                                            'Удалить'))
+                                                                  ]));
+                                                      if (yes == true) {
+                                                        try {
+                                                          await (await ref.read(
+                                                                  databaseServiceProvider
+                                                                      .future))
+                                                              .deleteRecipe(p);
+                                                          ref.invalidate(
+                                                              frequentProductsProvider);
+                                                        } catch (_) {
+                                                          if (context.mounted) {
+                                                            ScaffoldMessenger
+                                                                    .of(context)
+                                                                .showSnackBar(
+                                                                    const SnackBar(
+                                                                        content:
+                                                                            QText('Не удалось сохранить')));
+                                                          }
+                                                        }
                                                       }
-                                                    }
-                                                  }
-                                                })
-                                          ])
-                                    ])))
+                                                    })
+                                              ])
+                                        ]))))
                     ])));
 }
 
@@ -222,7 +238,7 @@ class _RecipeEditorState extends ConsumerState<RecipeEditor> {
     final key = GlobalKey<FormState>();
     final result = await showDialog<double>(
         context: context,
-        builder: (ctx) => AlertDialog(
+        builder: (ctx) => QuantDialog(
                 title: const QText('Масса ингредиента'),
                 content: Form(
                     key: key,
@@ -286,6 +302,7 @@ class _RecipeEditorState extends ConsumerState<RecipeEditor> {
         ..id = old?.id
         ..stableKey = old?.stableKey
         ..isFavorite = old?.isFavorite ?? false
+        ..waterPercentage = old?.waterPercentage ?? Hydration.detect(name.text)
         ..name = name.text.trim()
         ..category = 'Мои рецепты'
         ..source = 'quant recipe'
@@ -309,13 +326,13 @@ class _RecipeEditorState extends ConsumerState<RecipeEditor> {
   Widget build(BuildContext context) => PopScope(
       canPop: !busy,
       child: Scaffold(
-          appBar: AppBar(
+          appBar: QuantAppBar(
+              context: context,
               title: QText(widget.product == null
                   ? 'Создать рецепт'
                   : 'Изменить рецепт')),
           body: SingleChildScrollView(
-              padding: EdgeInsets.fromLTRB(
-                  16, 12, 16, 24 + MediaQuery.viewInsetsOf(context).bottom),
+              padding: QuantInsets.form(context),
               child: Form(
                   key: form,
                   child: Column(
@@ -329,7 +346,7 @@ class _RecipeEditorState extends ConsumerState<RecipeEditor> {
                                 validator: (v) => v == null || v.trim().isEmpty
                                     ? context.tr('Введите название')
                                     : null)),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: AppSpacing.section),
                         Card(
                             child: Padding(
                                 padding: const EdgeInsets.all(16),
@@ -362,12 +379,13 @@ class _RecipeEditorState extends ConsumerState<RecipeEditor> {
                                                 ingredients.removeAt(index)))),
                                     const Divider(height: 1)
                                   ],
+                                  const SizedBox(height: AppSpacing.actionGap),
                                   OutlinedButton.icon(
                                       onPressed: busy ? null : addIngredient,
                                       icon: const Icon(Icons.add),
                                       label: const QText('Добавить ингредиент'))
                                 ]))),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: AppSpacing.section),
                         const QText(
                             'Укажите вес после приготовления. Сумма ингредиентов — только начальное значение.'),
                         const SizedBox(height: 8),
@@ -383,7 +401,7 @@ class _RecipeEditorState extends ConsumerState<RecipeEditor> {
                                 onChanged: (_) => setState(() {}),
                                 decoration: InputDecoration(
                                     suffixText: context.tr('г')))),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: AppSpacing.actionGap),
                         OutlinedButton(
                             key: const ValueKey('recipe-use-ingredient-mass'),
                             style: OutlinedButton.styleFrom(
@@ -394,7 +412,7 @@ class _RecipeEditorState extends ConsumerState<RecipeEditor> {
                             child: const QText(
                                 'Использовать сумму массы ингредиентов',
                                 textAlign: TextAlign.center)),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: AppSpacing.section),
                         LabeledField(
                             label:
                                 context.tr('Количество порций (необязательно)'),
@@ -408,14 +426,14 @@ class _RecipeEditorState extends ConsumerState<RecipeEditor> {
                                     : validateLocalizedNumber(context, v,
                                         positive: true, max: 10000),
                                 onChanged: (_) => setState(() {}))),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: AppSpacing.section),
                         if (current != null)
                           Card(
                               child: Padding(
                                   padding: const EdgeInsets.all(16),
                                   child: RecipePreview(recipe: current!))),
                         if (error != null) QText(error!),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: AppSpacing.section),
                         FilledButton(
                             onPressed: busy ? null : save,
                             child: QText(busy ? 'Сохранение…' : 'Сохранить')),
@@ -434,16 +452,20 @@ class _IngredientPickerState extends ConsumerState<_IngredientPicker> {
   Widget build(BuildContext context) => SizedBox(
       height: MediaQuery.sizeOf(context).height * .8,
       child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.fromLTRB(
+              AppSpacing.section,
+              AppSpacing.section,
+              AppSpacing.section,
+              AppSpacing.section + MediaQuery.viewInsetsOf(context).bottom),
           child: Column(children: [
             const QText('Добавить ингредиент'),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.actionGap),
             TextField(
                 onChanged: (v) => setState(() => query = v),
                 decoration: InputDecoration(
                     hintText: context.tr('Найти продукт'),
                     prefixIcon: const Icon(Icons.search))),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.actionGap),
             Expanded(
                 child: ref.watch(productSearchProvider(query)).when(
                     loading: () =>

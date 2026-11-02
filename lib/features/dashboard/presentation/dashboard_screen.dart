@@ -1,3 +1,5 @@
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
+import 'package:smart_fitness_dashboard/shared/widgets/quant_layout.dart';
 import '../../../core/localization/app_strings.dart';
 import '../../../core/home_widgets/home_widgets.dart';
 import 'dart:async';
@@ -142,7 +144,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen>
       color: Theme.of(context).colorScheme.secondary,
       child: ListView(
         physics: const AlwaysScrollableScrollPhysics(),
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 120),
+        padding: QuantInsets.page(context, fab: false),
         children: [
           DashboardHeader(
               date: _day,
@@ -157,12 +159,13 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen>
                     children: [
                   const QText(
                       'Для старых взвешиваний разрешите чтение истории Health Connect.'),
+                  const SizedBox(height: AppSpacing.actionGap),
                   TextButton(
                       onPressed:
                           busy ? null : () => _sync(requestPermissions: true),
                       child: const QText('Разрешить историю')),
                 ])),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.section),
           ],
           if (healthState != null &&
               healthState.access != HealthAccess.granted) ...[
@@ -172,13 +175,13 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen>
                 onConnect: () => _sync(
                     requestPermissions:
                         healthState.access == HealthAccess.denied)),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.section),
           ],
           if (health.hasError) ...[
             const DashboardCard(
                 child: QText('Не удалось синхронизировать Health Connect. '
                     'Проверьте доступ и повторите обновление. Сохраненные на экране показатели могут быть устаревшими.')),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.section),
           ],
           diary.when(
             data: (day) =>
@@ -192,19 +195,20 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const QText('Не удалось прочитать дневник питания.'),
+                const SizedBox(height: AppSpacing.actionGap),
                 TextButton(
                     onPressed: () => ref.invalidate(foodDiaryProvider(_day)),
                     child: const QText('Повторить')),
               ],
             )),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.section),
           HealthMetricsGrid(
               key: _activityKey,
               metrics: metrics,
               loading: health.isLoading,
               stepGoal: goals.steps),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.section),
           WeightChartCard(history: metrics?.weightHistory ?? []),
           if (stored != null)
             Padding(

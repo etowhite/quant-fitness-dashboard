@@ -1,3 +1,4 @@
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
 import '../../../../core/localization/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -48,7 +49,7 @@ class CurrentMeasurementsGrid extends StatelessWidget {
               children: [
                 QText(metric.label,
                     style: Theme.of(context).textTheme.titleMedium),
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.actionGap),
                 QText(
                     latest == null
                         ? '— см'

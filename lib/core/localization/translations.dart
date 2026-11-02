@@ -1,4 +1,9 @@
 const english = <String, String>{
+  "Доля воды в продукте": "Water content",
+  "Процент воды, 0–100%": "Water content, 0–100%",
+  "Учитывать в водном балансе": "Include in water balance",
+  "Лимит Open Food Facts. Повторите позже.":
+      "Open Food Facts rate limit. Try again later.",
   "Виджеты главного экрана": "Home screen widgets",
   "Добавьте quant через меню виджетов Android":
       "Add quant from the Android widget picker",
@@ -49,8 +54,8 @@ const english = <String, String>{
       "Camera unavailable. Enter the barcode manually.",
   "Включая основной обмен": "Includes resting energy",
   "— ккал": "— kcal",
-  "Версия 1.4.5 · питание, движение и прогресс":
-      "Version 1.4.5 · nutrition, activity and progress",
+  "Версия 1.4.7 · питание, движение и прогресс":
+      "Version 1.4.7 · nutrition, activity and progress",
   "Дашборд": "Dashboard",
   "Питание": "Nutrition",
   "Замеры": "Measurements",
@@ -262,8 +267,7 @@ const english = <String, String>{
       "Foods: USDA FoodData Central (Public Domain) and Open Food Facts (ODbL). Nutrition is approximate and varies by recipe.",
   "Не удалось открыть локальную базу данных.":
       "Could not open the local database.",
-  "Логотип quant: кольца активности в форме q":
-      "quant logo: activity rings forming a q",
+  "Логотип quant: плавная открытая q": "quant logo: fluid open q",
   "Синхронизация Health Connect": "Syncing Health Connect",
   "Синхронизировать Health Connect": "Sync Health Connect",
   "Подключить Health Connect": "Connect Health Connect",
@@ -382,6 +386,8 @@ const english = <String, String>{
       "Recipe calculation using USDA SR Legacy (2018)"
 };
 const templates = <String, String>{
+  "Учитывать в воде: {0}% (+{1} мл)": "Count as water: {0}% (+{1} ml)",
+  "в т.ч. {0} мл из напитков и еды": "incl. {0} ml from drinks and food",
   "{0} общих ккал": "{0} total kcal",
   "Шаг {0} из 3": "Step {0} of 3",
   "Записей: {0}": "Entries: {0}",
@@ -435,6 +441,7 @@ const fragments = <String, String>{
   "Белки": "Protein",
   "Жиры": "Fat",
   "Углеводы": "Carbs",
+  " · сохранить офлайн": " · save offline",
   "Калории": "Calories",
   "Не удалось синхронизировать Health Connect. ":
       "Could not sync Health Connect. ",

@@ -16,6 +16,8 @@ class FoodLogEntry {
   String? productKey;
   late double weightGrams;
   // Totals for this portion, not per 100 g.
+  double waterPercentage = 0.0;
+
   late double calories;
   late double proteins;
   late double fats;

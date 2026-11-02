@@ -1,3 +1,5 @@
+import 'water_custom_test.dart' show WaterDatabase;
+import 'package:smart_fitness_dashboard/core/database/database_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,6 +17,7 @@ void main() {
       (tester) async {
     final day = DateTime(2026, 10, 31);
     await tester.pumpWidget(ProviderScope(overrides: [
+      databaseServiceProvider.overrideWith((ref) async => WaterDatabase()),
       effectiveUserGoalsProvider
           .overrideWithValue(const UserGoals(waterMl: 1000)),
       waterProvider(day).overrideWith((ref) => Stream.value([

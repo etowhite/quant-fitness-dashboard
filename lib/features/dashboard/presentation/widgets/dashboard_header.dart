@@ -24,7 +24,9 @@ class DashboardHeader extends StatelessWidget {
         Row(children: [
           const QuantLogo(size: 42),
           const SizedBox(width: 12),
-          QText('quant', style: Theme.of(context).textTheme.headlineMedium)
+          Flexible(
+              child: QText('quant',
+                  style: Theme.of(context).textTheme.headlineMedium))
         ]),
         const SizedBox(height: 4),
         QText('${formatted[0].toUpperCase()}${formatted.substring(1)}',

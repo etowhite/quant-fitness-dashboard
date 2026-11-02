@@ -1,3 +1,6 @@
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
+import 'package:smart_fitness_dashboard/shared/widgets/quant_layout.dart';
+import 'package:smart_fitness_dashboard/shared/widgets/quant_dialog.dart';
 import '../../../shared/widgets/scroll_island.dart';
 import '../../../core/localization/app_strings.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +44,7 @@ class _MeasurementsScreenState extends ConsumerState<MeasurementsScreen> {
     if (_deleting.contains(row.id)) return;
     final confirmed = await showDialog<bool>(
         context: context,
-        builder: (context) => AlertDialog(
+        builder: (context) => QuantDialog(
               title: const QText('Удалить замер?'),
               content: QText(
                   'Все параметры и заметка за ${DateFormat('d MMM yyyy', context.languageCode).format(row.date.toLocal())} будут удалены.'),
@@ -72,107 +75,92 @@ class _MeasurementsScreenState extends ConsumerState<MeasurementsScreen> {
   Widget build(BuildContext context) {
     final history = ref.watch(bodyMeasurementHistoryProvider);
     return Scaffold(
-      appBar: AppBar(title: const QText('Замеры')),
+      appBar: QuantAppBar(context: context, title: const QText('Замеры')),
       floatingActionButton: IslandAwareFab(
-          child: FloatingActionButton.extended(
+          child: QuantFab(
               onPressed: _sheetOpen ? null : _newMeasurement,
-              icon: const Icon(Icons.add),
-              label: const QText('Новый замер'))),
-      body: ListView(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 120),
-          children: [
-            QText('Антропометрия',
-                style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 16),
-            history.when(
-              loading: () => const Center(child: CircularProgressIndicator()),
-              error: (error, stack) => Column(children: [
-                const QText('Не удалось загрузить историю замеров.'),
-                TextButton(
-                    onPressed: () =>
-                        ref.invalidate(bodyMeasurementHistoryProvider),
-                    child: const QText('Повторить'))
-              ]),
-              data: (rows) => Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    CurrentMeasurementsGrid(history: rows),
-                    const SizedBox(height: 16),
-                    TimeSeriesChartCard(
-                        history: _metric.series(rows),
-                        title: 'Прогресс замеров',
-                        subtitle: '${_metric.label} · см',
-                        unit: 'см',
-                        emptyText:
-                            'Для графика нужны хотя бы два замера выбранного параметра.',
-                        controls: Wrap(spacing: 8, runSpacing: 8, children: [
-                          for (final metric in BodyMetric.values)
-                            ChoiceChip(
-                                label: QText(metric.label),
-                                selected: metric == _metric,
-                                onSelected: (_) =>
-                                    setState(() => _metric = metric)),
-                        ])),
-                    const SizedBox(height: 24),
-                    QText('История замеров',
-                        style: Theme.of(context).textTheme.titleLarge),
-                    const SizedBox(height: 12),
-                    if (rows.isEmpty)
-                      const QText(
-                          'Пока нет замеров. Добавьте первый, чтобы отслеживать прогресс.'),
-                    for (final row in rows)
-                      Padding(
-                          padding: const EdgeInsets.only(bottom: 12),
-                          child: Card(
-                              child: Padding(
-                                  padding: const EdgeInsets.all(16),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Expanded(
-                                          child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                            QText(
-                                                DateFormat('d MMM yyyy',
-                                                        context.languageCode)
-                                                    .format(row.date.toLocal()),
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleMedium),
-                                            const SizedBox(height: 8),
-                                            Wrap(
-                                                spacing: 16,
-                                                runSpacing: 8,
-                                                children: [
-                                                  for (final metric
-                                                      in BodyMetric.values)
-                                                    if (metric.read(row) !=
-                                                        null)
-                                                      QText(
-                                                          '${metric.label}: ${metric.read(row)!.toStringAsFixed(1)} см'),
-                                                ]),
-                                            if (row.note?.isNotEmpty == true)
-                                              Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 8),
-                                                  child: Text(row.note!)),
-                                          ])),
-                                      IconButton(
-                                          onPressed: _deleting.contains(row.id)
-                                              ? null
-                                              : () => _delete(row),
-                                          tooltip: context.tr('Удалить замер'),
-                                          icon:
-                                              const Icon(Icons.delete_outline)),
-                                    ],
-                                  )))),
-                  ]),
-            ),
+              label: 'Новый замер')),
+      body: ListView(padding: QuantInsets.page(context, fab: true), children: [
+        QText('Антропометрия', style: Theme.of(context).textTheme.titleLarge),
+        const SizedBox(height: AppSpacing.section),
+        history.when(
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (error, stack) => Column(children: [
+            const QText('Не удалось загрузить историю замеров.'),
+            TextButton(
+                onPressed: () => ref.invalidate(bodyMeasurementHistoryProvider),
+                child: const QText('Повторить'))
           ]),
+          data: (rows) =>
+              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            CurrentMeasurementsGrid(history: rows),
+            const SizedBox(height: AppSpacing.section),
+            TimeSeriesChartCard(
+                history: _metric.series(rows),
+                title: 'Прогресс замеров',
+                subtitle: '${_metric.label} · см',
+                unit: 'см',
+                emptyText:
+                    'Для графика нужны хотя бы два замера выбранного параметра.',
+                controls: Wrap(spacing: 8, runSpacing: 8, children: [
+                  for (final metric in BodyMetric.values)
+                    ChoiceChip(
+                        label: QText(metric.label),
+                        selected: metric == _metric,
+                        onSelected: (_) => setState(() => _metric = metric)),
+                ])),
+            const SizedBox(height: 24),
+            QText('История замеров',
+                style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: AppSpacing.actionGap),
+            if (rows.isEmpty)
+              const QText(
+                  'Пока нет замеров. Добавьте первый, чтобы отслеживать прогресс.'),
+            for (final row in rows)
+              Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: Card(
+                      child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                    QText(
+                                        DateFormat('d MMM yyyy',
+                                                context.languageCode)
+                                            .format(row.date.toLocal()),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium),
+                                    const SizedBox(height: 8),
+                                    Wrap(spacing: 16, runSpacing: 8, children: [
+                                      for (final metric in BodyMetric.values)
+                                        if (metric.read(row) != null)
+                                          QText(
+                                              '${metric.label}: ${metric.read(row)!.toStringAsFixed(1)} см'),
+                                    ]),
+                                    if (row.note?.isNotEmpty == true)
+                                      Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 8),
+                                          child: Text(row.note!)),
+                                  ])),
+                              IconButton(
+                                  onPressed: _deleting.contains(row.id)
+                                      ? null
+                                      : () => _delete(row),
+                                  tooltip: context.tr('Удалить замер'),
+                                  icon: const Icon(Icons.delete_outline)),
+                            ],
+                          )))),
+          ]),
+        ),
+      ]),
     );
   }
 }

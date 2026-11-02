@@ -1,7 +1,48 @@
 import 'package:flutter/material.dart';
+import '../../core/theme/app_spacing.dart';
 import '../../core/localization/app_strings.dart';
 
 const expressiveDuration = Duration(milliseconds: 420);
+
+/// Equal-width capsules whose column count follows translated, scaled labels.
+class ResponsiveChoices extends StatelessWidget {
+  const ResponsiveChoices(
+      {required this.labels,
+      required this.children,
+      this.leadingWidth = 0,
+      super.key});
+  final List<String> labels;
+  final List<Widget> children;
+  final double leadingWidth;
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(builder: (context, box) {
+        var widest = 64.0;
+        for (final label in labels) {
+          final painter = TextPainter(
+              text: TextSpan(
+                  text: context.tr(label),
+                  style: Theme.of(context).textTheme.labelLarge),
+              textDirection: Directionality.of(context),
+              textScaler: MediaQuery.textScalerOf(context))
+            ..layout();
+          final width = painter.width + 32 + leadingWidth;
+          if (width > widest) widest = width;
+          painter.dispose();
+        }
+        final columns =
+            ((box.maxWidth + AppSpacing.small) / (widest + AppSpacing.small))
+                .floor()
+                .clamp(1, children.length);
+        final width =
+            (box.maxWidth - AppSpacing.small * (columns - 1)) / columns;
+        return Wrap(
+            spacing: AppSpacing.small,
+            runSpacing: AppSpacing.small,
+            children: [
+              for (final child in children) SizedBox(width: width, child: child)
+            ]);
+      });
+}
 
 class CapsuleChoice extends StatelessWidget {
   const CapsuleChoice(

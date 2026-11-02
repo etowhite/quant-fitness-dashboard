@@ -21,6 +21,8 @@ class FoodProduct {
   String? recipeJson;
 
   // All values are per 100 g of edible product.
+  double waterPercentage = 0.0;
+
   late double calories;
   late double proteins;
   late double fats;

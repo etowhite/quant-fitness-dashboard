@@ -1,3 +1,4 @@
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
 import '../../core/localization/app_strings.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ class FeaturePlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListView(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(AppSpacing.cardInset),
         children: [
           Card(
             child: Padding(

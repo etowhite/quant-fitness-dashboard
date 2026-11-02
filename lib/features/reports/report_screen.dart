@@ -1,3 +1,5 @@
+import 'package:smart_fitness_dashboard/shared/widgets/quant_layout.dart';
+import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -125,7 +127,8 @@ class _ReportScreenState extends ConsumerState<ReportScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(title: const QText('Экспорт отчёта')),
+      appBar:
+          QuantAppBar(context: context, title: const QText('Экспорт отчёта')),
       body: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
           child:
@@ -143,10 +146,11 @@ class _ReportScreenState extends ConsumerState<ReportScreen> {
                             load();
                           })
             ]),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.section),
             if (busy) const LinearProgressIndicator(),
             if (error != null) ...[
               QText(error!),
+              const SizedBox(height: AppSpacing.actionGap),
               TextButton(
                   onPressed: busy ? null : load,
                   child: const QText('Повторить'))
@@ -154,12 +158,12 @@ class _ReportScreenState extends ConsumerState<ReportScreen> {
             if (report != null) ...[
               RepaintBoundary(
                   key: captureKey, child: ReportImage(data: report!)),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.section),
               FilledButton.icon(
                   onPressed: busy ? null : () => export(false),
                   icon: const Icon(Icons.save_alt),
                   label: const QText('Сохранить изображение')),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.actionGap),
               OutlinedButton.icon(
                   onPressed: busy ? null : () => export(true),
                   icon: const Icon(Icons.share_outlined),
@@ -218,12 +222,12 @@ class ReportImage extends StatelessWidget {
                       const SizedBox(height: 8),
                       QText('Отчёт за период', style: t.textTheme.titleLarge),
                       Text('${date(data.start)} — ${date(data.end)}'),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: AppSpacing.section),
                       WeightChartCard(
                           history: data.weights,
                           subtitle:
                               '${date(data.start)} — ${date(data.end)} · ${context.tr('кг')}'),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: AppSpacing.actionGap),
                       Card(
                           child: Padding(
                               padding: const EdgeInsets.all(16),
@@ -246,7 +250,7 @@ class ReportImage extends StatelessWidget {
                                             'Одно измерение — изменение не рассчитывается'),
                                     ]
                                   ]))),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: AppSpacing.actionGap),
                       average(
                           'Средние записанные калории', data.nutrition, 'ккал'),
                       average(
@@ -256,7 +260,7 @@ class ReportImage extends StatelessWidget {
                       average('Средние шаги', data.activity, 'шагов',
                           footnote:
                               '${context.tr('Дней достижения цели')}: ${data.stepGoalDays} / ${data.activity.days}'),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: AppSpacing.actionGap),
                       Text(
                           '${context.tr('Сравнение с текущими целями (история целей не ведётся)')}: ${data.waterGoal} ${context.tr('мл')}, ${data.stepGoal} ${context.tr('шагов')}.'),
                       const SizedBox(height: 8),
