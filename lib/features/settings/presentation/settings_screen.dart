@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
 import 'package:smart_fitness_dashboard/shared/widgets/quant_layout.dart';
 import '../../../core/home_widgets/home_widgets.dart';
@@ -190,25 +191,26 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                               }),
                     const SizedBox(height: AppSpacing.actionGap),
                     const QText(
-                        'Напоминания локальные. Android может задерживать их для экономии батареи. Точный режим требует отдельного разрешения.'),
+                        'Напоминания локальные. Система может задерживать их для экономии батареи.'),
                     const SizedBox(height: 8),
-                    SizedBox(
-                        width: double.infinity,
-                        child: OutlinedButton.icon(
-                            onPressed: _busy
-                                ? null
-                                : () => _run(() async {
-                                      await ref
-                                          .read(notificationServiceProvider)
-                                          .requestExact();
-                                      await ref
-                                          .read(
-                                              reminderSettingsProvider.notifier)
-                                          .refreshSchedule();
-                                    }),
-                            icon: const Icon(Icons.alarm),
-                            label: const QText('Разрешить точные напоминания',
-                                textAlign: TextAlign.center))),
+                    if (!Platform.isIOS)
+                      SizedBox(
+                          width: double.infinity,
+                          child: OutlinedButton.icon(
+                              onPressed: _busy
+                                  ? null
+                                  : () => _run(() async {
+                                        await ref
+                                            .read(notificationServiceProvider)
+                                            .requestExact();
+                                        await ref
+                                            .read(reminderSettingsProvider
+                                                .notifier)
+                                            .refreshSchedule();
+                                      }),
+                              icon: const Icon(Icons.alarm),
+                              label: const QText('Разрешить точные напоминания',
+                                  textAlign: TextAlign.center))),
                     const SizedBox(height: AppSpacing.actionGap),
                     SizedBox(
                         width: double.infinity,
@@ -247,7 +249,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                               fontSize: 28, fontWeight: FontWeight.w700))))
             ]),
             const SizedBox(height: AppSpacing.actionGap),
-            const QText('Версия 1.4.7 · питание, движение и прогресс'),
+            const QText('Версия 1.5.0 · питание, движение и прогресс'),
             const SizedBox(height: 8),
             const QText(
                 'Дневник хранится на устройстве. Health Connect доступен только для чтения. Поиск и штрихкоды отправляются в Open Food Facts; дневник и медицинские данные туда не передаются.'),

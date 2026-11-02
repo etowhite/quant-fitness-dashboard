@@ -8,6 +8,10 @@ import 'package:smart_fitness_dashboard/core/health/local_health.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  test('HealthKit fractions are converted to percentages only on iOS', () {
+    expect(normalizeBodyFat(0.192, iOS: true), closeTo(19.2, 0.001));
+    expect(normalizeBodyFat(19.2, iOS: false), 19.2);
+  });
   test('backup v9 preserves local body composition', () {
     final doc = BackupDocument(
         goals: const UserGoals(),

@@ -7,6 +7,9 @@ import 'interval_totals.dart';
 
 import '../../features/dashboard/domain/daily_health_metrics.dart';
 
+double normalizeBodyFat(double value, {required bool iOS}) =>
+    iOS ? value * 100 : value;
+
 enum HealthSourceMode { platform, localFallback }
 
 enum HealthAccess { granted, denied, unavailable, updateRequired }
@@ -352,7 +355,9 @@ class HealthConnectService {
       if (point.unit != expected) {
         throw StateError('Unexpected unit: ${point.unit}');
       }
-      final numeric = value.numericValue.toDouble();
+      final numeric = type == HealthDataType.BODY_FAT_PERCENTAGE
+          ? normalizeBodyFat(value.numericValue.toDouble(), iOS: _isIOS)
+          : value.numericValue.toDouble();
       final valid = numeric.isFinite &&
           (type == HealthDataType.WEIGHT
               ? numeric > 0 && numeric <= 1000

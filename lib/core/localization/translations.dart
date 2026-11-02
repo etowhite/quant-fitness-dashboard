@@ -54,8 +54,8 @@ const english = <String, String>{
       "Camera unavailable. Enter the barcode manually.",
   "Включая основной обмен": "Includes resting energy",
   "— ккал": "— kcal",
-  "Версия 1.4.7 · питание, движение и прогресс":
-      "Version 1.4.7 · nutrition, activity and progress",
+  "Версия 1.5.0 · питание, движение и прогресс":
+      "Version 1.5.0 · nutrition, activity and progress",
   "Дашборд": "Dashboard",
   "Питание": "Nutrition",
   "Замеры": "Measurements",
@@ -241,8 +241,8 @@ const english = <String, String>{
   "Суббота": "Saturday",
   "Воскресенье": "Sunday",
   "1,5 часа": "1.5 hours",
-  "Напоминания локальные. Android может задерживать их для экономии батареи. Точный режим требует отдельного разрешения.":
-      "Reminders stay on your device. Android may delay them to save battery. Exact timing needs a separate permission.",
+  "Напоминания локальные. Система может задерживать их для экономии батареи.":
+      "Reminders stay on your device. The system may delay them to save battery.",
   "Разрешить точные напоминания": "Allow exact reminders",
   "Проверить уведомление": "Test notification",
   "Тестовое уведомление отправлено": "Test notification sent",

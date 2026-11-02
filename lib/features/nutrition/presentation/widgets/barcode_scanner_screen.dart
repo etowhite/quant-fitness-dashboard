@@ -141,7 +141,7 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen>
             MobileScanner(
                 controller: _controller,
                 scanWindow: window,
-                errorBuilder: (_, __, ___) => const ColoredBox(
+                errorBuilder: (_, __) => const ColoredBox(
                     color: Colors.black,
                     child: Center(
                         child: Icon(Icons.no_photography_outlined,

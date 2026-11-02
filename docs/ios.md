@@ -25,3 +25,7 @@ Local iOS notifications are supported; exact-alarm settings are Android-only.
 Android widgets are not ported to WidgetKit.
 Windows cannot run Xcode/CocoaPods/iOS Simulator. macOS CI checks compilation;
 installation, Face ID, Health authorization and delivery need iPhone testing.
+
+Scanner 7.0.1 replaces 6.0.11 because the latter requires iOS 15.5. The Apple Vision backend permits the iOS 14 deployment target.
+
+HealthKit body fat is normalized from a fraction to 0–100 percent (HKUnit.percent).

@@ -58,8 +58,11 @@ void main() {
     final root = config.uri.resolve('${package['rootUri']}/');
     await Isar.initializeIsarCore(libraries: {
       Abi.current(): root
-          .resolve(
-              Platform.isWindows ? 'windows/libisar.dll' : 'linux/libisar.so')
+          .resolve(Platform.isWindows
+              ? 'windows/libisar.dll'
+              : Platform.isMacOS
+                  ? 'macos/isar.xcframework/macos-arm64_x86_64/libisar.dylib'
+                  : 'linux/libisar.so')
           .toFilePath()
     });
   });
