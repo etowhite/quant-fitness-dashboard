@@ -1,17 +1,12 @@
 import 'package:smart_fitness_dashboard/core/backup/backup_document.dart';
 import 'package:smart_fitness_dashboard/features/goals/domain/user_goals.dart';
 import 'package:smart_fitness_dashboard/features/measurements/data/body_measurement.dart';
-import 'package:smart_fitness_dashboard/core/health/health_connect_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_fitness_dashboard/core/health/local_health.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  test('HealthKit fractions are converted to percentages only on iOS', () {
-    expect(normalizeBodyFat(0.192, iOS: true), closeTo(19.2, 0.001));
-    expect(normalizeBodyFat(19.2, iOS: false), 19.2);
-  });
   test('backup v9 preserves local body composition', () {
     final doc = BackupDocument(
         goals: const UserGoals(),
@@ -26,15 +21,6 @@ void main() {
     final restored = BackupDocument.decode(doc.encode());
     expect(restored.measurements.single.weight, 72.5);
     expect(restored.measurements.single.bodyFat, 19.2);
-  });
-  test('sideload never calls HealthKit and fails closed without entitlement',
-      () async {
-    final service = HealthConnectService(iOS: true);
-    expect(await service.checkAccess(), HealthAccess.unavailable);
-    expect(await service.requestPermissions(), HealthAccess.unavailable);
-    expect(service.sourceMode, HealthSourceMode.localFallback);
-    await expectLater(
-        service.fetchTodayMetrics(), throwsA(isA<HealthAccessException>()));
   });
   test('manual activity is daily, persistent, nullable and validated',
       () async {

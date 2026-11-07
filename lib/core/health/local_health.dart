@@ -34,7 +34,7 @@ class ManualActivityRepository {
 Future<DailyHealthMetrics> mergeLocalHealth(
     Ref ref, DailyHealthMetrics? remote) async {
   final now = DateTime.now();
-  if (!Platform.isAndroid && !Platform.isIOS) {
+  if (!Platform.isAndroid) {
     return remote ??
         DailyHealthMetrics(
             fetchedAt: now,

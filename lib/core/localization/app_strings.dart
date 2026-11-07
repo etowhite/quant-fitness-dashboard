@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'translations.dart';
@@ -12,17 +11,11 @@ class AppStrings {
   static AppStrings of(BuildContext context) =>
       Localizations.of<AppStrings>(context, AppStrings) ??
       const AppStrings(Locale('ru'));
-  String text(String source) {
-    final translated = _text(source);
-    return Platform.isIOS
-        ? translated.replaceAll('Health Connect', 'Apple Health')
-        : translated;
-  }
+  String text(String source) => _text(source);
 
   String _text(String source) {
     if (locale.languageCode != 'en') return source;
     const manual = {
-      'Изображение сохранено в Файлы': 'Image saved to Files',
       'Health Connect недоступен. Нажмите карточку активности или + у состава тела, чтобы внести данные вручную.':
           'Health Connect is unavailable. Tap Activity or + in Body composition to enter data manually.',
       'Вес и процент жира': 'Weight and body fat',

@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
 import 'package:smart_fitness_dashboard/shared/widgets/quant_layout.dart';
 import '../../../core/home_widgets/home_widgets.dart';
@@ -193,24 +192,23 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     const QText(
                         'Напоминания локальные. Система может задерживать их для экономии батареи.'),
                     const SizedBox(height: 8),
-                    if (!Platform.isIOS)
-                      SizedBox(
-                          width: double.infinity,
-                          child: OutlinedButton.icon(
-                              onPressed: _busy
-                                  ? null
-                                  : () => _run(() async {
-                                        await ref
-                                            .read(notificationServiceProvider)
-                                            .requestExact();
-                                        await ref
-                                            .read(reminderSettingsProvider
-                                                .notifier)
-                                            .refreshSchedule();
-                                      }),
-                              icon: const Icon(Icons.alarm),
-                              label: const QText('Разрешить точные напоминания',
-                                  textAlign: TextAlign.center))),
+                    SizedBox(
+                        width: double.infinity,
+                        child: OutlinedButton.icon(
+                            onPressed: _busy
+                                ? null
+                                : () => _run(() async {
+                                      await ref
+                                          .read(notificationServiceProvider)
+                                          .requestExact();
+                                      await ref
+                                          .read(reminderSettingsProvider
+                                              .notifier)
+                                          .refreshSchedule();
+                                    }),
+                            icon: const Icon(Icons.alarm),
+                            label: const QText('Разрешить точные напоминания',
+                                textAlign: TextAlign.center))),
                     const SizedBox(height: AppSpacing.actionGap),
                     SizedBox(
                         width: double.infinity,

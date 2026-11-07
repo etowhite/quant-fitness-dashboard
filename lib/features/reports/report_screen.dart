@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:smart_fitness_dashboard/shared/widgets/quant_layout.dart';
 import 'package:smart_fitness_dashboard/core/theme/app_spacing.dart';
 import 'dart:ui' as ui;
@@ -114,9 +113,7 @@ class _ReportScreenState extends ConsumerState<ReportScreen> {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: QText(share
                 ? 'Открыто меню «Поделиться»'
-                : Platform.isIOS
-                    ? 'Изображение сохранено в Файлы'
-                    : 'Изображение сохранено в галерею')));
+                : 'Изображение сохранено в галерею')));
       }
     } catch (_) {
       if (mounted) {
